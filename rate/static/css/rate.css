@@ -1,0 +1,9 @@
+/* CSS for RateXBlock */
+
+.rate_block .count {
+    font-weight: bold;
+}
+
+.rate_block p {
+    cursor: pointer;
+}
