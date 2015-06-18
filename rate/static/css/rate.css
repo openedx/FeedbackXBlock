@@ -9,6 +9,11 @@
     padding: 10px
 }
 
+.rate_thank_you {
+    color: green;
+    visibility: hidden;
+}
+
 .rate_block .rate_header {
     font-weight: bold;
     font-size: large;
@@ -16,8 +21,15 @@
 
 .rate_block .rate_likert_rating {
     cursor: pointer;
+    border-radius:5px;
 }
 
 .rate_block .rate_string_input {
-    margin-bottom: 2em;
+    margin-bottom: 1em;
+}
+
+.rate_block .rate_rating_active {
+    color: blue;
+    font-weight: bold;
+    background-color: blanchedalmond;
 }

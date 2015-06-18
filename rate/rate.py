@@ -68,8 +68,10 @@ class RateXBlock(XBlock):
         when viewing courses.
         """
         html = self.resource_string("static/html/rate.html")
-        scale_item = u'<span class="rate_likert_rating rate_rating_{i}" title="{level}">{icon}</span>'
-        scale = u"".join(scale_item.format(level=level, icon=icon, i=i) for (level,icon,i) in zip(self.mouseover_levels, self.mouseover_icons, range(len(self.mouseover_icons))))
+        scale_item = u'<span class="rate_likert_rating rate_rating_{i} {active}" title="{level}">{icon}</span>'
+        indexes = range(len(self.mouseover_icons))
+        active_vote = [" rate_rating_active " if i == self.user_vote else "" for i in indexes]
+        scale = u"".join(scale_item.format(level=level, icon=icon, i=i, active=active) for (level,icon,i,active) in zip(self.mouseover_levels, self.mouseover_icons, indexes, active_vote))
         frag = Fragment(html.format(self=self, scale=scale))
         frag.add_css(self.resource_string("static/css/rate.css"))
         frag.add_javascript(self.resource_string("static/js/src/rate.js"))
@@ -87,7 +89,7 @@ class RateXBlock(XBlock):
 
         # Remove old vote if we voted before
         if self.user_vote != -1:
-            self.vote_aggregate[self.vote] -= 1
+            self.vote_aggregate[self.user_vote] -= 1
 
         self.user_vote = data['vote']
         self.vote_aggregate[self.user_vote] += 1
