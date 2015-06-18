@@ -1,5 +1,8 @@
 <div class="rate_block">
-<p>RateXBlock: count is now
-    <span class='count'>{self.count}</span> (click me to increment).
-</p>
+<div class="rate_header">{self.string_prompt}</div>
+<div class="rate_string_input">
+  <textarea class="rate_string_area" rows="4" cols="50">{self.user_feedback}</textarea>
+</div>
+<div class="rate_likert_header">{self.likert_prompt}</div>
+<div class="rate_likert_scale">{scale}</div>
 </div>
