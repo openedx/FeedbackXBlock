@@ -22,7 +22,7 @@ function RateXBlock(runtime, element) {
 	$('.rate_rating_active', element).removeClass("rate_rating_active");
 	$('.'+vote_class, element).addClass("rate_rating_active");
 	
-	Logger.log("edx.recommender.likert_rate", {"vote":vote})
+	Logger.log("edx.ratexblock.likert_rate", {"vote":vote})
 
         $.ajax({
             type: "POST",
@@ -34,7 +34,7 @@ function RateXBlock(runtime, element) {
     $('.rate_string_area', element).change(function(eventObject) {
 	$('.rate_thank_you', element).css('visibility','hidden');
 	var feedback_string = eventObject.currentTarget.value;
-	Logger.log("edx.recommender.string_feedback", {"feedback":feedback_string})
+	Logger.log("edx.ratexblock.string_feedback", {"feedback":feedback_string})
         $.ajax({
             type: "POST",
             url: feedback_handler,

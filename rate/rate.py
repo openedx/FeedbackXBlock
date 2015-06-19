@@ -11,6 +11,24 @@ from xblock.core import XBlock
 from xblock.fields import Scope, Integer, String, List
 from xblock.fragment import Fragment
 
+try:
+    from eventtracking import tracker
+except ImportError:
+    class tracker(object):  # pylint: disable=invalid-name
+        """
+        Define tracker if eventtracking cannot be imported. This is a workaround
+        so that the code works in both edx-platform and XBlock workbench (the latter
+        of which does not support event emission). This should be replaced with XBlock's
+        emit(), but at present, emit() is broken.
+        """
+        def __init__(self):
+            """ Do nothing """
+            pass
+
+        @staticmethod
+        def emit(param1, param2):
+            """ In workbench, do nothing for event emission """
+            pass
 
 class RateXBlock(XBlock):
     """
@@ -91,12 +109,20 @@ class RateXBlock(XBlock):
         if self.user_vote != -1:
             self.vote_aggregate[self.user_vote] -= 1
 
+        tracker.emit('edx.ratexblock.likert_rate', 
+                     {'old_vote' : self.user_vote,
+                      'new_vote' : data['vote']})
+
         self.user_vote = data['vote']
         self.vote_aggregate[self.user_vote] += 1
         return {"success": True}
 
     @XBlock.json_handler
     def feedback(self, data, suffix=''):
+         
+        tracker.emit('edx.ratexblock.string_feedback', 
+                     {'old_feedback' : self.user_feedback, 
+                      'new_feedback' : data['feedback']})
         self.user_feedback = data['feedback']
 
     # TO-DO: change this to create the scenarios you'd like to see in the
