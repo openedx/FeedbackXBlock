@@ -26,7 +26,7 @@ we can compile that feedback into useful insights. ;)
 This is not yet installed on edx.org, but hopefully soon will be. It 
 installs on any Open edX install same as any other xblock: 
 
-   pip install -e git+https://github.com/pmitros/RateXBlock.git@96c59c683a2647208d7a15e86e6f795b4b9c9bce#egg=rate
+    pip install -e git+https://github.com/pmitros/RateXBlock.git@96c59c683a2647208d7a15e86e6f795b4b9c9bce#egg=rate
 
 From there, add 'rate' to your list of advanced modules, and you're 
 good to go. 
