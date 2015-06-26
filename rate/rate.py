@@ -4,6 +4,7 @@ This is an XBlock designed to allow people to provide feedback on our
 course resources.
 """
 
+import random
 
 import pkg_resources
 
@@ -50,16 +51,11 @@ class RateXBlock(XBlock):
         help="Names of ratings for Likert-like scale"
     )
 
-    string_prompt = String(
-        default="Please provide us feedback on this section.", 
+    prompts = List(
+        default=[{'string':"Please provide us feedback on this section.",
+                  'likert':"Please rate your overall experience with this section."}], 
         scope=Scope.settings,
         help="Freeform user prompt"
-    )
-
-    likert_prompt = String(
-        default="Please rate your overall experience with this section.", 
-        scope=Scope.settings,
-        help="Likert-like scale user prompt"
     )
 
     user_vote = Integer(
@@ -90,7 +86,8 @@ class RateXBlock(XBlock):
         indexes = range(len(self.mouseover_icons))
         active_vote = [" rate_rating_active " if i == self.user_vote else "" for i in indexes]
         scale = u"".join(scale_item.format(level=level, icon=icon, i=i, active=active) for (level,icon,i,active) in zip(self.mouseover_levels, self.mouseover_icons, indexes, active_vote))
-        frag = Fragment(html.format(self=self, scale=scale))
+        prompt = random.sample(self.prompts, 1)[0]
+        frag = Fragment(html.format(self=self, scale=scale, string_prompt = prompt['string'], likert_prompt = prompt['likert']))
         frag.add_css(self.resource_string("static/css/rate.css"))
         frag.add_javascript(self.resource_string("static/js/src/rate.js"))
         frag.initialize_js('RateXBlock')
