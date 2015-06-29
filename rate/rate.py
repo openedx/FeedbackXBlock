@@ -9,7 +9,7 @@ import random
 import pkg_resources
 
 from xblock.core import XBlock
-from xblock.fields import Scope, Integer, String, List
+from xblock.fields import Scope, Integer, String, List, Float
 from xblock.fragment import Fragment
 
 try:
@@ -39,30 +39,41 @@ class RateXBlock(XBlock):
     this.
     """
 
-    mouseover_levels = List(
-        default=["Excellent", "Good", "Average", "Fair", "Poor"],
-        scope=Scope.settings,
-        help="Names of ratings for Likert-like scale"
-    )
-
-    mouseover_icons = List(
-        default=[u"😁",u"☺",u"😐",u"☹",u"😟"],
-        scope=Scope.settings,
-        help="Names of ratings for Likert-like scale"
-    )
-
+    default_prompt = {'string':"Please provide us feedback on this section.",
+                      'likert':"Please rate your overall experience with this section.",
+                      'mouseovers':["Excellent", "Good", "Average", "Fair", "Poor"],
+                      'icons':[u"😁",u"😊",u"😐",u"☹",u"😟"]}
+    
     prompts = List(
-        default=[{'string':"Please provide us feedback on this section.",
-                  'likert':"Please rate your overall experience with this section."}], 
+        default=[default_prompt,
+                 {'string':"What could be improved to make this section more clear?",
+                  'likert':"Was this section clear or confusing?."}], 
         scope=Scope.settings,
         help="Freeform user prompt"
     )
 
+    prompt_choice = Integer(
+        default=-1, scope=Scope.user_state,
+        help="Random number generated for p. -1 if uninitialized"
+    )
+
+    
     user_vote = Integer(
         default=-1, scope=Scope.user_state,
         help="How user voted. -1 if didn't vote"
     )
 
+    p = Float(
+        default=100, scope=Scope.settings,
+        help="What percent of the time should this show?"
+    )
+
+    p_r = Float(
+        default=-1, scope=Scope.user_state,
+        help="Random number generated for p. -1 if uninitialized"
+    )
+
+    
     vote_aggregate = List(
         default=None, scope=Scope.user_state_summary,
         help="A list of user votes"
@@ -81,13 +92,39 @@ class RateXBlock(XBlock):
         The primary view of the RateXBlock, shown to students
         when viewing courses.
         """
+
+        # Figure out which prompt we show. We set self.prompt_choice to
+        # the index of the prompt. We set it if it is out of range (either
+        # uninitiailized, or incorrect due to changing list length). Then,
+        # we grab the prompt, prepopulated with defaults.
+        if self.prompt_choice < 0 or self.prompt_choice >= len(self.prompts):
+            self.prompt_choice = random.randint(0, len(self.prompts)-1)        
+        prompt = dict(self.default_prompt)
+        prompt.update(self.prompts[self.prompt_choice])
+
+        # Now, we render the RateXBlock. This may be redundant, since we
+        # don't always show it.
         html = self.resource_string("static/html/rate.html")
         scale_item = u'<span class="rate_likert_rating rate_rating_{i} {active}" title="{level}">{icon}</span>'
-        indexes = range(len(self.mouseover_icons))
+        indexes = range(len(prompt['icons']))
         active_vote = [" rate_rating_active " if i == self.user_vote else "" for i in indexes]
-        scale = u"".join(scale_item.format(level=level, icon=icon, i=i, active=active) for (level,icon,i,active) in zip(self.mouseover_levels, self.mouseover_icons, indexes, active_vote))
-        prompt = random.sample(self.prompts, 1)[0]
-        frag = Fragment(html.format(self=self, scale=scale, string_prompt = prompt['string'], likert_prompt = prompt['likert']))
+        scale = u"".join(scale_item.format(level=level, icon=icon, i=i, active=active) for (level,icon,i,active) in zip(prompt['mouseovers'], prompt['icons'], indexes, active_vote))
+        rendered = html.format(self=self, scale=scale, string_prompt = prompt['string'], likert_prompt = prompt['likert'])
+
+        # We initialize self.p_r if not initialized -- this sets whether
+        # or not we show it. From there, if it is less than odds of showing,
+        # we set the fragment to the rendered XBlock. Otherwise, we return
+        # empty HTML. There ought to be a way to return None, but XBlocks
+        # doesn't support that. 
+        if self.p_r == -1:
+            self.p_r = random.uniform(0, 100)
+        if self.p_r < self.p:
+            frag = Fragment(rendered)
+        else:
+            frag = Fragment(u"")
+
+        # Finally, we do the standard JS+CSS boilerplate. Honestly, XBlocks
+        # ought to have a sane default here.
         frag.add_css(self.resource_string("static/css/rate.css"))
         frag.add_javascript(self.resource_string("static/js/src/rate.js"))
         frag.initialize_js('RateXBlock')
@@ -100,7 +137,7 @@ class RateXBlock(XBlock):
         """
         # Make sure we're initialized
         if not self.vote_aggregate:
-            self.vote_aggregate = [0]*len(self.mouseover_levels)
+            self.vote_aggregate = [0]*len(prompt['mouseovers'])
 
         # Remove old vote if we voted before
         if self.user_vote != -1:
@@ -130,9 +167,9 @@ class RateXBlock(XBlock):
         return [
             ("RateXBlock",
              """<vertical_demo>
-                <rate/>
-                <rate/>
-                <rate/>
+                <rate p="50"/>
+                <rate p="50"/>
+                <rate p="50"/>
                 </vertical_demo>
              """),
         ]
