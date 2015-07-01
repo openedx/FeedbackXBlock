@@ -49,7 +49,8 @@ class RateXBlock(XBlock):
                  {'string':"What could be improved to make this section more clear?",
                   'likert':"Was this section clear or confusing?."}], 
         scope=Scope.settings,
-        help="Freeform user prompt"
+        help="Freeform user prompt",
+        xml_node = True
     )
 
     prompt_choice = Integer(
