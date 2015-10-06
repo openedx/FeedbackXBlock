@@ -169,6 +169,10 @@ class RateXBlock(XBlock):
         """
         Handle voting
         """
+        # prompt_choice is initialized by student view.
+        # Ideally, we'd break this out into a function.
+        prompt = self.get_prompt(self.prompt_choice)
+
         # Make sure we're initialized
         if not self.vote_aggregate:
             self.vote_aggregate = [0]*len(prompt['mouseovers'])
