@@ -27,14 +27,14 @@ function RateXBlock(runtime, element) {
 	Logger.log("edx.ratexblock.likert_rate", {"vote":vote})
     });
 
-    $('.rate_string_area', element).change(function(eventObject) {
+    $('.rate_freeform_area', element).change(function(eventObject) {
 	$('.rate_thank_you', element).css('visibility','hidden');
-	var feedback_string = eventObject.currentTarget.value;
-	Logger.log("edx.ratexblock.string_feedback", {"feedback":feedback_string})
+	var feedback_freeform = eventObject.currentTarget.value;
+	Logger.log("edx.ratexblock.freeform_feedback", {"feedback":feedback_freeform})
         $.ajax({
             type: "POST",
             url: feedback_handler,
-            data: JSON.stringify({"feedback": feedback_string}),
+            data: JSON.stringify({"feedback": feedback_freeform}),
 	    success: function() {$('.rate_thank_you', element).css('visibility','visible')},
         });
     });

@@ -39,14 +39,17 @@ class RateXBlock(XBlock):
     this.
     """
 
-    default_prompt = {'string':"Please provide us feedback on this section.",
+    default_prompt = {'freeform':"Please provide us feedback on this section.",
                       'likert':"Please rate your overall experience with this section.",
                       'mouseovers':["Excellent", "Good", "Average", "Fair", "Poor"],
                       'icons':[u"😁",u"😊",u"😐",u"☹",u"😟"]}
     
+    # This is a list of prompts. If we have multiple elements in the
+    # list, one will be chosen at random. This is currently not
+    # exposed in the UX. If the prompt is missing any portions, we
+    # will default to the ones in default_prompt.
     prompts = List(
-        default=[default_prompt,
-                 {'string':"What could be improved to make this section more clear?",
+        default=[{'freeform':"What could be improved to make this section more clear?",
                   'likert':"Was this section clear or confusing?."}], 
         scope=Scope.settings,
         help="Freeform user prompt",
@@ -58,7 +61,6 @@ class RateXBlock(XBlock):
         help="Random number generated for p. -1 if uninitialized"
     )
 
-    
     user_vote = Integer(
         default=-1, scope=Scope.user_state,
         help="How user voted. -1 if didn't vote"
@@ -88,20 +90,29 @@ class RateXBlock(XBlock):
         data = pkg_resources.resource_string(__name__, path)
         return data.decode("utf8")
 
+    def get_prompt(self, index):
+        """
+        Return the current prompt dictionary, doing appropriate
+        randomization if necessary, and falling back to defaults when
+        necessary.
+        """
+        prompt = dict(self.default_prompt)
+        prompt.update(self.prompts[index])
+        return prompt
+
     def student_view(self, context=None):
         """
         The primary view of the RateXBlock, shown to students
         when viewing courses.
         """
+        if self.prompt_choice < 0 or self.prompt_choice >= len(self.prompts):
+            self.prompt_choice = random.randint(0, len(self.prompts)-1)        
+        prompt = self.get_prompt(self.prompt_choice)
 
         # Figure out which prompt we show. We set self.prompt_choice to
         # the index of the prompt. We set it if it is out of range (either
         # uninitiailized, or incorrect due to changing list length). Then,
         # we grab the prompt, prepopulated with defaults.
-        if self.prompt_choice < 0 or self.prompt_choice >= len(self.prompts):
-            self.prompt_choice = random.randint(0, len(self.prompts)-1)        
-        prompt = dict(self.default_prompt)
-        prompt.update(self.prompts[self.prompt_choice])
 
         # Now, we render the RateXBlock. This may be redundant, since we
         # don't always show it.
@@ -110,7 +121,7 @@ class RateXBlock(XBlock):
         indexes = range(len(prompt['icons']))
         active_vote = ["checked" if i == self.user_vote else "" for i in indexes]
         scale = u"".join(scale_item.format(level=level, icon=icon, i=i, active=active) for (level,icon,i,active) in zip(prompt['mouseovers'], prompt['icons'], indexes, active_vote))
-        rendered = html.format(self=self, scale=scale, string_prompt = prompt['string'], likert_prompt = prompt['likert'])
+        rendered = html.format(self=self, scale=scale, freeform_prompt = prompt['freeform'], likert_prompt = prompt['likert'])
 
         # We initialize self.p_r if not initialized -- this sets whether
         # or not we show it. From there, if it is less than odds of showing,
@@ -130,6 +141,29 @@ class RateXBlock(XBlock):
         frag.add_javascript(self.resource_string("static/js/src/rate.js"))
         frag.initialize_js('RateXBlock')
         return frag
+
+    def studio_view(self, context):
+        """
+        Create a fragment used to display the edit view in the Studio.
+        """
+        html_str = pkg_resources.resource_string(__name__, "static/html/studio_view.html")
+        prompt = self.get_prompt(0)
+        frag = Fragment(unicode(html_str).format(**prompt))
+        js_str = pkg_resources.resource_string(__name__, "static/js/src/studio.js")
+        frag.add_javascript(unicode(js_str))
+        frag.initialize_js('RateBlock')
+
+        return frag
+
+    @XBlock.json_handler
+    def studio_submit(self, data, suffix=''):
+        """
+        Called when submitting the form in Studio.
+        """
+        print data
+        self.prompts[0]['freeform'] = data.get('freeform')
+        self.prompts[0]['likert'] = data.get('likert')
+        return {'result': 'success'}
 
     @XBlock.json_handler
     def vote(self, data, suffix=''):
@@ -155,7 +189,7 @@ class RateXBlock(XBlock):
     @XBlock.json_handler
     def feedback(self, data, suffix=''):
          
-        tracker.emit('edx.ratexblock.string_feedback', 
+        tracker.emit('edx.ratexblock.freeform_feedback', 
                      {'old_feedback' : self.user_feedback, 
                       'new_feedback' : data['feedback']})
         self.user_feedback = data['feedback']
