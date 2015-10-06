@@ -13,30 +13,43 @@ if (typeof Logger === 'undefined') {
 
 
 function RateXBlock(runtime, element) {
-    var vote_handler = runtime.handlerUrl(element, 'vote');
     var feedback_handler = runtime.handlerUrl(element, 'feedback');
+
+    $(".rate_submit_feedback", element).click(function(eventObject) {
+	freeform = $(".rate_freeform_area", element).val();
+	vote = parseInt($(".rate_radio:checked").attr("id").split("_")[1]);
+	feedback = {"freeform": freeform, 
+		    "vote": vote}
+	Logger.log("edx.ratexblock.submit", feedback)
+	$.ajax({
+            type: "POST",
+            url: feedback_handler,
+            data: JSON.stringify(feedback),
+	    success: function() {$('.rate_thank_you', element).css('visibility','visible')}
+        });
+    });
 
     $('.rate_radio', element).change(function(eventObject) {
 	target_id = eventObject.target.id;
 	vote = parseInt(target_id.split('_')[1]);
-        $.ajax({
+        /*$.ajax({
             type: "POST",
-            url: vote_handler,
+            url: feedback_handler,
             data: JSON.stringify({"vote": vote}),
-        });
+        });*/
 	Logger.log("edx.ratexblock.likert_rate", {"vote":vote})
     });
 
     $('.rate_freeform_area', element).change(function(eventObject) {
 	$('.rate_thank_you', element).css('visibility','hidden');
-	var feedback_freeform = eventObject.currentTarget.value;
-	Logger.log("edx.ratexblock.freeform_feedback", {"feedback":feedback_freeform})
-        $.ajax({
+	var freeform = eventObject.currentTarget.value;
+	Logger.log("edx.ratexblock.freeform_feedback", {"freeform":freeform})
+        /*$.ajax({
             type: "POST",
             url: feedback_handler,
-            data: JSON.stringify({"feedback": feedback_freeform}),
+            data: JSON.stringify({"freeform": freeform}),
 	    success: function() {$('.rate_thank_you', element).css('visibility','visible')},
-        });
+        });*/
     });
 
 }

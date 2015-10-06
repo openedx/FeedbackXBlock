@@ -82,7 +82,7 @@ class RateXBlock(XBlock):
         help="A list of user votes"
     )
 
-    user_feedback = String(default = "", scope=Scope.user_state,
+    user_freeform = String(default = "", scope=Scope.user_state,
                         help = "Feedback")
 
     def resource_string(self, path):
@@ -165,8 +165,7 @@ class RateXBlock(XBlock):
         self.prompts[0]['likert'] = data.get('likert')
         return {'result': 'success'}
 
-    @XBlock.json_handler
-    def vote(self, data, suffix=''):
+    def vote(self, data):
         """
         Handle voting
         """
@@ -178,21 +177,23 @@ class RateXBlock(XBlock):
         if self.user_vote != -1:
             self.vote_aggregate[self.user_vote] -= 1
 
-        tracker.emit('edx.ratexblock.likert_rate', 
-                     {'old_vote' : self.user_vote,
-                      'new_vote' : data['vote']})
 
         self.user_vote = data['vote']
         self.vote_aggregate[self.user_vote] += 1
-        return {"success": True}
 
     @XBlock.json_handler
     def feedback(self, data, suffix=''):
-         
-        tracker.emit('edx.ratexblock.freeform_feedback', 
-                     {'old_feedback' : self.user_feedback, 
-                      'new_feedback' : data['feedback']})
-        self.user_feedback = data['feedback']
+        if 'freeform' in data:
+            tracker.emit('edx.ratexblock.freeform_feedback', 
+                         {'old_freeform' : self.user_freeform, 
+                          'new_freeform' : data['freeform']})
+            self.user_freeform = data['freeform']
+        if 'vote' in data:
+            tracker.emit('edx.ratexblock.likert_rate', 
+                         {'old_vote' : self.user_vote,
+                          'new_vote' : data['vote']})
+            self.vote(data)
+        return {"success": True}
 
     # TO-DO: change this to create the scenarios you'd like to see in the
     # workbench while developing your XBlock.
