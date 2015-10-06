@@ -28,6 +28,10 @@
     margin-bottom: 1em;
 }
 
+.rate_block .rate_freeform_area {
+    height:inherit;
+}
+
 .rate_block .rate_rating_active {
     color: blue;
     font-weight: bold;
@@ -51,6 +55,10 @@
     clip:rect(1px,1px,1px,1px);
     left:-10000px;
     overflow:hidden;
+}
+
+.rate_block label{
+    display:inline;
 }
 
 .rate_block input[type="radio"]:checked + label{
