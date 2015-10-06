@@ -106,9 +106,9 @@ class RateXBlock(XBlock):
         # Now, we render the RateXBlock. This may be redundant, since we
         # don't always show it.
         html = self.resource_string("static/html/rate.html")
-        scale_item = u'<span class="rate_likert_rating rate_rating_{i} {active}" title="{level}">{icon}</span>'
+        scale_item = u'<input id="radio_{i}" type="radio" name="rate_scale" class="rate_radio" title="{level}" {active}><label for="radio_{i}" title="{level}">{icon}<span class="rate_sr_text">{level}</span></label></input>'
         indexes = range(len(prompt['icons']))
-        active_vote = [" rate_rating_active " if i == self.user_vote else "" for i in indexes]
+        active_vote = ["checked" if i == self.user_vote else "" for i in indexes]
         scale = u"".join(scale_item.format(level=level, icon=icon, i=i, active=active) for (level,icon,i,active) in zip(prompt['mouseovers'], prompt['icons'], indexes, active_vote))
         rendered = html.format(self=self, scale=scale, string_prompt = prompt['string'], likert_prompt = prompt['likert'])
 

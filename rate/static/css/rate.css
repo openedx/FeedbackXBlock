@@ -33,3 +33,28 @@
     font-weight: bold;
     background-color: blanchedalmond;
 }
+
+.rate_block .rate_radio {
+    opacity:0;
+    width:0;
+    padding:0;
+    margin:0;
+}
+
+.rate_block .rate_sr_text{
+    opacity:0;
+    width:1px;
+    height:1px;
+    padding:0;
+    margin:0;
+    position:absolute;
+    clip:rect(1px,1px,1px,1px);
+    left:-10000px;
+    overflow:hidden;
+}
+
+.rate_block input[type="radio"]:checked + label{
+   background-color:yellow;
+   font-weight:bold;
+}
+
