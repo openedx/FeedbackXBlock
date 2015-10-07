@@ -50,7 +50,7 @@ class RateXBlock(XBlock):
     # will default to the ones in default_prompt.
     prompts = List(
         default=[{'freeform':"What could be improved to make this section more clear?",
-                  'likert':"Was this section clear or confusing?."}], 
+                  'likert':"Was this section clear or confusing?"}], 
         scope=Scope.settings,
         help="Freeform user prompt",
         xml_node = True
@@ -152,9 +152,8 @@ class RateXBlock(XBlock):
         prompt = self.get_prompt(0)
         frag = Fragment(unicode(html_str).format(**prompt))
         js_str = pkg_resources.resource_string(__name__, "static/js/src/studio.js")
-        #frag.add_javascript(unicode(js_str))
+        frag.add_javascript(unicode(js_str))
         frag.initialize_js('RateBlock')
-
         return frag
 
     @XBlock.json_handler
