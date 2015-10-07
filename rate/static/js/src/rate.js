@@ -17,7 +17,7 @@ function RateXBlock(runtime, element) {
 
     $(".rate_submit_feedback", element).click(function(eventObject) {
 	freeform = $(".rate_freeform_area", element).val();
-	vote = parseInt($(".rate_radio:checked").attr("id").split("_")[1]);
+	vote = parseInt($(".rate_radio:checked", element).attr("id").split("_")[1]);
 	feedback = {"freeform": freeform, 
 		    "vote": vote}
 	Logger.log("edx.ratexblock.submit", feedback)
