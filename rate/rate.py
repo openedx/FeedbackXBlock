@@ -31,6 +31,7 @@ except ImportError:
             """ In workbench, do nothing for event emission """
             pass
 
+
 class RateXBlock(XBlock):
     """
     This is an XBlock -- eventually, hopefully an aside -- which
@@ -39,21 +40,21 @@ class RateXBlock(XBlock):
     this.
     """
 
-    default_prompt = {'freeform':"Please provide us feedback on this section.",
-                      'likert':"Please rate your overall experience with this section.",
-                      'mouseovers':["Excellent", "Good", "Average", "Fair", "Poor"],
-                      'icons':[u"😁",u"😊",u"😐",u"☹",u"😟"]}
-    
+    default_prompt = {'freeform': "Please provide us feedback on this section.",
+                      'likert': "Please rate your overall experience with this section.",
+                      'mouseovers': ["Excellent", "Good", "Average", "Fair", "Poor"],
+                      'icons': [u"😁", u"😊", u"😐", u"☹", u"😟"]}
+
     # This is a list of prompts. If we have multiple elements in the
     # list, one will be chosen at random. This is currently not
     # exposed in the UX. If the prompt is missing any portions, we
     # will default to the ones in default_prompt.
     prompts = List(
-        default=[{'freeform':"What could be improved to make this section more clear?",
-                  'likert':"Was this section clear or confusing?"}], 
+        default=[{'freeform': "What could be improved to make this section more clear?",
+                  'likert': "Was this section clear or confusing?"}],
         scope=Scope.settings,
         help="Freeform user prompt",
-        xml_node = True
+        xml_node=True
     )
 
     prompt_choice = Integer(
@@ -76,14 +77,13 @@ class RateXBlock(XBlock):
         help="Random number generated for p. -1 if uninitialized"
     )
 
-    
     vote_aggregate = List(
         default=None, scope=Scope.user_state_summary,
         help="A list of user votes"
     )
 
-    user_freeform = String(default = "", scope=Scope.user_state,
-                        help = "Feedback")
+    user_freeform = String(default="", scope=Scope.user_state,
+                           help="Feedback")
 
     def resource_string(self, path):
         """Handy helper for getting resources from our kit."""
@@ -106,7 +106,7 @@ class RateXBlock(XBlock):
         when viewing courses.
         """
         if self.prompt_choice < 0 or self.prompt_choice >= len(self.prompts):
-            self.prompt_choice = random.randint(0, len(self.prompts)-1)        
+            self.prompt_choice = random.randint(0, len(self.prompts) - 1)
         prompt = self.get_prompt(self.prompt_choice)
 
         # Figure out which prompt we show. We set self.prompt_choice to
@@ -119,17 +119,17 @@ class RateXBlock(XBlock):
         html = self.resource_string("static/html/rate.html")
         # The replace allows us to format the HTML nicely without getting
         # extra whitespace
-        scale_item = self.resource_string("static/html/scale_item.html").replace('\n','')
+        scale_item = self.resource_string("static/html/scale_item.html").replace('\n', '')
         indexes = range(len(prompt['icons']))
         active_vote = ["checked" if i == self.user_vote else "" for i in indexes]
-        scale = u"".join(scale_item.format(level=level, icon=icon, i=i, active=active) for (level,icon,i,active) in zip(prompt['mouseovers'], prompt['icons'], indexes, active_vote))
-        rendered = html.format(self=self, scale=scale, freeform_prompt = prompt['freeform'], likert_prompt = prompt['likert'])
+        scale = u"".join(scale_item.format(level=level, icon=icon, i=i, active=active) for (level, icon, i, active) in zip(prompt['mouseovers'], prompt['icons'], indexes, active_vote))
+        rendered = html.format(self=self, scale=scale, freeform_prompt=prompt['freeform'], likert_prompt=prompt['likert'])
 
         # We initialize self.p_r if not initialized -- this sets whether
         # or not we show it. From there, if it is less than odds of showing,
         # we set the fragment to the rendered XBlock. Otherwise, we return
         # empty HTML. There ought to be a way to return None, but XBlocks
-        # doesn't support that. 
+        # doesn't support that.
         if self.p_r == -1:
             self.p_r = random.uniform(0, 100)
         if self.p_r < self.p:
@@ -176,12 +176,11 @@ class RateXBlock(XBlock):
 
         # Make sure we're initialized
         if not self.vote_aggregate:
-            self.vote_aggregate = [0]*len(prompt['mouseovers'])
+            self.vote_aggregate = [0] * len(prompt['mouseovers'])
 
         # Remove old vote if we voted before
         if self.user_vote != -1:
             self.vote_aggregate[self.user_vote] -= 1
-
 
         self.user_vote = data['vote']
         self.vote_aggregate[self.user_vote] += 1
@@ -189,14 +188,14 @@ class RateXBlock(XBlock):
     @XBlock.json_handler
     def feedback(self, data, suffix=''):
         if 'freeform' in data:
-            tracker.emit('edx.ratexblock.freeform_feedback', 
-                         {'old_freeform' : self.user_freeform, 
-                          'new_freeform' : data['freeform']})
+            tracker.emit('edx.ratexblock.freeform_feedback',
+                         {'old_freeform': self.user_freeform,
+                          'new_freeform': data['freeform']})
             self.user_freeform = data['freeform']
         if 'vote' in data:
-            tracker.emit('edx.ratexblock.likert_rate', 
-                         {'old_vote' : self.user_vote,
-                          'new_vote' : data['vote']})
+            tracker.emit('edx.ratexblock.likert_rate',
+                         {'old_vote': self.user_vote,
+                          'new_vote': data['vote']})
             self.vote(data)
         return {"success": True}
 
