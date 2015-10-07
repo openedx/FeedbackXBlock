@@ -1,10 +1,12 @@
 <div class="rate_block">
-<div class="rate_header">{freeform_prompt}</div>
+<label class="rate_header" for="rate_freeform_textarea">{freeform_prompt}</label>
 <div class="rate_freeform_input">
-  <textarea class="rate_freeform_area" rows="4" cols="30">{self.user_freeform}</textarea>
+  <textarea id="rate_freeform_textarea" class="rate_freeform_area" rows="4" cols="30">{self.user_freeform}</textarea>
   <div class="rate_thank_you">Thank you!</div>
 </div>
-<div class="rate_likert_header">{likert_prompt}</div>
+<fieldset class="rate_likert_field">
+<legend class="rate_likert_header">{likert_prompt}</legend>
 <div class="rate_likert_scale">  <form action="">{scale}</form></div>
+</fieldset>
 <button type="submit" class="rate_submit_feedback"> Submit Feedback </button>
 </div>
