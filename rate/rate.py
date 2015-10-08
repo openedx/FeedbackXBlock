@@ -129,7 +129,6 @@ class RateXBlock(XBlock):
         indexes = range(len(prompt['icons']))
         active_vote = ["checked" if i == self.user_vote else "" for i in indexes]
         scale = u"".join(scale_item.format(level=level, icon=icon, i=i, active=active) for (level, icon, i, active) in zip(prompt['mouseovers'], prompt['icons'], indexes, active_vote))
-        print self.user_vote
         if self.user_vote != -1:
             response = "Thank you for voting!"
         else:
@@ -176,7 +175,6 @@ class RateXBlock(XBlock):
         """
         Called when submitting the form in Studio.
         """
-        print data
         self.prompts[0]['freeform'] = data.get('freeform')
         self.prompts[0]['likert'] = data.get('likert')
         return {'result': 'success'}
