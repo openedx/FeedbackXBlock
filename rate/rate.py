@@ -85,6 +85,12 @@ class RateXBlock(XBlock):
     user_freeform = String(default="", scope=Scope.user_state,
                            help="Feedback")
 
+    display_name = String(
+        display_name = "Display Name",
+        default="Provide Feedback",
+        scopde=Scope.settings
+    )
+
     def resource_string(self, path):
         """Handy helper for getting resources from our kit."""
         data = pkg_resources.resource_string(__name__, path)

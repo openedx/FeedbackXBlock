@@ -45,10 +45,11 @@ function RateXBlock(runtime, element) {
     });
 
     $('.rate_freeform_area', element).change(function(eventObject) {
-	$('.rate_thank_you', element).css('visibility','hidden');
 	var freeform = eventObject.currentTarget.value;
 	Logger.log("edx.ratexblock.freeform_feedback", {"freeform":freeform})
-        /*$.ajax({
+        /*
+	$('.rate_thank_you', element).css('visibility','hidden');
+	$.ajax({
             type: "POST",
             url: feedback_handler,
             data: JSON.stringify({"freeform": freeform}),
