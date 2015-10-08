@@ -2,7 +2,7 @@
 <label class="rate_header" for="rate_freeform_textarea">{freeform_prompt}</label>
 <div class="rate_freeform_input">
   <textarea id="rate_freeform_textarea" class="rate_freeform_area" rows="4" cols="30">{self.user_freeform}</textarea>
-  <div class="rate_thank_you">Thank you!</div>
+  <div class="rate_thank_you" aria-live=polite>{response}</div>
 </div>
 <fieldset class="rate_likert_field">
 <legend class="rate_likert_header">{likert_prompt}</legend>

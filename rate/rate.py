@@ -43,7 +43,7 @@ class RateXBlock(XBlock):
     default_prompt = {'freeform': "Please provide us feedback on this section.",
                       'likert': "Please rate your overall experience with this section.",
                       'mouseovers': ["Excellent", "Good", "Average", "Fair", "Poor"],
-                      'icons': [u"😁", u"😊", u"😐", u"☹", u"😟"]}
+                      'icons': [u"😁", u"😊", u"😐", u"😞", u"😭"]}
 
     # This is a list of prompts. If we have multiple elements in the
     # list, one will be chosen at random. This is currently not
@@ -123,7 +123,16 @@ class RateXBlock(XBlock):
         indexes = range(len(prompt['icons']))
         active_vote = ["checked" if i == self.user_vote else "" for i in indexes]
         scale = u"".join(scale_item.format(level=level, icon=icon, i=i, active=active) for (level, icon, i, active) in zip(prompt['mouseovers'], prompt['icons'], indexes, active_vote))
-        rendered = html.format(self=self, scale=scale, freeform_prompt=prompt['freeform'], likert_prompt=prompt['likert'])
+        print self.user_vote
+        if self.user_vote != -1:
+            response = "Thank you for voting!"
+        else:
+            response = ""
+        rendered = html.format(self=self,
+                               scale=scale,
+                               freeform_prompt=prompt['freeform'],
+                               likert_prompt=prompt['likert'],
+                               response=response)
 
         # We initialize self.p_r if not initialized -- this sets whether
         # or not we show it. From there, if it is less than odds of showing,
@@ -197,7 +206,7 @@ class RateXBlock(XBlock):
                          {'old_vote': self.user_vote,
                           'new_vote': data['vote']})
             self.vote(data)
-        return {"success": True}
+        return {"success": True, "response": "Thank you!"}
 
     # TO-DO: change this to create the scenarios you'd like to see in the
     # workbench while developing your XBlock.

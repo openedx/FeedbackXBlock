@@ -17,7 +17,11 @@ function RateXBlock(runtime, element) {
 
     $(".rate_submit_feedback", element).click(function(eventObject) {
 	freeform = $(".rate_freeform_area", element).val();
-	vote = parseInt($(".rate_radio:checked", element).attr("id").split("_")[1]);
+	if ($(".rate_radio:checked", element).length == 0) {
+	    vote = -1
+	} else {
+	    vote = parseInt($(".rate_radio:checked", element).attr("id").split("_")[1]);
+	}
 	feedback = {"freeform": freeform, 
 		    "vote": vote}
 	Logger.log("edx.ratexblock.submit", feedback)
@@ -25,7 +29,7 @@ function RateXBlock(runtime, element) {
             type: "POST",
             url: feedback_handler,
             data: JSON.stringify(feedback),
-	    success: function() {$('.rate_thank_you', element).css('visibility','visible')}
+	    success: function(data) {console.log(data.response); $('.rate_thank_you', element).text(data.response);}
         });
     });
 
