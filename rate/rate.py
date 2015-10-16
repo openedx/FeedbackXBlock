@@ -31,7 +31,7 @@ except ImportError:
             """ In workbench, do nothing for event emission """
             pass
 
-
+@XBlock.needs('i18n')
 class RateXBlock(XBlock):
     """
     This is an XBlock -- eventually, hopefully an aside -- which
@@ -39,12 +39,6 @@ class RateXBlock(XBlock):
     long time, but Dartmouth finally encourage me to start to build
     this.
     """
-
-    default_prompt = {'freeform': "Please provide us feedback on this section.",
-                      'likert': "Please rate your overall experience with this section.",
-                      'mouseovers': ["Excellent", "Good", "Average", "Fair", "Poor"],
-                      'icons': [u"😁", u"😊", u"😐", u"😞", u"😭"]}
-
     # This is a list of prompts. If we have multiple elements in the
     # list, one will be chosen at random. This is currently not
     # exposed in the UX. If the prompt is missing any portions, we
@@ -72,7 +66,7 @@ class RateXBlock(XBlock):
         help="What percent of the time should this show?"
     )
 
-    p_r = Float(
+    p_user = Float(
         default=-1, scope=Scope.user_state,
         help="Random number generated for p. -1 if uninitialized"
     )
@@ -102,7 +96,12 @@ class RateXBlock(XBlock):
         randomization if necessary, and falling back to defaults when
         necessary.
         """
-        prompt = dict(self.default_prompt)
+        _ = self.runtime.service(self, 'i18n').ugettext
+        prompt = {'freeform': _("Please provide us feedback on this section."),
+                  'likert': _("Please rate your overall experience with this section."),
+                  'mouseovers': [_("Excellent"), _("Good"), _("Average"), _("Fair"), _("Poor")],
+                  'icons': [u"😁", u"😊", u"😐", u"😞", u"😭"]}
+
         prompt.update(self.prompts[index])
         return prompt
 
@@ -138,14 +137,14 @@ class RateXBlock(XBlock):
                                likert_prompt=prompt['likert'],
                                response=response)
 
-        # We initialize self.p_r if not initialized -- this sets whether
+        # We initialize self.p_user if not initialized -- this sets whether
         # or not we show it. From there, if it is less than odds of showing,
         # we set the fragment to the rendered XBlock. Otherwise, we return
         # empty HTML. There ought to be a way to return None, but XBlocks
         # doesn't support that.
-        if self.p_r == -1:
-            self.p_r = random.uniform(0, 100)
-        if self.p_r < self.p:
+        if self.p_user == -1:
+            self.p_user = random.uniform(0, 100)
+        if self.p_user < self.p:
             frag = Fragment(rendered)
         else:
             frag = Fragment(u"")
