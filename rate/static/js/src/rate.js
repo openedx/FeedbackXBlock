@@ -29,32 +29,19 @@ function RateXBlock(runtime, element) {
             type: "POST",
             url: feedback_handler,
             data: JSON.stringify(feedback),
-	    success: function(data) {console.log(data.response); $('.rate_thank_you', element).text(data.response);}
+	    success: function(data) {$('.rate_thank_you', element).text(data.response);}
         });
     });
 
     $('.rate_radio', element).change(function(eventObject) {
 	target_id = eventObject.target.id;
 	vote = parseInt(target_id.split('_')[1]);
-        /*$.ajax({
-            type: "POST",
-            url: feedback_handler,
-            data: JSON.stringify({"vote": vote}),
-        });*/
 	Logger.log("edx.ratexblock.likert_rate", {"vote":vote})
     });
 
     $('.rate_freeform_area', element).change(function(eventObject) {
 	var freeform = eventObject.currentTarget.value;
 	Logger.log("edx.ratexblock.freeform_feedback", {"freeform":freeform})
-        /*
-	$('.rate_thank_you', element).css('visibility','hidden');
-	$.ajax({
-            type: "POST",
-            url: feedback_handler,
-            data: JSON.stringify({"freeform": freeform}),
-	    success: function() {$('.rate_thank_you', element).css('visibility','visible')},
-        });*/
     });
 
 }

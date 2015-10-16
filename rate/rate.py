@@ -50,8 +50,8 @@ class RateXBlock(XBlock):
     # exposed in the UX. If the prompt is missing any portions, we
     # will default to the ones in default_prompt.
     prompts = List(
-        default=[{'freeform': "What could be improved to make this section more clear?",
-                  'likert': "Was this section clear or confusing?"}],
+        default=[{'freeform': "Please provide us feedback on this section",
+                  'likert': "Please rate your overall experience with this section"}],
         scope=Scope.settings,
         help="Freeform user prompt",
         xml_node=True
@@ -111,14 +111,13 @@ class RateXBlock(XBlock):
         The primary view of the RateXBlock, shown to students
         when viewing courses.
         """
-        if self.prompt_choice < 0 or self.prompt_choice >= len(self.prompts):
-            self.prompt_choice = random.randint(0, len(self.prompts) - 1)
-        prompt = self.get_prompt(self.prompt_choice)
-
         # Figure out which prompt we show. We set self.prompt_choice to
         # the index of the prompt. We set it if it is out of range (either
         # uninitiailized, or incorrect due to changing list length). Then,
         # we grab the prompt, prepopulated with defaults.
+        if self.prompt_choice < 0 or self.prompt_choice >= len(self.prompts):
+            self.prompt_choice = random.randint(0, len(self.prompts) - 1)
+        prompt = self.get_prompt(self.prompt_choice)
 
         # Now, we render the RateXBlock. This may be redundant, since we
         # don't always show it.
@@ -162,10 +161,10 @@ class RateXBlock(XBlock):
         """
         Create a fragment used to display the edit view in the Studio.
         """
-        html_str = pkg_resources.resource_string(__name__, "static/html/studio_view.html")
+        html_str = self.resource_string("static/html/studio_view.html")
         prompt = self.get_prompt(0)
         frag = Fragment(unicode(html_str).format(**prompt))
-        js_str = pkg_resources.resource_string(__name__, "static/js/src/studio.js")
+        js_str = self.resource_string("static/js/src/studio.js")
         frag.add_javascript(unicode(js_str))
         frag.initialize_js('RateBlock')
         return frag
