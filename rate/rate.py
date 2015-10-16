@@ -128,7 +128,8 @@ class RateXBlock(XBlock):
         active_vote = ["checked" if i == self.user_vote else "" for i in indexes]
         scale = u"".join(scale_item.format(level=level, icon=icon, i=i, active=active) for (level, icon, i, active) in zip(prompt['mouseovers'], prompt['icons'], indexes, active_vote))
         if self.user_vote != -1:
-            response = "Thank you for voting!"
+            _ = self.runtime.service(self, 'i18n').ugettext
+            response = _("Thank you for voting!")
         else:
             response = ""
         rendered = html.format(self=self,
@@ -208,7 +209,8 @@ class RateXBlock(XBlock):
                          {'old_vote': self.user_vote,
                           'new_vote': data['vote']})
             self.vote(data)
-        return {"success": True, "response": "Thank you!"}
+        _ = self.runtime.service(self, 'i18n').ugettext
+        return {"success": True, "response": _("Thank you!")}
 
     # TO-DO: change this to create the scenarios you'd like to see in the
     # workbench while developing your XBlock.
