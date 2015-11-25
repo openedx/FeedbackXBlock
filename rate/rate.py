@@ -17,10 +17,11 @@ try:
 except ImportError:
     class tracker(object):  # pylint: disable=invalid-name
         """
-        Define tracker if eventtracking cannot be imported. This is a workaround
-        so that the code works in both edx-platform and XBlock workbench (the latter
-        of which does not support event emission). This should be replaced with XBlock's
-        emit(), but at present, emit() is broken.
+        Define tracker if eventtracking cannot be imported. This is a
+        workaround so that the code works in both edx-platform and
+        XBlock workbench (the latter of which does not support event
+        emission). This should be replaced with XBlock's emit(), but
+        at present, emit() is broken.
         """
         def __init__(self):
             """ Do nothing """
@@ -30,6 +31,7 @@ except ImportError:
         def emit(param1, param2):
             """ In workbench, do nothing for event emission """
             pass
+
 
 @XBlock.needs('i18n')
 class RateXBlock(XBlock):
@@ -44,8 +46,10 @@ class RateXBlock(XBlock):
     # exposed in the UX. If the prompt is missing any portions, we
     # will default to the ones in default_prompt.
     prompts = List(
-        default=[{'freeform': "Please provide us feedback on this section",
-                  'likert': "Please rate your overall experience with this section"}],
+        default=[
+            {'freeform': "Please provide us feedback on this section",
+             'likert': "Please rate your overall experience with this section"}
+        ],
         scope=Scope.settings,
         help="Freeform user prompt",
         xml_node=True
@@ -80,7 +84,7 @@ class RateXBlock(XBlock):
                            help="Feedback")
 
     display_name = String(
-        display_name = "Display Name",
+        display_name="Display Name",
         default="Provide Feedback",
         scopde=Scope.settings
     )
@@ -97,10 +101,17 @@ class RateXBlock(XBlock):
         necessary.
         """
         _ = self.runtime.service(self, 'i18n').ugettext
-        prompt = {'freeform': _("Please provide us feedback on this section."),
-                  'likert': _("Please rate your overall experience with this section."),
-                  'mouseovers': [_("Excellent"), _("Good"), _("Average"), _("Fair"), _("Poor")],
-                  'icons': [u"😁", u"😊", u"😐", u"😞", u"😭"]}
+        prompt = {
+            'freeform': _("Please provide us feedback on this section."),
+            'likert': _("Please rate your overall experience "
+                        "with this section."),
+            'mouseovers': [_("Excellent"),
+                           _("Good"),
+                           _("Average"),
+                           _("Fair"),
+                           _("Poor")],
+            'icons': [u"😁", u"😊", u"😐", u"😞", u"😭"]
+        }
 
         prompt.update(self.prompts[index])
         return prompt
@@ -123,10 +134,16 @@ class RateXBlock(XBlock):
         html = self.resource_string("static/html/rate.html")
         # The replace allows us to format the HTML nicely without getting
         # extra whitespace
-        scale_item = self.resource_string("static/html/scale_item.html").replace('\n', '')
+        scale_item = self.resource_string("static/html/scale_item.html")
+        scale_item = scale_item.replace('\n', '')
         indexes = range(len(prompt['icons']))
-        active_vote = ["checked" if i == self.user_vote else "" for i in indexes]
-        scale = u"".join(scale_item.format(level=level, icon=icon, i=i, active=active) for (level, icon, i, active) in zip(prompt['mouseovers'], prompt['icons'], indexes, active_vote))
+        active_vote = ["checked" if i == self.user_vote else ""
+                       for i in indexes]
+        scale = u"".join(
+            scale_item.format(level=level, icon=icon, i=i, active=active) for
+            (level, icon, i, active) in
+            zip(prompt['mouseovers'], prompt['icons'], indexes, active_vote)
+        )
         if self.user_vote != -1:
             _ = self.runtime.service(self, 'i18n').ugettext
             response = _("Thank you for voting!")
@@ -199,18 +216,44 @@ class RateXBlock(XBlock):
 
     @XBlock.json_handler
     def feedback(self, data, suffix=''):
+        '''
+        Allow students to submit feedback, both numerical and
+        qualitative. We only update the specific type of feedback
+        submitted.
+
+        We return the current state. While this is not used by the
+        client code, it is helpful for testing. For staff users, we
+        also return the aggregate results.
+        '''
+        _ = self.runtime.service(self, 'i18n').ugettext
+
+        if 'freeform' not in data and 'vote' not in data:
+            response = {"success": False,
+                        "response": _("Please vote!")}
         if 'freeform' in data:
+            response = {"success": True,
+                        "response": _("Thank you for your feedback!")}
             tracker.emit('edx.ratexblock.freeform_feedback',
                          {'old_freeform': self.user_freeform,
                           'new_freeform': data['freeform']})
             self.user_freeform = data['freeform']
         if 'vote' in data:
+            response = {"success": True,
+                        "response": _("Thank you for voting!")}
             tracker.emit('edx.ratexblock.likert_rate',
                          {'old_vote': self.user_vote,
                           'new_vote': data['vote']})
             self.vote(data)
-        _ = self.runtime.service(self, 'i18n').ugettext
-        return {"success": True, "response": _("Thank you!")}
+
+        response.update({
+            "freeform": self.user_freeform,
+            "vote": self.user_vote
+        })
+
+        if self.is_staff():
+            response['aggregate'] = self.vote_aggregate
+
+        return response
 
     # TO-DO: change this to create the scenarios you'd like to see in the
     # workbench while developing your XBlock.
@@ -226,3 +269,18 @@ class RateXBlock(XBlock):
                 </vertical_demo>
              """),
         ]
+
+    def is_staff(self):
+        """
+        Return self.xmodule_runtime.user_is_staff if available
+
+        This is not a supported part of the XBlocks API in all
+        runtimes, and this is a workaround so something reasonable
+        happens in both workbench and edx-platform
+        """
+        if hasattr(self, "xmodule_runtime") and \
+           hasattr(self.xmodule_runtime, "user_is_staff"):
+            return self.xmodule_runtime.user_is_staff
+        else:
+            # In workbench and similar settings, always return true
+            return True
