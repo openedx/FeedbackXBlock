@@ -139,6 +139,8 @@ class RateXBlock(XBlock):
         indexes = range(len(prompt['icons']))
         active_vote = ["checked" if i == self.user_vote else ""
                        for i in indexes]
+        img_urls = [self.runtime.local_resource_url(self, 'public/default_icons/{i}t.png'.format(i=i))
+                    for i in range(1,6)]
         scale = u"".join(
             scale_item.format(level=level, icon=icon, i=i, active=active) for
             (level, icon, i, active) in
@@ -233,14 +235,16 @@ class RateXBlock(XBlock):
         if 'freeform' in data:
             response = {"success": True,
                         "response": _("Thank you for your feedback!")}
-            tracker.emit('edx.ratexblock.freeform_feedback',
-                         {'old_freeform': self.user_freeform,
-                          'new_freeform': data['freeform']})
+            self.runtime.publish(self,
+                                 'edx.ratexblock.freeform_provided',
+                                 {'old_freeform': self.user_freeform,
+                                 'new_freeform': data['freeform']})
             self.user_freeform = data['freeform']
         if 'vote' in data:
             response = {"success": True,
                         "response": _("Thank you for voting!")}
-            tracker.emit('edx.ratexblock.likert_rate',
+            self.runtime.publish(self,
+                         'edx.ratexblock.likert_provided',
                          {'old_vote': self.user_vote,
                           'new_vote': data['vote']})
             self.vote(data)
