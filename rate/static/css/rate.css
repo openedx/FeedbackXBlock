@@ -44,8 +44,9 @@
 .rate_block .rate_radio {
     opacity:0;
     width:1px;
-    padding:0;
-    margin:0;
+    padding:0px;
+    margin:0px;
+    position:absolute;
 }
 
 .rate_block .rate_sr_text{
