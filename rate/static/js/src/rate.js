@@ -11,7 +11,6 @@ if (typeof Logger === 'undefined') {
     };
 }
 
-
 function RateXBlock(runtime, element) {
     var feedback_handler = runtime.handlerUrl(element, 'feedback');
 

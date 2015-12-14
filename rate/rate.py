@@ -94,12 +94,15 @@ class RateXBlock(XBlock):
         data = pkg_resources.resource_string(__name__, path)
         return data.decode("utf8")
 
-    def get_prompt(self, index):
+    def get_prompt(self, index=-1):
         """
         Return the current prompt dictionary, doing appropriate
         randomization if necessary, and falling back to defaults when
         necessary.
         """
+        if index == -1:
+            index = self.prompt_choice
+
         _ = self.runtime.service(self, 'i18n').ugettext
         prompt = {
             'freeform': _("Please provide us feedback on this section."),
@@ -127,22 +130,27 @@ class RateXBlock(XBlock):
         # we grab the prompt, prepopulated with defaults.
         if self.prompt_choice < 0 or self.prompt_choice >= len(self.prompts):
             self.prompt_choice = random.randint(0, len(self.prompts) - 1)
-        prompt = self.get_prompt(self.prompt_choice)
+        prompt = self.get_prompt()
 
         # Now, we render the RateXBlock. This may be redundant, since we
         # don't always show it.
         html = self.resource_string("static/html/rate.html")
         # The replace allows us to format the HTML nicely without getting
         # extra whitespace
-        scale_item = self.resource_string("static/html/scale_item.html")
+        if self.vote_aggregate and self.is_staff():
+            scale_item = self.resource_string("static/html/staff_item.html")
+        else:
+            scale_item = self.resource_string("static/html/scale_item.html")
         scale_item = scale_item.replace('\n', '')
         indexes = range(len(prompt['icons']))
         active_vote = ["checked" if i == self.user_vote else ""
                        for i in indexes]
+        self.init_vote_aggregate()
+        votes = self.vote_aggregate
         scale = u"".join(
-            scale_item.format(level=level, icon=icon, i=i, active=active) for
-            (level, icon, i, active) in
-            zip(prompt['mouseovers'], prompt['icons'], indexes, active_vote)
+            scale_item.format(level=l, icon=icon, i=i, active=a, votes=v) for
+            (l, icon, i, a, v) in
+            zip(prompt['mouseovers'], prompt['icons'], indexes, active_vote, votes)
         )
         if self.user_vote != -1:
             _ = self.runtime.service(self, 'i18n').ugettext
@@ -195,6 +203,12 @@ class RateXBlock(XBlock):
         self.prompts[0]['likert'] = data.get('likert')
         return {'result': 'success'}
 
+    def init_vote_aggregate(self):
+        # Make sure we're initialized
+        print self.get_prompt()
+        if not self.vote_aggregate:
+            self.vote_aggregate = [0] * (len(self.get_prompt()['mouseovers']))
+
     def vote(self, data):
         """
         Handle voting
@@ -204,8 +218,7 @@ class RateXBlock(XBlock):
         prompt = self.get_prompt(self.prompt_choice)
 
         # Make sure we're initialized
-        if not self.vote_aggregate:
-            self.vote_aggregate = [0] * len(prompt['mouseovers'])
+        self.init_vote_aggregate()
 
         # Remove old vote if we voted before
         if self.user_vote != -1:
