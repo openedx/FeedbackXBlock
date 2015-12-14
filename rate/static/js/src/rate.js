@@ -24,7 +24,7 @@ function RateXBlock(runtime, element) {
 	}
 	var feedback = {"freeform": freeform, 
 		    "vote": vote};
-	Logger.log("edx.ratexblock.submit", feedback);
+	Logger.log("edx.ratexblock.submitted", feedback);
 	$.ajax({
             type: "POST",
             url: feedback_handler,
@@ -36,12 +36,12 @@ function RateXBlock(runtime, element) {
     $('.rate_radio', element).change(function(eventObject) {
 	var target_id = eventObject.target.id;
 	var vote = parseInt(target_id.split('_')[1]);
-	Logger.log("edx.ratexblock.likert_rate", {"vote":vote});
+	Logger.log("edx.ratexblock.likert_clicked", {"vote":vote});
     });
 
     $('.rate_freeform_area', element).change(function(eventObject) {
 	var freeform = eventObject.currentTarget.value;
-	Logger.log("edx.ratexblock.freeform_feedback", {"freeform":freeform});
+	Logger.log("edx.ratexblock.freeform_changed", {"freeform":freeform});
     });
 
 }
