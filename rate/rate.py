@@ -1,7 +1,8 @@
 # coding: utf-8
 """
 This is an XBlock designed to allow people to provide feedback on our
-course resources.
+course resources, and to think and synthesize about their experience
+in the course.
 """
 
 import random
@@ -12,6 +13,22 @@ from xblock.core import XBlock
 from xblock.fields import Scope, Integer, String, List, Float
 from xblock.fragment import Fragment
 
+"""
+We provide default text which is designed to elicit student thought. We'd
+like instructors to customize this to something highly structured (not 
+"What did you think?" and "How did you like it?".
+
+We 
+"""
+default_freeform = "What did you learn from this? What was missing?"
+default_likert = "How would you rate this as a learning experience?"
+default_default = "Think about the material, and try to synthesize key " \
+                  "lessons learned, as well as key gaps in our presentation."
+default_placeholder = "Take a little bit of time to reflect here. " \
+                      "Research shows that a meaningful synthesis will help " \
+                      "you better understand and remember material from this" \
+                      "course."
+default_icon = "face"
 
 @XBlock.needs('i18n')
 class RateXBlock(XBlock):
@@ -27,8 +44,9 @@ class RateXBlock(XBlock):
     # will default to the ones in default_prompt.
     prompts = List(
         default=[
-            {'freeform': "Please provide us feedback on this section",
-             'likert': "Please rate your overall experience with this section"}
+            {'freeform': default_freeform,
+             'default_text': default_default,
+             'likert': default_likert}
         ],
         scope=Scope.settings,
         help="Freeform user prompt",
@@ -85,10 +103,12 @@ class RateXBlock(XBlock):
 
         _ = self.runtime.service(self, 'i18n').ugettext
         prompt = {
-            'freeform': _("Please provide us feedback on this section."),
-            'likert': _("Please rate your overall experience "
-                        "with this section."),
-            'mouseovers': [_("Excellent"),
+            'freeform': _("Please reflect on this course material"),
+            'default_text': _("Please take time to meaningfully reflect "
+                              "on your experience with this course "
+                              "material."),
+            'likert': _("Please rate your overall experience"),
+            'scale_text': [_("Excellent"),
                            _("Good"),
                            _("Average"),
                            _("Fair"),
@@ -112,25 +132,73 @@ class RateXBlock(XBlock):
             self.prompt_choice = random.randint(0, len(self.prompts) - 1)
         prompt = self.get_prompt()
 
-        # Now, we render the RateXBlock. This may be redundant, since we
-        # don't always show it.
+        # Now, we render the RateXBlock.
         html = self.resource_string("static/html/rate.html")
-        # The replace allows us to format the HTML nicely without getting
-        # extra whitespace
+
+        # Staff see vote totals, so we have slightly different HTML here.
         if self.vote_aggregate and self.is_staff():
             scale_item = self.resource_string("static/html/staff_item.html")
         else:
             scale_item = self.resource_string("static/html/scale_item.html")
+        # The replace allows us to format the HTML nicely without getting
+        # extra whitespace
         scale_item = scale_item.replace('\n', '')
+
+        # We have five Likert fields right now, but we'd like this to
+        # be dynamic
         indexes = range(len(prompt['icons']))
+
+        # If the user voted before, we'd like to show that
         active_vote = ["checked" if i == self.user_vote else ""
                        for i in indexes]
+
+        # Confirm that we do have vote totals (this may be uninitialized
+        # otherwise). This should probably go into __init__ or similar.
         self.init_vote_aggregate()
         votes = self.vote_aggregate
+
+        # We grab the icons. This should move to a Filesystem field so
+        # instructors can upload new ones
+        ina_templ = 'public/default_icons/iface{i}.png'
+        act_templ = 'public/default_icons/aface{i}.png'
+        sel_templ = 'public/default_icons/sface{i}.png'
+        ina_urls = [self.runtime.local_resource_url(self, ina_templ.format(i=i))
+                    for i in range(1,6)]
+        act_urls = [self.runtime.local_resource_url(self, act_templ.format(i=i))
+                    for i in range(1,6)]
+        sel_urls = [self.runtime.local_resource_url(self, sel_templ.format(i=i))
+                    for i in range(1,6)]
+        img_urls = [i if active else a
+                    for (i, active, a)
+                    in zip(ina_urls, active_vote, act_urls)]
+
+        # Render the 
         scale = u"".join(
-            scale_item.format(level=l, icon=icon, i=i, active=a, votes=v) for
-            (l, icon, i, a, v) in
-            zip(prompt['mouseovers'], prompt['icons'], indexes, active_vote, votes)
+            scale_item.format(scale_text=scale_text,
+                              unicode_icon=unicode_icon,
+                              idx=idx,
+                              active=active,
+                              vote_cnt=vote_cnt,
+                              ina_icon=ina_icon,
+                              act_icon=act_icon,
+                              sel_icon=sel_icon) for
+            (scale_text,
+             unicode_icon,
+             idx,
+             active,
+             vote_cnt,
+             act_icon,
+             ina_icon,
+             sel_icon) in
+            zip(prompt['scale_text'],
+                prompt['icons'],
+                indexes,
+                active_vote,
+                votes,
+                act_urls,
+                ina_urls,
+                sel_urls
+            )
         )
         if self.user_vote != -1:
             _ = self.runtime.service(self, 'i18n').ugettext
@@ -187,7 +255,7 @@ class RateXBlock(XBlock):
         # Make sure we're initialized
         print self.get_prompt()
         if not self.vote_aggregate:
-            self.vote_aggregate = [0] * (len(self.get_prompt()['mouseovers']))
+            self.vote_aggregate = [0] * (len(self.get_prompt()['scale_text']))
 
     def vote(self, data):
         """
@@ -226,14 +294,6 @@ class RateXBlock(XBlock):
             self.runtime.publish(self,
                                  'edx.ratexblock.nothing_provided',
                                  {})
-        if 'freeform' in data:
-            response = {"success": True,
-                        "response": _("Thank you for your feedback!")}
-            self.runtime.publish(self,
-                                 'edx.ratexblock.freeform_provided',
-                                 {'old_freeform': self.user_freeform,
-                                 'new_freeform': data['freeform']})
-            self.user_freeform = data['freeform']
         if 'vote' in data:
             response = {"success": True,
                         "response": _("Thank you for voting!")}
@@ -242,6 +302,14 @@ class RateXBlock(XBlock):
                          {'old_vote': self.user_vote,
                           'new_vote': data['vote']})
             self.vote(data)
+        if 'freeform' in data:
+            response = {"success": True,
+                        "response": _("Thank you for your feedback!")}
+            self.runtime.publish(self,
+                                 'edx.ratexblock.freeform_provided',
+                                 {'old_freeform': self.user_freeform,
+                                 'new_freeform': data['freeform']})
+            self.user_freeform = data['freeform']
 
         response.update({
             "freeform": self.user_freeform,
@@ -261,9 +329,9 @@ class RateXBlock(XBlock):
         return [
             ("RateXBlock",
              """<vertical_demo>
-                <rate p="50"/>
-                <rate p="50"/>
-                <rate p="50"/>
+                <rate p="100"/>
+                <!--rate p="50"/>
+                <rate p="50"/-->
                 </vertical_demo>
              """),
         ]

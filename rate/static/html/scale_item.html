@@ -1,5 +1,8 @@
-<label title="{level}">
-<input id="radio_{i}" name="rate_scale" class="rate_radio" type="radio" {active}>
-<span aria-hidden="true">{icon}</span>
-<span class="rate_sr_text">{level}</span>
-</label>
+<div style="display:inline-block; text-align:center; padding:0px 10px 0px 10px;">
+  <label title="{scale_text}">
+    <input id="radio_{idx}" name="rate_scale" class="rate_radio" type="radio" {active}/>
+    <img src="{ina_icon}"/>
+    <br/>
+    <span>{scale_text}</span>
+  </label>
+</div>

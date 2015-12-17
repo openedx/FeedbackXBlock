@@ -3,45 +3,57 @@
 if (typeof Logger === 'undefined') {
     var Logger = {
         log: function(a, b) { 
-	    console.log("<<Log>>"); 
-	    console.log(a);
-	    console.log(b);
-	    console.log("<</Log>>"); 
+	    console.log(JSON.stringify(a)+"/"+JSON.stringify(a));
 	}
     };
 }
 
 function RateXBlock(runtime, element) {
-    var feedback_handler = runtime.handlerUrl(element, 'feedback');
-
-    $(".rate_submit_feedback", element).click(function(eventObject) {
-	var freeform = $(".rate_freeform_area", element).val();
+    function likert_vote() {
 	var vote = 0;
 	if ($(".rate_radio:checked", element).length === 0) {
 	    vote = -1;
 	} else {
 	    vote = parseInt($(".rate_radio:checked", element).attr("id").split("_")[1]);
 	}
-	var feedback = {"freeform": freeform, 
-		    "vote": vote};
+	return vote;
+    }
+
+    function feedback() {
+	return $(".rate_freeform_area", element).val();
+    }
+
+    function submit_feedback(freeform, vote) {
+	var feedback = {};
+	if(freeform) {
+	    feedback['freeform'] = freeform;
+	}
+	if(vote != -1) {
+	    feedback['vote'] = vote;
+	}
+
 	Logger.log("edx.ratexblock.submitted", feedback);
 	$.ajax({
             type: "POST",
-            url: feedback_handler,
+            url: runtime.handlerUrl(element, 'feedback'),
             data: JSON.stringify(feedback),
-	    success: function(data) {$('.rate_thank_you', element).text(data.response);}
+	    success: function(data) {
+		$('.rate_thank_you', element).text("");
+		$('.rate_thank_you', element).text(data.response);
+	    }
         });
+    }
+
+    $(".rate_submit_feedback", element).click(function(eventObject) {
+	submit_feedback(feedback(), -1);
     });
 
     $('.rate_radio', element).change(function(eventObject) {
-	var target_id = eventObject.target.id;
-	var vote = parseInt(target_id.split('_')[1]);
-	Logger.log("edx.ratexblock.likert_clicked", {"vote":vote});
+	Logger.log("edx.ratexblock.likert_changed", {"vote":likert_vote()});
+	submit_feedback(false, likert_vote());
     });
 
     $('.rate_freeform_area', element).change(function(eventObject) {
-	var freeform = eventObject.currentTarget.value;
-	Logger.log("edx.ratexblock.freeform_changed", {"freeform":freeform});
+	Logger.log("edx.ratexblock.freeform_changed", {"freeform":feedback()});
     });
-
 }

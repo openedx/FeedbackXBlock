@@ -23,11 +23,10 @@ class TestIcons(WebAppTest):
         """
         page = IconsPage(self.browser)
         page.visit()
-        self.assertScreenshot("#face1", "face1")
-        self.assertScreenshot("#face2", "face2")
-        self.assertScreenshot("#face3", "face3")
-        self.assertScreenshot("#face4", "face4")
-        self.assertScreenshot("#face5", "face5")
+        for i in range(5):
+            for icon in ["face", "num"]:
+                for style in "ais":
+                    self.assertScreenshot("#"+style+icon+str(i+1), style+icon+str(i+1))
 
 if __name__ == '__main__':
     unittest.main()
