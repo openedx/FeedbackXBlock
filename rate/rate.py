@@ -17,8 +17,6 @@ from xblock.fragment import Fragment
 We provide default text which is designed to elicit student thought. We'd
 like instructors to customize this to something highly structured (not 
 "What did you think?" and "How did you like it?".
-
-We 
 """
 default_freeform = "What did you learn from this? What was missing?"
 default_likert = "How would you rate this as a learning experience?"
@@ -46,7 +44,8 @@ class RateXBlock(XBlock):
         default=[
             {'freeform': default_freeform,
              'default_text': default_default,
-             'likert': default_likert}
+             'likert': default_likert,
+             'placeholder': default_placeholder}
         ],
         scope=Scope.settings,
         help="Freeform user prompt",
@@ -113,7 +112,8 @@ class RateXBlock(XBlock):
                            _("Average"),
                            _("Fair"),
                            _("Poor")],
-            'icons': [u"😁", u"😊", u"😐", u"😞", u"😭"]
+            'icons': [u"😁", u"😊", u"😐", u"😞", u"😭"],
+            'placeholder': ["Please take a moment to thoughtfully reflect."]
         }
 
         prompt.update(self.prompts[index])
@@ -253,7 +253,6 @@ class RateXBlock(XBlock):
 
     def init_vote_aggregate(self):
         # Make sure we're initialized
-        print self.get_prompt()
         if not self.vote_aggregate:
             self.vote_aggregate = [0] * (len(self.get_prompt()['scale_text']))
 

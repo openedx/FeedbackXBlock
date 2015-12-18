@@ -22,10 +22,11 @@ def package_data(pkg, roots):
 
 setup(
     name='rate-xblock',
-    version='0.1',
+    version='0.0',
     description='rate XBlock',   # TODO: write a better description.
     packages=[
         'rate',
+        'ratetests'
     ],
     install_requires=[
         'XBlock',
@@ -33,6 +34,9 @@ setup(
     entry_points={
         'xblock.v1': [
             'rate = rate:RateXBlock',
+        ],
+        'xblock.test.v0': [
+            'ratetest = ratetests:TestRate',
         ]
     },
     package_data=package_data("rate", ["static", "public"]),
