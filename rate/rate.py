@@ -5,6 +5,7 @@ course resources, and to think and synthesize about their experience
 in the course.
 """
 
+import cgi
 import random
 
 import pkg_resources
@@ -13,20 +14,24 @@ from xblock.core import XBlock
 from xblock.fields import Scope, Integer, String, List, Float
 from xblock.fragment import Fragment
 
-"""
-We provide default text which is designed to elicit student thought. We'd
-like instructors to customize this to something highly structured (not 
-"What did you think?" and "How did you like it?".
-"""
-default_freeform = "What did you learn from this? What was missing?"
-default_likert = "How would you rate this as a learning experience?"
-default_default = "Think about the material, and try to synthesize key " \
+# We provide default text which is designed to elicit student thought. We'd
+# like instructors to customize this to something highly structured (not
+# "What did you think?" and "How did you like it?".
+DEFAULT_FREEFORM = "What did you learn from this? What was missing?"
+DEFAULT_LIKERT = "How would you rate this as a learning experience?"
+DEFAULT_DEFAULT = "Think about the material, and try to synthesize key " \
                   "lessons learned, as well as key gaps in our presentation."
-default_placeholder = "Take a little bit of time to reflect here. " \
+DEFAULT_PLACEHOLDER = "Take a little bit of time to reflect here. " \
                       "Research shows that a meaningful synthesis will help " \
                       "you better understand and remember material from this" \
                       "course."
-default_icon = "face"
+DEFAULT_ICON = "face"
+DEFAULT_SCALETEXT = ["Excellent", "Good", "Average", "Fair", "Poor"]
+
+ICON_SETS = {'face': u"😁😊😐😞😭",
+             'num': u"12345",
+             'midface': u"😞😐😊😐😞"}
+
 
 @XBlock.needs('i18n')
 class RateXBlock(XBlock):
@@ -42,10 +47,12 @@ class RateXBlock(XBlock):
     # will default to the ones in default_prompt.
     prompts = List(
         default=[
-            {'freeform': default_freeform,
-             'default_text': default_default,
-             'likert': default_likert,
-             'placeholder': default_placeholder}
+            {'freeform': DEFAULT_FREEFORM,
+             'default_text': DEFAULT_DEFAULT,
+             'likert': DEFAULT_LIKERT,
+             'placeholder': DEFAULT_PLACEHOLDER,
+             'scale_text': DEFAULT_SCALETEXT,
+             'icon_set': DEFAULT_ICON}
         ],
         scope=Scope.settings,
         help="Freeform user prompt",
@@ -62,6 +69,7 @@ class RateXBlock(XBlock):
         help="How user voted. -1 if didn't vote"
     )
 
+    # pylint: disable=invalid-name
     p = Float(
         default=100, scope=Scope.settings,
         help="What percent of the time should this show?"
@@ -86,7 +94,8 @@ class RateXBlock(XBlock):
         scopde=Scope.settings
     )
 
-    def resource_string(self, path):
+    @classmethod
+    def resource_string(cls, path):
         """Handy helper for getting resources from our kit."""
         data = pkg_resources.resource_string(__name__, path)
         return data.decode("utf8")
@@ -101,6 +110,14 @@ class RateXBlock(XBlock):
             index = self.prompt_choice
 
         _ = self.runtime.service(self, 'i18n').ugettext
+        # This is the default prompt if something is not specified in the
+        # settings dictionary. Note that this is not the same as the default
+        # above. The default above is the prompt the instructor starts from
+        # in a tool like Studio. This is a fallback in case some JSON fields
+        # are left unpopulated (e.g. if someone manually tweaks the database,
+        # in case of OLX authoring, and similar). The examplar above is
+        # intended as a well-structured, coherent response. This is designed
+        # as generic, to work with any content as a safe fallback.
         prompt = {
             'freeform': _("Please reflect on this course material"),
             'default_text': _("Please take time to meaningfully reflect "
@@ -112,8 +129,8 @@ class RateXBlock(XBlock):
                            _("Average"),
                            _("Fair"),
                            _("Poor")],
-            'icons': [u"😁", u"😊", u"😐", u"😞", u"😭"],
-            'placeholder': ["Please take a moment to thoughtfully reflect."]
+            'icon_set': 'num',
+            'placeholder': "Please take a moment to thoughtfully reflect."
         }
 
         prompt.update(self.prompts[index])
@@ -146,7 +163,7 @@ class RateXBlock(XBlock):
 
         # We have five Likert fields right now, but we'd like this to
         # be dynamic
-        indexes = range(len(prompt['icons']))
+        indexes = range(5)
 
         # If the user voted before, we'd like to show that
         active_vote = ["checked" if i == self.user_vote else ""
@@ -159,20 +176,27 @@ class RateXBlock(XBlock):
 
         # We grab the icons. This should move to a Filesystem field so
         # instructors can upload new ones
-        ina_templ = 'public/default_icons/iface{i}.png'
-        act_templ = 'public/default_icons/aface{i}.png'
-        sel_templ = 'public/default_icons/sface{i}.png'
-        ina_urls = [self.runtime.local_resource_url(self, ina_templ.format(i=i))
-                    for i in range(1,6)]
-        act_urls = [self.runtime.local_resource_url(self, act_templ.format(i=i))
-                    for i in range(1,6)]
-        sel_urls = [self.runtime.local_resource_url(self, sel_templ.format(i=i))
-                    for i in range(1,6)]
-        img_urls = [i if active else a
-                    for (i, active, a)
-                    in zip(ina_urls, active_vote, act_urls)]
+        def get_url(icon_type, i):
+            '''
+            Helper function to generate the URL for the icons shown in the
+            tool. Takes the type of icon (active, inactive, etc.) and
+            the number of the icon.
 
-        # Render the 
+            Note that some icon types may not be actively used in the
+            styling. For example, at the time of this writing, we do
+            selected through CSS, rather than by using those icons.
+            '''
+            templates = {'inactive': 'public/default_icons/i{set}{i}.png',
+                         'active': 'public/default_icons/a{set}{i}.png',
+                         'selected': 'public/default_icons/s{set}{i}.png'}
+            template = templates[icon_type]
+            icon_file = template.format(i=i, set=prompt['icon_set'])
+            return self.runtime.local_resource_url(self, icon_file)
+        ina_urls = [get_url('inactive', i) for i in range(1, 6)]
+        act_urls = [get_url('active', i) for i in range(1, 6)]
+        sel_urls = [get_url('selected', i) for i in range(1, 6)]
+
+        # Render the Likert scale (not the whole page)
         scale = u"".join(
             scale_item.format(scale_text=scale_text,
                               unicode_icon=unicode_icon,
@@ -191,14 +215,14 @@ class RateXBlock(XBlock):
              ina_icon,
              sel_icon) in
             zip(prompt['scale_text'],
-                prompt['icons'],
+                ICON_SETS[(prompt['icon_set'])],
                 indexes,
                 active_vote,
                 votes,
                 act_urls,
                 ina_urls,
                 sel_urls
-            )
+               )
         )
         if self.user_vote != -1:
             _ = self.runtime.service(self, 'i18n').ugettext
@@ -209,7 +233,8 @@ class RateXBlock(XBlock):
                                scale=scale,
                                freeform_prompt=prompt['freeform'],
                                likert_prompt=prompt['likert'],
-                               response=response)
+                               response=response,
+                               placeholder=prompt['placeholder'])
 
         # We initialize self.p_user if not initialized -- this sets whether
         # or not we show it. From there, if it is less than odds of showing,
@@ -236,6 +261,8 @@ class RateXBlock(XBlock):
         """
         html_str = self.resource_string("static/html/studio_view.html")
         prompt = self.get_prompt(0)
+        for idx in range(len(prompt['scale_text'])):
+            prompt['likert{i}'.format(i=idx)] = prompt['scale_text'][idx]
         frag = Fragment(unicode(html_str).format(**prompt))
         js_str = self.resource_string("static/js/src/studio.js")
         frag.add_javascript(unicode(js_str))
@@ -247,12 +274,30 @@ class RateXBlock(XBlock):
         """
         Called when submitting the form in Studio.
         """
-        self.prompts[0]['freeform'] = data.get('freeform')
-        self.prompts[0]['likert'] = data.get('likert')
+        print "Received: ", data
+        print "Old prompt: ", self.prompts[0]
+        for item in ['freeform', 'likert', 'placeholder', 'icon_set']:
+            item_submission = data.get(item, None)
+            if item_submission and len(item_submission) > 0:
+                print "Setting", item
+                self.prompts[0][item] = cgi.escape(item_submission)
+        for i in range(5):
+            likert = data.get('likert{i}'.format(i=i), None)
+            if likert and len(likert) > 0:
+                print "Setting", i
+                self.prompts[0]['scale_text'][i] = cgi.escape(likert)
+
+        print "New prompt: ", self.prompts[0]
         return {'result': 'success'}
 
     def init_vote_aggregate(self):
-        # Make sure we're initialized
+        '''
+        There are a lot of places we read the aggregate vote counts. We
+        start out with these uninitialized. This guarantees they are
+        initialized. We'd prefer to do it this way, rather than default
+        value, since we do plan to not force scale length to be 5 in the
+        future.
+        '''
         if not self.vote_aggregate:
             self.vote_aggregate = [0] * (len(self.get_prompt()['scale_text']))
 
@@ -297,9 +342,9 @@ class RateXBlock(XBlock):
             response = {"success": True,
                         "response": _("Thank you for voting!")}
             self.runtime.publish(self,
-                         'edx.ratexblock.likert_provided',
-                         {'old_vote': self.user_vote,
-                          'new_vote': data['vote']})
+                                 'edx.ratexblock.likert_provided',
+                                 {'old_vote': self.user_vote,
+                                  'new_vote': data['vote']})
             self.vote(data)
         if 'freeform' in data:
             response = {"success": True,
@@ -307,7 +352,7 @@ class RateXBlock(XBlock):
             self.runtime.publish(self,
                                  'edx.ratexblock.freeform_provided',
                                  {'old_freeform': self.user_freeform,
-                                 'new_freeform': data['freeform']})
+                                  'new_freeform': data['freeform']})
             self.user_freeform = data['freeform']
 
         response.update({

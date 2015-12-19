@@ -23,7 +23,7 @@ def package_data(pkg, roots):
 setup(
     name='rate-xblock',
     version='0.0',
-    description='rate XBlock',   # TODO: write a better description.
+    description='XBlock for providing feedback on course content',
     packages=[
         'rate',
         'ratetests'

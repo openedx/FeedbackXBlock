@@ -26,8 +26,8 @@ class TestIcons(WebAppTest):
         for i in range(5):
             for icon in ["face", "num"]:
                 for style in "ais":
-                    self.assertScreenshot("#"+style+icon+str(i+1), style+icon+str(i+1))
+                    self.assertScreenshot("#"+style+icon+str(i+1),
+                                          style+icon+str(i+1))
 
 if __name__ == '__main__':
     unittest.main()
-    

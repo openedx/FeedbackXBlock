@@ -78,7 +78,7 @@ class TestRate(XBlockTestCase):
         self.submit_feedback('rate_0',
                              {'freeform': 'Worked well', 'vote': 3},
                              {'freeform': 'Worked well', 'vote': 3,
-                              'response': vote_str, 'success': True})
+                              'response': feedback_str, 'success': True})
         self.submit_feedback('rate_0',
                              {'vote': 4},
                              {'freeform': 'Worked well', 'vote': 4,

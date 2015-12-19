@@ -2,21 +2,15 @@
   <p> This XBlock allows you to collect student feedback on pieces of
     the course. This may be helpful either for course improvement, or
     to give students a chance to reflect on what they have done.</p>
-  <p>Please note that the text feedback needs to be analyzed as part
-    of the <a href="https://edx.readthedocs.org/en/latest/">edX
-    research dumps</a>. For now, we do not provide any kind of visual
-    analytics associated with this block. We do display numbers of
-    students giving specific feedback.</p>
-  <p>We do recommend matrix sampling. This can be done by using the
-  <a href="http://edx.readthedocs.org/projects/edx-partner-course-staff/en/latest/content_experiments/content_experiments_configure.html">randomized
-  control trials framework</a>.</p>
-  <p> We suggest asking specific questions which provide students
-  clear guidance. For the Likert prompt, it is helpful to be very
-  specific: Was this assignment easy to understand? Was the length
-  appropriate? For the freeform response, you should provide students
-  clear guidance on what kind of feedback you would like.</p>
-  <ul class="list-input settings-list">
+  
+  <p> Prior to using this block, we recommend reading about best
+    practices in the edX documentation. In particular, we do recommend
+    asking for structured, specific feedback, and we advise using this
+    in conjunction with
+    the <a href="http://edx.readthedocs.org/projects/edx-partner-course-staff/en/latest/content_experiments/content_experiments_configure.html">RCT
+    framework</a> for matrix sampling.</p>
 
+  <ul class="list-input settings-list">
     <li class="field comp-setting-entry is-set">
       <div class="wrapper-comp-setting">
         <label class="label setting-label" for="freeform">Freeform prompt</label>
@@ -27,10 +21,69 @@
 
     <li class="field comp-setting-entry is-set">
       <div class="wrapper-comp-setting">
+        <label class="label setting-label" for="placeholder">Freeform placeholder</label>
+        <input class="input setting-input" name="placeholder" id="placeholder" value="{placeholder}" type="text" />
+      </div>
+      <span class="tip setting-help">This is shown as grayed out text before the student has answered.</span>
+    </li>
+
+    <li class="field comp-setting-entry is-set">
+      <div class="wrapper-comp-setting">
+        <label class="label setting-label" for="icon_set">Likert icon set</label>
+	<select name="icon_set">
+	  <option value="face">Faces (happy-to-sad)</option>
+	  <option value="midface">Faces (sad-to-happy-to-sad)</option>
+	  <option value="num">Numeric</option></select>
+      </div>
+      <span class="tip setting-help">We can either show happy/sad faces, or numbers 1-5.</span>
+    </li>
+
+    <li class="field comp-setting-entry is-set">
+      <div class="wrapper-comp-setting">
         <label class="label setting-label" for="likert">Likert prompt</label>
         <input class="input setting-input" name="likert" id="likert" value="{likert}" type="text" />
       </div>
       <span class="tip setting-help">Example: Please rate your overall experience with this section.</span>
+    </li>
+
+    <li class="field comp-setting-entry is-set">
+      <div class="wrapper-comp-setting">
+        <label class="label setting-label" for="likert0">Likert option 1</label>
+        <input class="input setting-input" name="likert0" id="likert0" value="{likert0}" type="text" />
+      </div>
+      <span class="tip setting-help">Example: Excellent!</span>
+    </li>
+
+    <li class="field comp-setting-entry is-set">
+      <div class="wrapper-comp-setting">
+        <label class="label setting-label" for="likert1">Likert option 2</label>
+        <input class="input setting-input" name="likert1" id="likert1" value="{likert1}" type="text" />
+      </div>
+      <span class="tip setting-help">Example: Good</span>
+    </li>
+
+    <li class="field comp-setting-entry is-set">
+      <div class="wrapper-comp-setting">
+        <label class="label setting-label" for="likert2">Likert option 3</label>
+        <input class="input setting-input" name="likert2" id="likert2" value="{likert2}" type="text" />
+      </div>
+      <span class="tip setting-help">Example: Average</span>
+    </li>
+
+    <li class="field comp-setting-entry is-set">
+      <div class="wrapper-comp-setting">
+        <label class="label setting-label" for="likert3">Likert option 4</label>
+        <input class="input setting-input" name="likert3" id="likert3" value="{likert3}" type="text" />
+      </div>
+      <span class="tip setting-help">Example: Fair</span>
+    </li>
+
+    <li class="field comp-setting-entry is-set">
+      <div class="wrapper-comp-setting">
+        <label class="label setting-label" for="likert4">Likert option 5</label>
+        <input class="input setting-input" name="likert4" id="likert4" value="{likert4}" type="text" />
+      </div>
+      <span class="tip setting-help">Example: Poor</span>
     </li>
 
   <div class="xblock-actions">
