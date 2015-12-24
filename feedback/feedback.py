@@ -7,6 +7,7 @@ in the course.
 
 import cgi
 import random
+import sys
 
 import pkg_resources
 
@@ -221,8 +222,7 @@ class FeedbackXBlock(XBlock):
                 votes,
                 act_urls,
                 ina_urls,
-                sel_urls
-               )
+                sel_urls)
         )
         if self.user_vote != -1:
             _ = self.runtime.service(self, 'i18n').ugettext
@@ -276,20 +276,15 @@ class FeedbackXBlock(XBlock):
         """
         Called when submitting the form in Studio.
         """
-        print "Received: ", data
-        print "Old prompt: ", self.prompts[0]
         for item in ['freeform', 'likert', 'placeholder', 'icon_set']:
             item_submission = data.get(item, None)
             if item_submission and len(item_submission) > 0:
-                print "Setting", item
                 self.prompts[0][item] = cgi.escape(item_submission)
         for i in range(5):
             likert = data.get('likert{i}'.format(i=i), None)
             if likert and len(likert) > 0:
-                print "Setting", i
                 self.prompts[0]['scale_text'][i] = cgi.escape(likert)
 
-        print "New prompt: ", self.prompts[0]
         return {'result': 'success'}
 
     def init_vote_aggregate(self):
