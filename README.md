@@ -1,32 +1,30 @@
-RateXBlock
+Feedback XBlock
 ==========
 
-This is a basic clone of Dropthought for use in Open edX. This doesn't
-have all the analytics niceness, and the UX is less polished.
+This is a basic clone of Dropthought for use in Open edX. This used to
+be called the RateXBlock. We renamed it for better consistency. We are
+keeping the old one around for backwards-compatibility.
 
-I'm not positioning this as a competitor to DropThought or similar 
-services; ideally, once we collect the data, we'll just ship the data 
-off to their fancy analytics algorithms, but we won't have to bother
-with (a somewhat less reliable, integrated, and performant) 
-services-based integration, and we'll have something: 
+The goal of this XBlock is two-fold:
 
-* Nicely integrated from a user standpoint
-* Data lives in the platform, so we can use our own analytics pipeline 
-  on it as well. 
+1. Allow students to reflect on their learning experience
+2. Provide instructors with feedback on which parts of courses work
+   well and which parts work poorly.
 
-As of the time this README is written, we still need to apply styling,
-but for now, it looks like:
+Instructors have a good amount of control over the contents of
+the block:
 
-![Screenshot of the RateXBlock](RateXBlock.png)
+![Screenshot of the FeedbackXBlock](FeedbackXBlock.png)
 
 This can be placed anywhere in the courseware, and students can
 provide feedback on those sections. With just a few database queries,
-we can compile that feedback into useful insights. ;)
+we can compile that feedback into useful insights. ;) We do provide
+aggregate statistics to instructors, but not yet the text of the
+feedback.
 
-This is not yet installed on edx.org, but hopefully soon will be. It 
-installs on any Open edX install same as any other xblock: 
+It installs on any Open edX install same as any other xblock:
 
-    pip install -e git+https://github.com/pmitros/RateXBlock.git@96c59c683a2647208d7a15e86e6f795b4b9c9bce#egg=rate
+    pip install -e git+https://github.com/pmitros/FeedbackXBlock.git#egg=rate==0.0
 
-From there, add 'rate' to your list of advanced modules, and you're 
+From there, add 'feedback' to your list of advanced modules, and you're 
 good to go. 

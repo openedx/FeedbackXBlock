@@ -34,10 +34,10 @@ ICON_SETS = {'face': u"😁😊😐😞😭",
 
 
 @XBlock.needs('i18n')
-class RateXBlock(XBlock):
+class FeedbackXBlock(XBlock):
     """
     This is an XBlock -- eventually, hopefully an aside -- which
-    allows you to rate content in the course. We've wanted this for a
+    allows you to feedback content in the course. We've wanted this for a
     long time, but Dartmouth finally encourage me to start to build
     this.
     """
@@ -138,7 +138,7 @@ class RateXBlock(XBlock):
 
     def student_view(self, context=None):
         """
-        The primary view of the RateXBlock, shown to students
+        The primary view of the FeedbackXBlock, shown to students
         when viewing courses.
         """
         # Figure out which prompt we show. We set self.prompt_choice to
@@ -149,8 +149,8 @@ class RateXBlock(XBlock):
             self.prompt_choice = random.randint(0, len(self.prompts) - 1)
         prompt = self.get_prompt()
 
-        # Now, we render the RateXBlock.
-        html = self.resource_string("static/html/rate.html")
+        # Now, we render the FeedbackXBlock.
+        html = self.resource_string("static/html/feedback.html")
 
         # Staff see vote totals, so we have slightly different HTML here.
         if self.vote_aggregate and self.is_staff():
@@ -229,6 +229,7 @@ class RateXBlock(XBlock):
             response = _("Thank you for voting!")
         else:
             response = ""
+        # Now, render the whole page
         rendered = html.format(self=self,
                                scale=scale,
                                freeform_prompt=prompt['freeform'],
@@ -250,9 +251,9 @@ class RateXBlock(XBlock):
 
         # Finally, we do the standard JS+CSS boilerplate. Honestly, XBlocks
         # ought to have a sane default here.
-        frag.add_css(self.resource_string("static/css/rate.css"))
-        frag.add_javascript(self.resource_string("static/js/src/rate.js"))
-        frag.initialize_js('RateXBlock')
+        frag.add_css(self.resource_string("static/css/feedback.css"))
+        frag.add_javascript(self.resource_string("static/js/src/feedback.js"))
+        frag.initialize_js('FeedbackXBlock')
         return frag
 
     def studio_view(self, context):
@@ -266,7 +267,8 @@ class RateXBlock(XBlock):
         frag = Fragment(unicode(html_str).format(**prompt))
         js_str = self.resource_string("static/js/src/studio.js")
         frag.add_javascript(unicode(js_str))
-        frag.initialize_js('RateBlock', {})
+        frag.initialize_js('FeedbackBlock',
+                           {'icon_set': prompt['icon_set']})
         return frag
 
     @XBlock.json_handler
@@ -336,13 +338,13 @@ class RateXBlock(XBlock):
             response = {"success": False,
                         "response": _("Please vote!")}
             self.runtime.publish(self,
-                                 'edx.ratexblock.nothing_provided',
+                                 'edx.feedbackxblock.nothing_provided',
                                  {})
         if 'vote' in data:
             response = {"success": True,
                         "response": _("Thank you for voting!")}
             self.runtime.publish(self,
-                                 'edx.ratexblock.likert_provided',
+                                 'edx.feedbackxblock.likert_provided',
                                  {'old_vote': self.user_vote,
                                   'new_vote': data['vote']})
             self.vote(data)
@@ -350,7 +352,7 @@ class RateXBlock(XBlock):
             response = {"success": True,
                         "response": _("Thank you for your feedback!")}
             self.runtime.publish(self,
-                                 'edx.ratexblock.freeform_provided',
+                                 'edx.feedbackxblock.freeform_provided',
                                  {'old_freeform': self.user_freeform,
                                   'new_freeform': data['freeform']})
             self.user_freeform = data['freeform']
@@ -365,17 +367,20 @@ class RateXBlock(XBlock):
 
         return response
 
-    # TO-DO: change this to create the scenarios you'd like to see in the
-    # workbench while developing your XBlock.
     @staticmethod
     def workbench_scenarios():
-        """A canned scenario for display in the workbench."""
+        """
+        A canned scenario for display in the workbench.
+
+        We have three blocks. One shows up all the time (for testing). The
+        other two show up 50% of the time.
+        """
         return [
-            ("RateXBlock",
+            ("FeedbackXBlock",
              """<vertical_demo>
-                <rate p="100"/>
-                <!--rate p="50"/>
-                <rate p="50"/-->
+                <feedback p="100"/>
+                <feedback p="50"/>
+                <feedback p="50"/>
                 </vertical_demo>
              """),
         ]

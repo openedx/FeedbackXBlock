@@ -1,5 +1,5 @@
 '''
-Tests for the RateXBlock.
+Tests for the FeedbackXBlock.
 '''
 
 import json
@@ -28,17 +28,17 @@ class PatchRandomMixin:
 
 
 # pylint: disable=abstract-method
-class TestRate(XBlockTestCase):
+class TestFeedback(XBlockTestCase):
     """
-    Basic tests for the RateXBlock. We set up a page with two
+    Basic tests for the FeedbackXBlock. We set up a page with two
     of the block, make sure the page renders, toggle a few ratings,
     and call it quits.
     """
 
     olx_scenarios = {  # Currently not used
-        "two_rate_block_test_case": """<vertical>
-          <rate urlname="rate0"/>
-          <rate urlname="rate1"/>
+        "two_feedback_block_test_case": """<vertical>
+          <feedback urlname="feedback0"/>
+          <feedback urlname="feedback1"/>
         </vertical>"""
     }
 
@@ -46,16 +46,16 @@ class TestRate(XBlockTestCase):
     # normal workbench scenarios
     test_configuration = [
         {
-            "urlname": "two_rate_block_test_case",
+            "urlname": "two_feedback_block_test_case",
             "xblocks": [  # Stopgap until we handle OLX
                 {
-                    'blocktype': 'rate',
-                    'urlname': 'rate_0',
+                    'blocktype': 'feedback',
+                    'urlname': 'feedback_0',
                     'parameters': {'p': 100}
                 },
                 {
-                    'blocktype': 'rate',
-                    'urlname': 'rate_1',
+                    'blocktype': 'feedback',
+                    'urlname': 'feedback_1',
                     'parameters': {'p': 50}
                 }
             ]
@@ -86,30 +86,30 @@ class TestRate(XBlockTestCase):
         # To do: Below method needs to be implemented
         # self.assertXBlockScreenshot(block_urlname, rendering)
 
-    def test_rate(self):
+    def test_feedback(self):
         """
         Walk through a few toggles. Make sure the blocks don't mix up
         state between them, initial state is correct, and final state
         is correct.
         """
         # We confirm we don't have errors rendering the student view
-        self.check_response('rate_0', 'rate-unset')
-        self.check_response('rate_1', 'rate-unset')
+        self.check_response('feedback_0', 'feedback-unset')
+        self.check_response('feedback_1', 'feedback-unset')
         vote_str = 'Thank you for voting!'
         feedback_str = 'Thank you for your feedback!'
-        self.submit_feedback('rate_0',
+        self.submit_feedback('feedback_0',
                              {'freeform': 'Worked well', 'vote': 3},
                              {'freeform': 'Worked well', 'vote': 3,
                               'response': feedback_str, 'success': True})
-        self.submit_feedback('rate_0',
+        self.submit_feedback('feedback_0',
                              {'vote': 4},
                              {'freeform': 'Worked well', 'vote': 4,
                               'response': vote_str, 'success': True})
-        self.submit_feedback('rate_0',
+        self.submit_feedback('feedback_0',
                              {'freeform': 'Worked great'},
                              {'freeform': 'Worked great', 'vote': 4,
                               'response': feedback_str, 'success': True})
 
         # And confirm we render correctly
-        self.check_response('rate_0', 'rate-unset')
-        self.check_response('rate_1', 'rate-set')
+        self.check_response('feedback_0', 'feedback-unset')
+        self.check_response('feedback_1', 'feedback-set')

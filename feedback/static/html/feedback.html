@@ -1,0 +1,17 @@
+<div class="feedback_block">
+  <form action="" onsubmit="return false;">
+    <fieldset class="feedback_likert_field">
+      <legend class="feedback_likert_header">{likert_prompt}</legend>
+      <div class="feedback_likert_scale">{scale}</div>
+    </fieldset>
+
+    <div class="feedback_header_div">
+      <label class="feedback_header" for="feedback_freeform_textarea">{freeform_prompt}</label>
+    </div>
+    <div class="feedback_freeform_input">
+      <textarea id="feedback_freeform_textarea" class="feedback_freeform_area" rows="6" cols="45" placeholder="{placeholder}">{self.user_freeform}</textarea>
+      <div class="feedback_thank_you" aria-live=polite>{response}</div>
+    </div>
+    <button type="submit" class="feedback_submit_feedback"> Submit Feedback </button>
+  </form>
+</div>

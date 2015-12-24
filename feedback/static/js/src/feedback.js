@@ -1,4 +1,4 @@
-/* Javascript for RateXBlock. */
+/* Javascript for FeedbackXBlock. */
 // Work-around so we can log in edx-platform, but not fail in Workbench
 if (typeof Logger === 'undefined') {
     var Logger = {
@@ -8,19 +8,19 @@ if (typeof Logger === 'undefined') {
     };
 }
 
-function RateXBlock(runtime, element) {
+function FeedbackXBlock(runtime, element) {
     function likert_vote() {
 	var vote = 0;
-	if ($(".rate_radio:checked", element).length === 0) {
+	if ($(".feedback_radio:checked", element).length === 0) {
 	    vote = -1;
 	} else {
-	    vote = parseInt($(".rate_radio:checked", element).attr("id").split("_")[1]);
+	    vote = parseInt($(".feedback_radio:checked", element).attr("id").split("_")[1]);
 	}
 	return vote;
     }
 
     function feedback() {
-	return $(".rate_freeform_area", element).val();
+	return $(".feedback_freeform_area", element).val();
     }
 
     function submit_feedback(freeform, vote) {
@@ -32,28 +32,28 @@ function RateXBlock(runtime, element) {
 	    feedback['vote'] = vote;
 	}
 
-	Logger.log("edx.ratexblock.submitted", feedback);
+	Logger.log("edx.feedbackxblock.submitted", feedback);
 	$.ajax({
             type: "POST",
             url: runtime.handlerUrl(element, 'feedback'),
             data: JSON.stringify(feedback),
 	    success: function(data) {
-		$('.rate_thank_you', element).text("");
-		$('.rate_thank_you', element).text(data.response);
+		$('.feedback_thank_you', element).text("");
+		$('.feedback_thank_you', element).text(data.response);
 	    }
         });
     }
 
-    $(".rate_submit_feedback", element).click(function(eventObject) {
+    $(".feedback_submit_feedback", element).click(function(eventObject) {
 	submit_feedback(feedback(), -1);
     });
 
-    $('.rate_radio', element).change(function(eventObject) {
-	Logger.log("edx.ratexblock.likert_changed", {"vote":likert_vote()});
+    $('.feedback_radio', element).change(function(eventObject) {
+	Logger.log("edx.feedbackxblock.likert_changed", {"vote":likert_vote()});
 	submit_feedback(false, likert_vote());
     });
 
-    $('.rate_freeform_area', element).change(function(eventObject) {
-	Logger.log("edx.ratexblock.freeform_changed", {"freeform":feedback()});
+    $('.feedback_freeform_area', element).change(function(eventObject) {
+	Logger.log("edx.feedbackxblock.freeform_changed", {"freeform":feedback()});
     });
 }

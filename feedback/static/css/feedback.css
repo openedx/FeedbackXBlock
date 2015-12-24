@@ -1,8 +1,8 @@
-/* CSS for RateXBlock */
+/* CSS for FeedbackXBlock */
 
 /* Overall block. We limit width, and put a very faint
    border around it. */
-.rate_block {
+.feedback_block {
     max-width: 450px;
     border-width: 1px;
     border-style: solid;
@@ -11,24 +11,24 @@
 }
 
 /* Little thank you message div after people vote */
-.rate_thank_you {
+.feedback_thank_you {
     color: green;
 }
 
 /* Label for the freeform text input. We want a little
    space between this and the Likert input.*/
-.rate_block .rate_header_div {
+.feedback_block .feedback_header_div {
     margin-top:1em;
 }
 
 /* Fieldset for the Likert radio buttons */
-.rate_block .rate_likert_field {
+.feedback_block .feedback_likert_field {
     padding: 0px;
     margin: 0px;
 }
 
 /* The div around everything with a radio button */
-.rate_block .rate_likert_rating {
+.feedback_block .feedback_likert_rating {
     cursor: pointer;
     border-radius:5px;
     display:inline-block;
@@ -37,19 +37,19 @@
 }
 
 /* Hide checked icon */
-.rate_icon_active { display:none; }
-.rate_icon_inactive { display:inline-block; }
+.feedback_icon_active { display:none; }
+.feedback_icon_inactive { display:inline-block; }
 
 /* But show it if we are checked... */
-.rate_block input[type="radio"]:checked ~ .rate_icon_active{
+.feedback_block input[type="radio"]:checked ~ .feedback_icon_active{
     display: inline-block;
 }
 /* ... while hiding the unchecked icon */
-.rate_block input[type="radio"]:checked ~ .rate_icon_inactive{
+.feedback_block input[type="radio"]:checked ~ .feedback_icon_inactive{
     display: none;
 }
 
-.rate_icon {
+.feedback_icon {
    border-style:solid;
    border-width: 1px;
    border-color: rgba(255,255,255,0);
@@ -57,33 +57,33 @@
    height:60px;
 }
 
-.rate_block input[type="radio"]:focus ~ .rate_icon {
+.feedback_block input[type="radio"]:focus ~ .feedback_icon {
    border-color: #999999;
 }
 
-.rate_block input[type="radio"]:hover ~ .rate_icon {
+.feedback_block input[type="radio"]:hover ~ .feedback_icon {
    border-color: #999999;
 }
 
-.rate_block .rate_likert_label {
+.feedback_block .feedback_likert_label {
     cursor: pointer;
 }
 
-.rate_block .rate_freeform_input {
+.feedback_block .feedback_freeform_input {
     margin-bottom: 1em;
 }
 
-.rate_block .rate_freeform_area {
+.feedback_block .feedback_freeform_area {
     height:inherit;
 }
 
-.rate_block .rate_rating_active {
+.feedback_block .feedback_rating_active {
     color: blue;
     font-weight: bold;
     background-color: blanchedalmond;
 }
 
-.rate_block .rate_radio {
+.feedback_block .feedback_radio {
     opacity:0;
     width:1px;
     padding:0px;
@@ -91,7 +91,7 @@
     position:absolute;
 }
 
-.rate_block .rate_sr_text{
+.feedback_block .feedback_sr_text{
     opacity:0;
     width:1px;
     height:1px;
@@ -103,13 +103,13 @@
     overflow:hidden;
 }
 
-.rate_block label{
+.feedback_block label{
     display:inline;
 }
 
-.rate_block .rate_likert_field {
+.feedback_block .feedback_likert_field {
     border-style:none;
 }
-.rate_block .rate_submit_feedback {
+.feedback_block .feedback_submit_feedback {
     width:100%;
 }

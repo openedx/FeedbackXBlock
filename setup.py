@@ -1,4 +1,4 @@
-"""Setup for rate XBlock."""
+"""Setup for feedback XBlock."""
 
 import os
 from setuptools import setup
@@ -21,23 +21,23 @@ def package_data(pkg, roots):
 
 
 setup(
-    name='rate-xblock',
+    name='feedback-xblock',
     version='0.0',
     description='XBlock for providing feedback on course content',
     packages=[
-        'rate',
-        'ratetests'
+        'feedback',
+        'feedbacktests'
     ],
     install_requires=[
         'XBlock',
     ],
     entry_points={
         'xblock.v1': [
-            'rate = rate:RateXBlock',
+            'feedback = feedback:FeedbackXBlock',
         ],
         'xblock.test.v0': [
-            'ratetest = ratetests:TestRate',
+            'feedbacktest = feedbacktests:TestFeedback',
         ]
     },
-    package_data=package_data("rate", ["static", "public"]),
+    package_data=package_data("feedback", ["static", "public"]),
 )
