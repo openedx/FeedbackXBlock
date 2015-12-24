@@ -266,7 +266,7 @@ class RateXBlock(XBlock):
         frag = Fragment(unicode(html_str).format(**prompt))
         js_str = self.resource_string("static/js/src/studio.js")
         frag.add_javascript(unicode(js_str))
-        frag.initialize_js('RateBlock')
+        frag.initialize_js('RateBlock', {})
         return frag
 
     @XBlock.json_handler

@@ -7,6 +7,26 @@ import json
 from openedx.tests.xblock_integration.xblock_testcase import XBlockTestCase
 
 
+class PatchRandomMixin:
+    """
+    This is a class which will patch random.uniform so that we can
+    confirm whether randomization works.
+    """
+    def setUp(self):
+        self.value = None
+
+        def patched_uniform(mock_self, min, max):
+            return self.value
+
+        patcher = mock.patch("random.random.uniform",
+                             patched_uniform)
+        patcher.start()
+        self.addCleanup(patcher.stop)
+
+    def set_random(self, value):
+        self.value = value
+
+
 # pylint: disable=abstract-method
 class TestRate(XBlockTestCase):
     """
@@ -30,11 +50,13 @@ class TestRate(XBlockTestCase):
             "xblocks": [  # Stopgap until we handle OLX
                 {
                     'blocktype': 'rate',
-                    'urlname': 'rate_0'
+                    'urlname': 'rate_0',
+                    'parameters': {'p': 100}
                 },
                 {
                     'blocktype': 'rate',
-                    'urlname': 'rate_1'
+                    'urlname': 'rate_1',
+                    'parameters': {'p': 50}
                 }
             ]
         }
