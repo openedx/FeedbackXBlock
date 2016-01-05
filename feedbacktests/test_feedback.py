@@ -8,6 +8,7 @@ import sys
 from openedx.tests.xblock_integration.xblock_testcase import XBlockTestCase
 import mock
 
+
 class PatchRandomMixin(object):
     """
     This is a class which will patch random.uniform so that we can
