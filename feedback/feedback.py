@@ -7,7 +7,6 @@ in the course.
 
 import cgi
 import random
-import sys
 
 import pkg_resources
 
