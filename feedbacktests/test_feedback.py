@@ -21,7 +21,7 @@ class PatchRandomMixin(object):
         def patched_uniform(min, max):
             return self.random_patch_value
 
-        patcher = mock.patch("random.uniform",
+        patcher = mock.patch("feedback.feedback.random.uniform",
                              patched_uniform)
         patcher.start()
         self.addCleanup(patcher.stop)
