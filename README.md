@@ -14,7 +14,9 @@ The goal of this XBlock is two-fold:
 Instructors have a good amount of control over the contents of
 the block:
 
-![Screenshot of the FeedbackXBlock](FeedbackXBlock.png)
+![Screenshot of the FeedbackXBlock -- good to bad scale](happy_sad_example.png)
+![Screenshot of the FeedbackXBlock -- scale where good is in the middle](happy_sad_happy_example.png)
+![Screenshot of the FeedbackXBlock -- numerical scale](numerical_example.png)
 
 This can be placed anywhere in the courseware, and students can
 provide feedback on those sections. With just a few database queries,
