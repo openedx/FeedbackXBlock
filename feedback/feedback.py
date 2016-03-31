@@ -28,9 +28,10 @@ DEFAULT_PLACEHOLDER = "Take a little bit of time to reflect here. " \
 DEFAULT_ICON = "face"
 DEFAULT_SCALETEXT = ["Excellent", "Good", "Average", "Fair", "Poor"]
 
-ICON_SETS = {'face': u"😁😊😐😞😭",
+# Unicode alt faces are cute, but we do nulls instead for a11y.
+ICON_SETS = {'face': [""]*5,  # u"😁😊😐😞😭",
              'num': u"12345",
-             'midface': u"😞😐😊😐😞"}
+             'midface': [""]*5}  #u"😞😐😊😐😞"}
 
 
 @XBlock.needs('i18n')
