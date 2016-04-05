@@ -14,7 +14,7 @@ function FeedbackXBlock(runtime, element) {
 	if ($(".feedback_radio:checked", element).length === 0) {
 	    vote = -1;
 	} else {
-	    vote = parseInt($(".feedback_radio:checked", element).attr("id").split("_")[1]);
+	    vote = parseInt($(".feedback_radio:checked", element).attr("data-id").split("_")[1]);
 	}
 	return vote;
     }
