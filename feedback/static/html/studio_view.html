@@ -15,77 +15,86 @@
 
     <li class="field comp-setting-entry is-set">
       <div class="wrapper-comp-setting">
-        <label class="label setting-label" for="freeform">Freeform prompt</label>
-        <input class="input setting-input" name="freeform" id="freeform" value="{freeform}" type="text" />
+        <label class="label setting-label" aria-describedby="ff_p_div">Freeform prompt
+          <input class="input setting-input" name="freeform" id="freeform" value="{freeform}" type="text" />
+        </label>
       </div>
-      <span class="tip setting-help">Example: Please provide us feedback on this section.</span>
+      <span class="tip setting-help" id="ff_p_div">Example: Please provide us feedback on this section.</span>
     </li>
 
     <li class="field comp-setting-entry is-set">
       <div class="wrapper-comp-setting">
-        <label class="label setting-label" for="placeholder">Freeform placeholder</label>
-        <input class="input setting-input" name="placeholder" id="placeholder" value="{placeholder}" type="text" />
+        <label aria-describedby="placeholder_span" class="label setting-label>"Freeform placeholder
+          <input class="input setting-input" name="placeholder" id="placeholder" value="{placeholder}" type="text" />
+        </label>
       </div>
-      <span class="tip setting-help">This is shown as grayed out text before the student has answered.</span>
+      <span id="placeholder_span" class="tip setting-help">This is shown as grayed out text before the student has answered.</span>
     </li>
 
     <li class="field comp-setting-entry is-set">
       <div class="wrapper-comp-setting">
-        <label class="label setting-label" for="icon_set">Likert icon set</label>
+        <label aria-describedby="icon_set_option" class="label setting-label">Likert icon set
 	<select name="icon_set">
 	  <option value="face">Faces (happy to sad)</option>
 	  <option value="midface">Faces (sad to happy to sad)</option>
 	  <option value="num">Numeric</option></select>
+	</select>
+	</label>
       </div>
-      <span class="tip setting-help">We can either show happy/sad faces, or numbers 1-5.</span>
+      <span id="icon_set_option" class="tip setting-help">We can either show happy/sad faces, or numbers 1-5.</span>
     </li>
 
     <li class="field comp-setting-entry is-set">
       <div class="wrapper-comp-setting">
-        <label class="label setting-label" for="likert">Likert prompt</label>
-        <input class="input setting-input" name="likert" id="likert" value="{likert}" type="text" />
+        <label aria-describedby="lik_example" class="label setting-label">Likert prompt
+          <input class="input setting-input" name="likert" id="likert" value="{likert}" type="text" />
+        </label>
       </div>
-      <span class="tip setting-help">Example: Please rate your overall experience with this section.</span>
+      <span id="lik_example" class="tip setting-help">Example: Please rate your overall experience with this section.</span>
     </li>
 
     <li class="field comp-setting-entry is-set">
       <div class="wrapper-comp-setting">
-        <label class="label setting-label" for="likert0">Likert option 1</label>
-        <input class="input setting-input" name="likert0" id="likert0" value="{likert0}" type="text" />
+        <label aria-describedby="lik_excel" class="label setting-label">Likert option 1
+          <input class="input setting-input" name="likert0" id="likert0" value="{likert0}" type="text" />
+        </label>
       </div>
-      <span class="tip setting-help">Example: Excellent!</span>
+      <span id="lik_excel" class="tip setting-help">Example: Excellent!</span>
     </li>
 
     <li class="field comp-setting-entry is-set">
       <div class="wrapper-comp-setting">
-        <label class="label setting-label" for="likert1">Likert option 2</label>
-        <input class="input setting-input" name="likert1" id="likert1" value="{likert1}" type="text" />
+        <label aria-describedby="lik_good" class="label setting-label">Likert option 2
+          <input class="input setting-input" name="likert1" id="likert1" value="{likert1}" type="text" />
+        </label>
       </div>
-      <span class="tip setting-help">Example: Good</span>
+      <span id="lik_good" class="tip setting-help">Example: Good</span>
     </li>
 
     <li class="field comp-setting-entry is-set">
       <div class="wrapper-comp-setting">
-        <label class="label setting-label" for="likert2">Likert option 3</label>
-        <input class="input setting-input" name="likert2" id="likert2" value="{likert2}" type="text" />
+        <label aria-describedby="lik_ave" class="label setting-label">Likert option 3
+          <input class="input setting-input" name="likert2" id="likert2" value="{likert2}" type="text" />
       </div>
-      <span class="tip setting-help">Example: Average</span>
+      <span id="lik_ave" class="tip setting-help">Example: Average</span>
     </li>
 
     <li class="field comp-setting-entry is-set">
       <div class="wrapper-comp-setting">
-        <label class="label setting-label" for="likert3">Likert option 4</label>
-        <input class="input setting-input" name="likert3" id="likert3" value="{likert3}" type="text" />
+        <label aria-describedby="lik_fair" class="label setting-label">Likert option 4</label>
+          <input class="input setting-input" name="likert3" id="likert3" value="{likert3}" type="text" />
+        </label>
       </div>
-      <span class="tip setting-help">Example: Fair</span>
+      <span id="lik_fair" class="tip setting-help">Example: Fair</span>
     </li>
 
     <li class="field comp-setting-entry is-set">
       <div class="wrapper-comp-setting">
-        <label class="label setting-label" for="likert4">Likert option 5</label>
-        <input class="input setting-input" name="likert4" id="likert4" value="{likert4}" type="text" />
+        <label aria-describedby="lik_poor" class="label setting-label">Likert option 5</label>
+          <input class="input setting-input" name="likert4" id="likert4" value="{likert4}" type="text" />
+        </label>
       </div>
-      <span class="tip setting-help">Example: Poor</span>
+      <span id="lik_poor" class="tip setting-help">Example: Poor</span>
     </li>
   </ul>
 
