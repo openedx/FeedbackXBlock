@@ -7,8 +7,8 @@ in the course.
 
 import cgi
 import random
-
 import pkg_resources
+import six
 
 from xblock.core import XBlock
 from xblock.fields import Scope, Integer, String, List, Float
@@ -264,9 +264,9 @@ class FeedbackXBlock(XBlock):
         prompt = self.get_prompt(0)
         for idx in range(len(prompt['scale_text'])):
             prompt['likert{i}'.format(i=idx)] = prompt['scale_text'][idx]
-        frag = Fragment(unicode(html_str).format(**prompt))
+        frag = Fragment(six.text_type(html_str).format(**prompt))
         js_str = self.resource_string("static/js/src/studio.js")
-        frag.add_javascript(unicode(js_str))
+        frag.add_javascript(six.text_type(js_str))
         frag.initialize_js('FeedbackBlock',
                            {'icon_set': prompt['icon_set']})
         return frag

@@ -1,5 +1,5 @@
 '''
-Tests for the FeedbackXBlock.
+Tests for the FeedbackXBlock that needs to run in Open edX.
 '''
 
 import json
@@ -31,7 +31,7 @@ class PatchRandomMixin(object):
 
 
 # pylint: disable=abstract-method
-class TestFeedback(PatchRandomMixin, XBlockTestCase):
+class FeedbackTestCase(PatchRandomMixin, XBlockTestCase):
     """
     Basic tests for the FeedbackXBlock. We set up a page with two
     of the block, make sure the page renders, toggle a few ratings,
