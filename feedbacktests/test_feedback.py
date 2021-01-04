@@ -2,8 +2,6 @@
 Tests for the FeedbackXBlock that needs to run in Open edX.
 '''
 
-import json
-import sys
 
 from openedx.tests.xblock_integration.xblock_testcase import XBlockTestCase
 import mock

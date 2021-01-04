@@ -29,5 +29,6 @@ class TestIcons(WebAppTest):
                     self.assertScreenshot("#"+style+icon+str(i+1),
                                           style+icon+str(i+1))
 
+
 if __name__ == '__main__':
     unittest.main()

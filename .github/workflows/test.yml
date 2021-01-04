@@ -10,10 +10,10 @@ jobs:
     runs-on: ubuntu-18.04
     strategy:
       matrix:
-        python-version: [3.5]
+        python-version: [2.7, 3.5, 3.8]
         tox-env:
           - quality
-          - django22
+          - py
     steps:
      - uses: actions/checkout@v2
      - name: Set up Python ${{ matrix.python-version }}

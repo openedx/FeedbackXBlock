@@ -12,7 +12,8 @@ import six
 
 from xblock.core import XBlock
 from xblock.fields import Scope, Integer, String, List, Float
-from xblock.fragment import Fragment
+from web_fragments.fragment import Fragment
+
 
 # We provide default text which is designed to elicit student thought. We'd
 # like instructors to customize this to something highly structured (not
@@ -31,7 +32,7 @@ DEFAULT_SCALETEXT = ["Excellent", "Good", "Average", "Fair", "Poor"]
 # Unicode alt faces are cute, but we do nulls instead for a11y.
 ICON_SETS = {'face': [""]*5,  # u"😁😊😐😞😭",
              'num': u"12345",
-             'midface': [""]*5}  #u"😞😐😊😐😞"}
+             'midface': [""]*5}  # u"😞😐😊😐😞"}
 
 
 @XBlock.needs('i18n')
@@ -304,7 +305,7 @@ class FeedbackXBlock(XBlock):
         """
         # prompt_choice is initialized by student view.
         # Ideally, we'd break this out into a function.
-        prompt = self.get_prompt(self.prompt_choice)
+        prompt = self.get_prompt(self.prompt_choice)  # noqa
 
         # Make sure we're initialized
         self.init_vote_aggregate()
