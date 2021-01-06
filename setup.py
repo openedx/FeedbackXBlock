@@ -33,7 +33,7 @@ setup(
     ],
     entry_points={
         'xblock.v1': [
-            'feedback = feedback:FeedbackXBlock',
+            'feedback = feedback.feedback:FeedbackXBlock',
         ],
         'xblock.test.v0': [
             'feedbacktest = feedbacktests:TestFeedback',

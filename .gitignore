@@ -1,3 +1,7 @@
 *pyc
 rate_xblock.egg-info
 *~
+.coverage
+.tox
+*.egg-info
+__pycache__

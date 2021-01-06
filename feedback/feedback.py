@@ -7,12 +7,13 @@ in the course.
 
 import cgi
 import random
-
 import pkg_resources
+import six
 
 from xblock.core import XBlock
 from xblock.fields import Scope, Integer, String, List, Float
-from xblock.fragment import Fragment
+from web_fragments.fragment import Fragment
+
 
 # We provide default text which is designed to elicit student thought. We'd
 # like instructors to customize this to something highly structured (not
@@ -31,7 +32,7 @@ DEFAULT_SCALETEXT = ["Excellent", "Good", "Average", "Fair", "Poor"]
 # Unicode alt faces are cute, but we do nulls instead for a11y.
 ICON_SETS = {'face': [""]*5,  # u"😁😊😐😞😭",
              'num': u"12345",
-             'midface': [""]*5}  #u"😞😐😊😐😞"}
+             'midface': [""]*5}  # u"😞😐😊😐😞"}
 
 
 @XBlock.needs('i18n')
@@ -264,9 +265,9 @@ class FeedbackXBlock(XBlock):
         prompt = self.get_prompt(0)
         for idx in range(len(prompt['scale_text'])):
             prompt['likert{i}'.format(i=idx)] = prompt['scale_text'][idx]
-        frag = Fragment(unicode(html_str).format(**prompt))
+        frag = Fragment(six.text_type(html_str).format(**prompt))
         js_str = self.resource_string("static/js/src/studio.js")
-        frag.add_javascript(unicode(js_str))
+        frag.add_javascript(six.text_type(js_str))
         frag.initialize_js('FeedbackBlock',
                            {'icon_set': prompt['icon_set']})
         return frag
@@ -304,7 +305,7 @@ class FeedbackXBlock(XBlock):
         """
         # prompt_choice is initialized by student view.
         # Ideally, we'd break this out into a function.
-        prompt = self.get_prompt(self.prompt_choice)
+        prompt = self.get_prompt(self.prompt_choice)  # noqa
 
         # Make sure we're initialized
         self.init_vote_aggregate()
