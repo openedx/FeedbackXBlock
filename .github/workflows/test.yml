@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-18.04
     strategy:
       matrix:
-        python-version: [2.7, 3.5, 3.8]
+        python-version: [3.5, 3.8]
         tox-env:
           - quality
           - py
