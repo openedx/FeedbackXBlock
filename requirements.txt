@@ -2,6 +2,7 @@ bok-choy>=1.1.1
 
 Django>=1.11,<2; python_version < '3'
 Django>=2.2,<2.3; python_version >= '3'
+Django>=3.0,<3.3; python_version >= '3.6'
 
 django-pyfs>=2.2
 flake8>=3.8.4
