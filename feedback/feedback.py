@@ -31,7 +31,7 @@ DEFAULT_SCALETEXT = ["Excellent", "Good", "Average", "Fair", "Poor"]
 
 # Unicode alt faces are cute, but we do nulls instead for a11y.
 ICON_SETS = {'face': [""]*5,  # u"😁😊😐😞😭",
-             'num': u"12345",
+             'num': "12345",
              'midface': [""]*5}  # u"😞😐😊😐😞"}
 
 
@@ -199,7 +199,7 @@ class FeedbackXBlock(XBlock):
         sel_urls = [get_url('selected', i) for i in range(1, 6)]
 
         # Render the Likert scale (not the whole page)
-        scale = u"".join(
+        scale = "".join(
             scale_item.format(scale_text=scale_text,
                               unicode_icon=unicode_icon,
                               idx=idx,
@@ -248,7 +248,7 @@ class FeedbackXBlock(XBlock):
         if self.p_user < self.p:
             frag = Fragment(rendered)
         else:
-            frag = Fragment(u"")
+            frag = Fragment("")
 
         # Finally, we do the standard JS+CSS boilerplate. Honestly, XBlocks
         # ought to have a sane default here.
