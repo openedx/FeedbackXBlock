@@ -1,7 +1,7 @@
 .PHONY: docs upgrade test quality install
 
-REPO_NAME := DoneXBlock
-DOCKER_NAME := donexblock
+REPO_NAME := FeedbackXBlock
+DOCKER_NAME := feedbackxblock
 
 # For opening files in a browser. Use like: $(BROWSER)relative/path/to/file.html
 BROWSER := python -m webbrowser file://$(CURDIR)/
@@ -19,8 +19,8 @@ install-dev:
 install: install-test
 
 quality:  ## Run the quality checks
-	pycodestyle --config=.pep8 done
-	pylint --rcfile=pylintrc done
+	pycodestyle --config=.pep8 feedback
+	pylint --rcfile=pylintrc feedback
 	python setup.py -q sdist
 	twine check dist/*
 
@@ -65,7 +65,7 @@ dev.run: dev.clean dev.build ## Clean, build and run test image
 
 ## Localization targets
 
-WORKING_DIR := done
+WORKING_DIR := feedback
 EXTRACT_DIR := $(WORKING_DIR)/translations/en/LC_MESSAGES
 EXTRACTED_DJANGO := $(EXTRACT_DIR)/django-partial.po
 EXTRACTED_DJANGOJS := $(EXTRACT_DIR)/djangojs-partial.po
