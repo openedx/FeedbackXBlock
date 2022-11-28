@@ -24,8 +24,8 @@ DEFAULT_DEFAULT = "Think about the material, and try to synthesize key " \
                   "lessons learned, as well as key gaps in our presentation."
 DEFAULT_PLACEHOLDER = "Take a little bit of time to reflect here. " \
                       "Research shows that a meaningful synthesis will help " \
-                      "you better understand and remember material from this " \
-                      "course."
+                      "you better understand and remember material from " \
+                      "this course."
 DEFAULT_ICON = "face"
 DEFAULT_SCALETEXT = ["Excellent", "Good", "Average", "Fair", "Poor"]
 
