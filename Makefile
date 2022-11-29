@@ -19,7 +19,7 @@ install-dev:
 install: install-test
 
 quality:  ## Run the quality checks
-	pycodestyle --config=.pep8 feedback
+	pycodestyle --max-line-length=120 --config=.pep8 feedback
 	pylint --rcfile=pylintrc feedback
 	python setup.py -q sdist
 	twine check dist/*
