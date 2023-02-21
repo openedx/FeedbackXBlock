@@ -26,7 +26,7 @@ feedback.
 
 It installs on any Open edX install same as any other xblock:
 
-    pip install -e git+https://github.com/pmitros/FeedbackXBlock.git#egg=rate==0.0
+    pip install -e git+https://github.com/openedx/FeedbackXBlock.git#egg=rate==0.0
 
 From there, add "feedback" to your list of advanced modules, and you're 
 good to go. 
