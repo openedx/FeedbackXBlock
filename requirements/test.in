@@ -9,5 +9,6 @@ edx_lint
 mock
 pycodestyle
 pytest
+pytest-django
 twine
 xblock-sdk
