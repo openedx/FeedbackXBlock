@@ -1,3 +1,4 @@
+# pylint: disable=E1101
 # coding: utf-8
 """
 This is an XBlock designed to allow people to provide feedback on our
@@ -5,7 +6,7 @@ course resources, and to think and synthesize about their experience
 in the course.
 """
 
-import cgi
+import html
 import random
 import pkg_resources
 import six
@@ -24,14 +25,14 @@ DEFAULT_DEFAULT = "Think about the material, and try to synthesize key " \
                   "lessons learned, as well as key gaps in our presentation."
 DEFAULT_PLACEHOLDER = "Take a little bit of time to reflect here. " \
                       "Research shows that a meaningful synthesis will help " \
-                      "you better understand and remember material from this " \
-                      "course."
+                      "you better understand and remember material from " \
+                      "this course."
 DEFAULT_ICON = "face"
 DEFAULT_SCALETEXT = ["Excellent", "Good", "Average", "Fair", "Poor"]
 
 # Unicode alt faces are cute, but we do nulls instead for a11y.
 ICON_SETS = {'face': [""]*5,  # u"😁😊😐😞😭",
-             'num': u"12345",
+             'num': "12345",
              'midface': [""]*5}  # u"😞😐😊😐😞"}
 
 
@@ -138,7 +139,7 @@ class FeedbackXBlock(XBlock):
         prompt.update(self.prompts[index])
         return prompt
 
-    def student_view(self, context=None):
+    def student_view(self, context=None):  # pylint: disable=unused-argument
         """
         The primary view of the FeedbackXBlock, shown to students
         when viewing courses.
@@ -152,7 +153,7 @@ class FeedbackXBlock(XBlock):
         prompt = self.get_prompt()
 
         # Now, we render the FeedbackXBlock.
-        html = self.resource_string("static/html/feedback.html")
+        html_str = self.resource_string("static/html/feedback.html")
 
         # Staff see vote totals, so we have slightly different HTML here.
         if self.vote_aggregate and self.is_staff():
@@ -199,7 +200,7 @@ class FeedbackXBlock(XBlock):
         sel_urls = [get_url('selected', i) for i in range(1, 6)]
 
         # Render the Likert scale (not the whole page)
-        scale = u"".join(
+        scale = "".join(
             scale_item.format(scale_text=scale_text,
                               unicode_icon=unicode_icon,
                               idx=idx,
@@ -231,12 +232,12 @@ class FeedbackXBlock(XBlock):
         else:
             response = ""
         # Now, render the whole page
-        rendered = html.format(self=self,
-                               scale=scale,
-                               freeform_prompt=prompt['freeform'],
-                               likert_prompt=prompt['likert'],
-                               response=response,
-                               placeholder=prompt['placeholder'])
+        rendered = html_str.format(self=self,
+                                   scale=scale,
+                                   freeform_prompt=prompt['freeform'],
+                                   likert_prompt=prompt['likert'],
+                                   response=response,
+                                   placeholder=prompt['placeholder'])
 
         # We initialize self.p_user if not initialized -- this sets whether
         # or not we show it. From there, if it is less than odds of showing,
@@ -248,7 +249,7 @@ class FeedbackXBlock(XBlock):
         if self.p_user < self.p:
             frag = Fragment(rendered)
         else:
-            frag = Fragment(u"")
+            frag = Fragment("")
 
         # Finally, we do the standard JS+CSS boilerplate. Honestly, XBlocks
         # ought to have a sane default here.
@@ -257,7 +258,7 @@ class FeedbackXBlock(XBlock):
         frag.initialize_js('FeedbackXBlock')
         return frag
 
-    def studio_view(self, context):
+    def studio_view(self, context):  # pylint: disable=unused-argument
         """
         Create a fragment used to display the edit view in the Studio.
         """
@@ -273,18 +274,19 @@ class FeedbackXBlock(XBlock):
         return frag
 
     @XBlock.json_handler
-    def studio_submit(self, data, suffix=''):
+    def studio_submit(self,
+                      data, suffix=''):  # pylint: disable=unused-argument
         """
         Called when submitting the form in Studio.
         """
         for item in ['freeform', 'likert', 'placeholder', 'icon_set']:
             item_submission = data.get(item, None)
             if item_submission and len(item_submission) > 0:
-                self.prompts[0][item] = cgi.escape(item_submission)
+                self.prompts[0][item] = html.escape(item_submission)
         for i in range(5):
             likert = data.get('likert{i}'.format(i=i), None)
             if likert and len(likert) > 0:
-                self.prompts[0]['scale_text'][i] = cgi.escape(likert)
+                self.prompts[0]['scale_text'][i] = html.escape(likert)
 
         return {'result': 'success'}
 
@@ -305,7 +307,7 @@ class FeedbackXBlock(XBlock):
         """
         # prompt_choice is initialized by student view.
         # Ideally, we'd break this out into a function.
-        prompt = self.get_prompt(self.prompt_choice)  # noqa
+        prompt = self.get_prompt(self.prompt_choice)  # pylint: disable=unused-variable]
 
         # Make sure we're initialized
         self.init_vote_aggregate()
@@ -318,7 +320,7 @@ class FeedbackXBlock(XBlock):
         self.vote_aggregate[self.user_vote] += 1
 
     @XBlock.json_handler
-    def feedback(self, data, suffix=''):
+    def feedback(self, data, suffix=''):  # pylint: disable=unused-argument
         '''
         Allow students to submit feedback, both numerical and
         qualitative. We only update the specific type of feedback

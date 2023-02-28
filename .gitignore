@@ -1,5 +1,6 @@
 *pyc
 rate_xblock.egg-info
+geckodriver.log
 *~
 .coverage
 .tox
