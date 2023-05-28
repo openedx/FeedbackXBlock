@@ -123,12 +123,17 @@ lxml==4.9.2
     #   -r requirements/base.txt
     #   xblock
     #   xblock-sdk
+mako==1.2.4
+    # via
+    #   -r requirements/base.txt
+    #   xblock-utils
 markdown-it-py==2.2.0
     # via rich
 markupsafe==2.1.2
     # via
     #   -r requirements/base.txt
     #   jinja2
+    #   mako
     #   xblock
 mccabe==0.7.0
     # via pylint
@@ -220,8 +225,11 @@ s3transfer==0.6.0
     # via boto3
 secretstorage==3.3.3
     # via keyring
-simplejson==3.18.3
-    # via xblock-sdk
+simplejson==3.19.1
+    # via
+    #   -r requirements/base.txt
+    #   xblock-sdk
+    #   xblock-utils
 six==1.16.0
     # via
     #   -r requirements/base.txt
@@ -259,6 +267,7 @@ web-fragments==2.0.0
     #   -r requirements/base.txt
     #   xblock
     #   xblock-sdk
+    #   xblock-utils
 webencodings==0.5.1
     # via bleach
 webob==1.8.7
@@ -272,8 +281,13 @@ xblock[django]==1.6.2
     # via
     #   -r requirements/base.txt
     #   xblock-sdk
+    #   xblock-utils
 xblock-sdk==0.5.4
     # via -r requirements/test.in
+xblock-utils==3.0.0
+    # via
+    #   -r requirements/base.txt
+    #   -r requirements/test.in
 zipp==3.15.0
     # via
     #   importlib-metadata

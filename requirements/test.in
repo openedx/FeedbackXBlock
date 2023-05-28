@@ -12,3 +12,4 @@ pytest
 pytest-django
 twine
 xblock-sdk
+xblock-utils
