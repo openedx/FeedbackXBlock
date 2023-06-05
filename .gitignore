@@ -6,3 +6,6 @@ geckodriver.log
 .tox
 *.egg-info
 __pycache__
+
+# Translations
+feedback/conf/locale/*/LC_MESSAGES/*

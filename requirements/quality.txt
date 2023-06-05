@@ -89,10 +89,15 @@ lxml==4.9.2
     #   -r requirements/base.txt
     #   xblock
     #   xblock-sdk
+mako==1.2.4
+    # via
+    #   -r requirements/base.txt
+    #   xblock-utils
 markupsafe==2.1.2
     # via
     #   -r requirements/base.txt
     #   jinja2
+    #   mako
     #   xblock
 mccabe==0.7.0
     # via pylint
@@ -148,8 +153,11 @@ requests==2.28.2
     #   xblock-sdk
 s3transfer==0.6.0
     # via boto3
-simplejson==3.18.3
-    # via xblock-sdk
+simplejson==3.19.1
+    # via
+    #   -r requirements/base.txt
+    #   xblock-sdk
+    #   xblock-utils
 six==1.16.0
     # via
     #   -r requirements/base.txt
@@ -180,6 +188,7 @@ web-fragments==2.0.0
     #   -r requirements/base.txt
     #   xblock
     #   xblock-sdk
+    #   xblock-utils
 webob==1.8.7
     # via
     #   -r requirements/base.txt
@@ -191,8 +200,11 @@ xblock[django]==1.6.2
     # via
     #   -r requirements/base.txt
     #   xblock-sdk
+    #   xblock-utils
 xblock-sdk==0.5.4
     # via -r requirements/quality.in
+xblock-utils==3.0.0
+    # via -r requirements/base.txt
 
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools

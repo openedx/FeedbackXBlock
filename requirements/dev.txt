@@ -24,9 +24,14 @@ lxml==4.9.2
     # via
     #   -r requirements/base.txt
     #   xblock
+mako==1.2.4
+    # via
+    #   -r requirements/base.txt
+    #   xblock-utils
 markupsafe==2.1.2
     # via
     #   -r requirements/base.txt
+    #   mako
     #   xblock
 path==16.6.0
     # via edx-i18n-tools
@@ -45,6 +50,10 @@ pyyaml==6.0
     #   -r requirements/base.txt
     #   edx-i18n-tools
     #   xblock
+simplejson==3.19.1
+    # via
+    #   -r requirements/base.txt
+    #   xblock-utils
 six==1.16.0
     # via
     #   -r requirements/base.txt
@@ -56,11 +65,16 @@ web-fragments==2.0.0
     # via
     #   -r requirements/base.txt
     #   xblock
+    #   xblock-utils
 webob==1.8.7
     # via
     #   -r requirements/base.txt
     #   xblock
 xblock==1.6.2
+    # via
+    #   -r requirements/base.txt
+    #   xblock-utils
+xblock-utils==3.0.0
     # via -r requirements/base.txt
 
 # The following packages are considered to be unsafe in a requirements file:

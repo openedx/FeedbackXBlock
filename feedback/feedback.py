@@ -14,7 +14,9 @@ import six
 from xblock.core import XBlock
 from xblock.fields import Scope, Integer, String, List, Float
 from web_fragments.fragment import Fragment
+from xblockutils.resources import ResourceLoader
 
+resource_loader = ResourceLoader(__name__)
 
 # We provide default text which is designed to elicit student thought. We'd
 # like instructors to customize this to something highly structured (not
@@ -34,6 +36,13 @@ DEFAULT_SCALETEXT = ["Excellent", "Good", "Average", "Fair", "Poor"]
 ICON_SETS = {'face': [""]*5,  # u"😁😊😐😞😭",
              'num': "12345",
              'midface': [""]*5}  # u"😞😐😊😐😞"}
+
+
+def _(text):
+    """
+    Make '_' a no-op, so we can scrape strings
+    """
+    return text
 
 
 @XBlock.needs('i18n')
@@ -58,42 +67,42 @@ class FeedbackXBlock(XBlock):
              'icon_set': DEFAULT_ICON}
         ],
         scope=Scope.settings,
-        help="Freeform user prompt",
+        help=_("Freeform user prompt"),
         xml_node=True
     )
 
     prompt_choice = Integer(
         default=-1, scope=Scope.user_state,
-        help="Random number generated for p. -1 if uninitialized"
+        help=_("Random number generated for p. -1 if uninitialized")
     )
 
     user_vote = Integer(
         default=-1, scope=Scope.user_state,
-        help="How user voted. -1 if didn't vote"
+        help=_("How user voted. -1 if didn't vote")
     )
 
     # pylint: disable=invalid-name
     p = Float(
         default=100, scope=Scope.settings,
-        help="What percent of the time should this show?"
+        help=_("What percent of the time should this show?")
     )
 
     p_user = Float(
         default=-1, scope=Scope.user_state,
-        help="Random number generated for p. -1 if uninitialized"
+        help=_("Random number generated for p. -1 if uninitialized")
     )
 
     vote_aggregate = List(
         default=None, scope=Scope.user_state_summary,
-        help="A list of user votes"
+        help=_("A list of user votes")
     )
 
     user_freeform = String(default="", scope=Scope.user_state,
-                           help="Feedback")
+                           help=_("Feedback"))
 
     display_name = String(
-        display_name="Display Name",
-        default="Provide Feedback",
+        display_name=_("Display Name"),
+        default=_("Provide Feedback"),
         scopde=Scope.settings
     )
 
@@ -152,17 +161,11 @@ class FeedbackXBlock(XBlock):
             self.prompt_choice = random.randint(0, len(self.prompts) - 1)
         prompt = self.get_prompt()
 
-        # Now, we render the FeedbackXBlock.
-        html_str = self.resource_string("static/html/feedback.html")
-
         # Staff see vote totals, so we have slightly different HTML here.
         if self.vote_aggregate and self.is_staff():
-            scale_item = self.resource_string("static/html/staff_item.html")
+            item_templates_file = "templates/html/staff_item.html"
         else:
-            scale_item = self.resource_string("static/html/scale_item.html")
-        # The replace allows us to format the HTML nicely without getting
-        # extra whitespace
-        scale_item = scale_item.replace('\n', '')
+            item_templates_file = "templates/html/scale_item.html"
 
         # We have five Likert fields right now, but we'd like this to
         # be dynamic
@@ -199,16 +202,22 @@ class FeedbackXBlock(XBlock):
         act_urls = [get_url('active', i) for i in range(1, 6)]
         sel_urls = [get_url('selected', i) for i in range(1, 6)]
 
-        # Render the Likert scale (not the whole page)
+        # Prepare the Likert scale fragment to be embedded into the feedback form
         scale = "".join(
-            scale_item.format(scale_text=scale_text,
-                              unicode_icon=unicode_icon,
-                              idx=idx,
-                              active=active,
-                              vote_cnt=vote_cnt,
-                              ina_icon=ina_icon,
-                              act_icon=act_icon,
-                              sel_icon=sel_icon) for
+            resource_loader.render_django_template(
+                item_templates_file,
+                {
+                    'scale_text': scale_text,
+                    'unicode_icon': unicode_icon,
+                    'idx': idx,
+                    'active': active,
+                    'vote_cnt': vote_cnt,
+                    'ina_icon': ina_icon,
+                    'act_icon': act_icon,
+                    'sel_icon': sel_icon
+                },
+                i18n_service=self.runtime.service(self, 'i18n'),
+            ) for
             (scale_text,
              unicode_icon,
              idx,
@@ -231,13 +240,6 @@ class FeedbackXBlock(XBlock):
             response = _("Thank you for voting!")
         else:
             response = ""
-        # Now, render the whole page
-        rendered = html_str.format(self=self,
-                                   scale=scale,
-                                   freeform_prompt=prompt['freeform'],
-                                   likert_prompt=prompt['likert'],
-                                   response=response,
-                                   placeholder=prompt['placeholder'])
 
         # We initialize self.p_user if not initialized -- this sets whether
         # or not we show it. From there, if it is less than odds of showing,
@@ -247,9 +249,21 @@ class FeedbackXBlock(XBlock):
         if self.p_user == -1:
             self.p_user = random.uniform(0, 100)
         if self.p_user < self.p:
-            frag = Fragment(rendered)
+            frag = Fragment()
+            frag.add_content(resource_loader.render_django_template(
+                'templates/html/feedback.html',
+                context={
+                    'self': self,
+                    'scale': scale,
+                    'freeform_prompt': prompt['freeform'],
+                    'likert_prompt': prompt['likert'],
+                    'response': response,
+                    'placeholder': prompt['placeholder']
+                },
+                i18n_service=self.runtime.service(self, 'i18n')
+            ))
         else:
-            frag = Fragment("")
+            frag = Fragment('')
 
         # Finally, we do the standard JS+CSS boilerplate. Honestly, XBlocks
         # ought to have a sane default here.
@@ -262,11 +276,15 @@ class FeedbackXBlock(XBlock):
         """
         Create a fragment used to display the edit view in the Studio.
         """
-        html_str = self.resource_string("static/html/studio_view.html")
         prompt = self.get_prompt(0)
         for idx in range(len(prompt['scale_text'])):
             prompt['likert{i}'.format(i=idx)] = prompt['scale_text'][idx]
-        frag = Fragment(six.text_type(html_str).format(**prompt))
+        frag = Fragment()
+        frag.add_content(resource_loader.render_django_template(
+            'templates/html/studio_view.html',
+            prompt,
+            i18n_service=self.runtime.service(self, 'i18n')
+        ))
         js_str = self.resource_string("static/js/src/studio.js")
         frag.add_javascript(six.text_type(js_str))
         frag.initialize_js('FeedbackBlock',

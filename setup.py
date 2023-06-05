@@ -3,6 +3,8 @@
 import os
 from setuptools import setup
 
+README = open(os.path.join(os.path.dirname(__file__), 'README.rst')).read()
+
 
 def package_data(pkg, roots):
     """Generic function to find package_data.
@@ -24,6 +26,8 @@ setup(
     name='feedback-xblock',
     version='1.1',
     description='XBlock for providing feedback on course content',
+    long_description=README,
+    long_description_content_type='text/x-rst',
     packages=[
         'feedback',
         'feedbacktests'
@@ -39,5 +43,5 @@ setup(
             'feedbacktest = feedbacktests:TestFeedback',
         ]
     },
-    package_data=package_data("feedback", ["static", "public"]),
+    package_data=package_data("feedback", ["static", "public", "templates", "translations"]),
 )
