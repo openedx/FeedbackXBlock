@@ -5,6 +5,7 @@
 
 pycodestyle
 pylint
+twine
 edx_lint
 xblock-sdk
 ddt
