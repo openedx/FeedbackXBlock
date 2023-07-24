@@ -8,7 +8,7 @@ appdirs==1.4.4
     # via fs
 fs==2.4.16
     # via xblock
-lxml==4.9.2
+lxml==4.9.3
     # via xblock
 mako==1.2.4
     # via xblock-utils
@@ -20,7 +20,7 @@ python-dateutil==2.8.2
     # via xblock
 pytz==2023.3
     # via xblock
-pyyaml==6.0
+pyyaml==6.0.1
     # via xblock
 simplejson==3.19.1
     # via xblock-utils
