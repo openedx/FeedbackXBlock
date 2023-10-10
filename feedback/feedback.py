@@ -14,7 +14,7 @@ import six
 from xblock.core import XBlock
 from xblock.fields import Scope, Integer, String, List, Float
 from web_fragments.fragment import Fragment
-from xblockutils.resources import ResourceLoader
+from xblock.utils.resources import ResourceLoader
 
 resource_loader = ResourceLoader(__name__)
 
