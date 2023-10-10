@@ -186,7 +186,6 @@ mako==1.2.4
     # via
     #   -r requirements/test.txt
     #   xblock
-    #   xblock-utils
 markdown-it-py==3.0.0
     # via
     #   -r requirements/test.txt
@@ -350,7 +349,6 @@ simplejson==3.19.2
     #   -r requirements/test.txt
     #   xblock
     #   xblock-sdk
-    #   xblock-utils
 six==1.16.0
     # via
     #   -r requirements/test.txt
@@ -415,7 +413,6 @@ web-fragments==2.1.0
     #   -r requirements/test.txt
     #   xblock
     #   xblock-sdk
-    #   xblock-utils
 webob==1.8.7
     # via
     #   -r requirements/test.txt
@@ -429,10 +426,7 @@ xblock[django]==1.8.1
     # via
     #   -r requirements/test.txt
     #   xblock-sdk
-    #   xblock-utils
 xblock-sdk==0.7.0
-    # via -r requirements/test.txt
-xblock-utils==4.0.0
     # via -r requirements/test.txt
 zipp==3.17.0
     # via
