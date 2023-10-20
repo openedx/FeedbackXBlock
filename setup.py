@@ -41,7 +41,10 @@ setup(
         ],
         'xblock.test.v0': [
             'feedbacktest = feedbacktests:TestFeedback',
-        ]
+        ],
+        "xblock_asides.v1": [
+            "feedback = feedback.feedback:FeedbackXBlockAside",
+        ],
     },
     package_data=package_data("feedback", ["static", "public", "templates", "translations"]),
 )

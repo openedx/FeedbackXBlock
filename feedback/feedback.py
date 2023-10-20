@@ -11,10 +11,15 @@ import random
 import pkg_resources
 import six
 
-from xblock.core import XBlock
+from xblock.core import XBlock, XBlockAside
 from xblock.fields import Scope, Integer, String, List, Float
 from web_fragments.fragment import Fragment
 from xblock.utils.resources import ResourceLoader
+
+from django.template import Context, Template
+from web_fragments.fragment import Fragment
+
+from xmodule.x_module import STUDENT_VIEW
 
 resource_loader = ResourceLoader(__name__)
 
@@ -415,3 +420,79 @@ class FeedbackXBlock(XBlock):
         else:
             # In workbench and similar settings, always return true
             return True
+
+
+@XBlockAside.needs('completion')
+class FeedbackXBlockAside(FeedbackXBlock, XBlockAside):
+    """
+    XBlock Aside version of FeedbackXBlock
+    """
+
+    # The scope user_state_summary is not supported in XBlockAside unless
+    # this XBlockAside is limited to a subsection. This is because the
+    # user_state_summary means the key used is the unit ID.
+    #vote_aggregate = List(
+    #    default=None, scope=Scope.user_state,
+    #    help=_("A list of user votes")
+    #)
+
+    @XBlockAside.aside_for(STUDENT_VIEW)
+    def student_view_aside(
+        self, block, context=None
+    ):  # pylint: disable=unused-argument
+        """
+        Render the aside contents for the student view.
+        """
+        return super().student_view()
+
+    @XBlock.json_handler
+    def feedback(self, data, suffix=''):  # pylint: disable=unused-argument
+        '''
+        Allow students to submit feedback, both numerical and
+        qualitative. We only update the specific type of feedback
+        submitted.
+
+        We return the current state. While this is not used by the
+        client code, it is helpful for testing. For staff users, we
+        also return the aggregate results.
+        '''
+        _ = self.runtime.service(self, 'i18n').ugettext
+
+        if 'freeform' not in data and 'vote' not in data:
+            response = {"success": False,
+                        "response": _("Please vote!")}
+            #self.runtime.publish(self,
+            #                     'edx.feedbackxblock.nothing_provided',
+            #                     {})
+        if 'vote' in data:
+            response = {"success": True,
+                        "response": _("Thank you for voting!")}
+            #self.runtime.publish(self,
+            #                     'edx.feedbackxblock.likert_provided',
+            #                     {'old_vote': self.user_vote,
+            #                      'new_vote': data['vote']})
+            self.vote(data)
+        if 'freeform' in data:
+            response = {"success": True,
+                        "response": _("Thank you for your feedback!")}
+            #self.runtime.publish(self,
+            #                     'edx.feedbackxblock.freeform_provided',
+            #                     {'old_freeform': self.user_freeform,
+            #                      'new_freeform': data['freeform']})
+            self.user_freeform = data['freeform']
+
+        response.update({
+            "freeform": self.user_freeform,
+            "vote": self.user_vote
+        })
+
+        if self.is_staff():
+            response['aggregate'] = self.vote_aggregate
+
+        return response
+
+    @classmethod
+    def should_apply_to_block(cls, block):
+        if getattr(block, 'category', None) != 'vertical':
+            return False
+        return True
