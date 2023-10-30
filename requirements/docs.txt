@@ -16,17 +16,17 @@ asgiref==3.7.2
     # via
     #   -r requirements/base.txt
     #   django
-babel==2.13.0
+babel==2.13.1
     # via
     #   pydata-sphinx-theme
     #   sphinx
 beautifulsoup4==4.12.2
     # via pydata-sphinx-theme
-boto3==1.28.68
+boto3==1.28.73
     # via
     #   -r requirements/base.txt
     #   fs-s3fs
-botocore==1.31.68
+botocore==1.31.73
     # via
     #   -r requirements/base.txt
     #   boto3
@@ -92,7 +92,7 @@ packaging==23.2
     # via
     #   pydata-sphinx-theme
     #   sphinx
-pydata-sphinx-theme==0.14.1
+pydata-sphinx-theme==0.14.2
     # via sphinx-book-theme
 pygments==2.16.1
     # via
