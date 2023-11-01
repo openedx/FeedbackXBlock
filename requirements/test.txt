@@ -63,8 +63,12 @@ django==3.2.23
     # via
     #   -c https://raw.githubusercontent.com/openedx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/base.txt
+    #   django-crum
     #   openedx-django-pyfs
+    #   openedx-filters
     #   xblock-sdk
+django-crum==0.7.9
+    # via -r requirements/base.txt
 docopt==0.6.2
     # via coveralls
 docutils==0.20.1
@@ -148,16 +152,16 @@ openedx-django-pyfs==3.4.0
     # via
     #   -r requirements/base.txt
     #   xblock
+openedx-filters==1.6.0
+    # via -r requirements/base.txt
 packaging==23.2
     # via pytest
 pbr==6.0.0
     # via stevedore
 pkginfo==1.9.6
     # via twine
-platformdirs==3.11.0
-    # via
-    #   -c https://raw.githubusercontent.com/openedx/edx-lint/master/edx_lint/files/common_constraints.txt
-    #   pylint
+platformdirs==4.1.0
+    # via pylint
 pluggy==1.3.0
     # via pytest
 pycodestyle==2.11.1

@@ -1,7 +1,7 @@
 """Setup for feedback XBlock."""
 
 import os
-from setuptools import setup
+from setuptools import setup, find_packages
 
 README = open(os.path.join(os.path.dirname(__file__), 'README.rst')).read()
 
@@ -28,10 +28,14 @@ setup(
     description='XBlock for providing feedback on course content',
     long_description=README,
     long_description_content_type='text/x-rst',
-    packages=[
-        'feedback',
-        'feedbacktests'
-    ],
+    packages=find_packages(
+        include=[
+            "feedback",
+            "feedback.*",
+            "feedbacktests.*",
+        ],
+        exclude=["*tests"],
+    ),
     install_requires=[
         'XBlock',
     ],
@@ -45,6 +49,5 @@ setup(
          "lms.djangoapp": [
             "feedback = feedback.apps:FeedbackConfig",
         ],
-    },
-    package_data=package_data("feedback", ["static", "public", "templates", "translations"]),
+    }
 )

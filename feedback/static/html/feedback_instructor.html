@@ -1,0 +1,24 @@
+{% load i18n %}
+
+<div class="feedback-instructor-wrapper">
+  <ul>
+    {% for block in blocks %}
+    <li>
+      <div class="feedback-block">
+        <div class="feedback-block-title">{{ block.display_name }}</div>
+        <div class="feedback-block-prompts">{{ block.prompts }}</div>
+        <div class="feedback-block-vote-aggregate">Results:
+          {% for vote_aggregate in block.vote_aggregate %}
+            {{ vote_aggregate.scale_text }}: {{ vote_aggregate.count }}
+          {% endfor %}
+        </div>
+        <div class="feedback-block-answers">
+          {% for answer in block.answers %}
+          <div class="feedback-block-answer"> * {{ answer.username }}: {{ answer.user_freeform }}. Vote: {{ answer.user_vote }}</div>
+          {% endfor %}
+        </div>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+</div>

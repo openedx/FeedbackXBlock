@@ -6,6 +6,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.22/ref/settings/
 """
 
+
 def plugin_settings(settings):  # pylint: disable=unused-argument
     """
     Set of plugin settings used by the Open Edx platform.
