@@ -36,9 +36,12 @@ DEFAULT_ICON = "face"
 DEFAULT_SCALETEXT = ["Excellent", "Good", "Average", "Fair", "Poor"]
 
 # Unicode alt faces are cute, but we do nulls instead for a11y.
-ICON_SETS = {'face': [""]*5,  # u"😁😊😐😞😭",
-             'num': "12345",
-             'midface': [""]*5}  # u"😞😐😊😐😞"}
+ICON_SETS = {
+    "face": [""] * 5,  # u"😁😊😐😞😭",
+    "num": "12345",
+    "midface": [""] * 5,  # u"😞😐😊😐😞"
+    "star": [""] * 5,  # u "☆☆☆☆☆"
+}
 
 
 def _(text):
@@ -213,15 +216,15 @@ class FeedbackXBlock(XBlock):
             styling. For example, at the time of this writing, we do
             selected through CSS, rather than by using those icons.
             '''
-            templates = {'inactive': 'public/default_icons/i{set}{i}.png',
-                         'active': 'public/default_icons/a{set}{i}.png',
-                         'selected': 'public/default_icons/s{set}{i}.png'}
+            templates = {
+                'inactive': 'public/default_icons/i{set}{i}.png',
+                'active': 'public/default_icons/a{set}{i}.png',
+            }
             template = templates[icon_type]
             icon_file = template.format(i=i, set=prompt['icon_set'])
             return self.runtime.local_resource_url(self, icon_file)
         ina_urls = [get_url('inactive', i) for i in range(1, 6)]
         act_urls = [get_url('active', i) for i in range(1, 6)]
-        sel_urls = [get_url('selected', i) for i in range(1, 6)]
 
         # Prepare the Likert scale fragment to be embedded into the feedback form
         scale = "".join(
@@ -235,7 +238,6 @@ class FeedbackXBlock(XBlock):
                     'vote_cnt': vote_cnt,
                     'ina_icon': ina_icon,
                     'act_icon': act_icon,
-                    'sel_icon': sel_icon
                 },
                 i18n_service=self.runtime.service(self, 'i18n'),
             ) for
@@ -245,16 +247,14 @@ class FeedbackXBlock(XBlock):
              active,
              vote_cnt,
              act_icon,
-             ina_icon,
-             sel_icon) in
+             ina_icon,) in
             zip(prompt['scale_text'],
                 ICON_SETS[(prompt['icon_set'])],
                 indexes,
                 active_vote,
                 votes,
                 act_urls,
-                ina_urls,
-                sel_urls)
+                ina_urls)
         )
         if self.user_vote != -1:
             _ = self.runtime.service(self, 'i18n').ugettext
