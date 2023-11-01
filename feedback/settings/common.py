@@ -11,6 +11,7 @@ INSTALLED_APPS = [
     "feedback",
 ]
 
+
 def plugin_settings(settings):
     """
     Set of plugin settings used by the Open Edx platform.

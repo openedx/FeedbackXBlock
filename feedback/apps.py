@@ -4,6 +4,7 @@ forum_email_notifier Django application initialization.
 
 from django.apps import AppConfig
 
+
 class FeedbackConfig(AppConfig):
     """
     Configuration for the feedback Django application.

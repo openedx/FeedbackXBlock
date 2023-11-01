@@ -20,11 +20,11 @@ astroid==3.0.1
     #   pylint-celery
 binaryornot==0.4.4
     # via cookiecutter
-boto3==1.28.73
+boto3==1.28.75
     # via
     #   -r requirements/base.txt
     #   fs-s3fs
-botocore==1.31.73
+botocore==1.31.75
     # via
     #   -r requirements/base.txt
     #   boto3
@@ -35,7 +35,7 @@ cffi==1.16.0
     # via cryptography
 chardet==5.2.0
     # via binaryornot
-charset-normalizer==3.3.1
+charset-normalizer==3.3.2
     # via requests
 click==8.1.7
     # via
@@ -59,12 +59,16 @@ ddt==1.6.0
     # via -r requirements/test.in
 dill==0.3.7
     # via pylint
-django==3.2.22
+django==3.2.23
     # via
     #   -c https://raw.githubusercontent.com/openedx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/base.txt
+    #   django-crum
     #   openedx-django-pyfs
+    #   openedx-filters
     #   xblock-sdk
+django-crum==0.7.9
+    # via -r requirements/base.txt
 docopt==0.6.2
     # via coveralls
 docutils==0.20.1
@@ -148,6 +152,8 @@ openedx-django-pyfs==3.4.0
     # via
     #   -r requirements/base.txt
     #   xblock
+openedx-filters==1.6.0
+    # via -r requirements/base.txt
 packaging==23.2
     # via pytest
 pbr==5.11.1
@@ -186,7 +192,7 @@ pytest==7.4.3
     # via
     #   -r requirements/test.in
     #   pytest-django
-pytest-django==4.5.2
+pytest-django==4.6.0
     # via -r requirements/test.in
 python-dateutil==2.8.2
     # via

@@ -8,9 +8,12 @@ from django.template import Context, Template
 from openedx_filters import PipelineStep
 from web_fragments.fragment import Fragment
 
-from feedback.edxapp_wrapper.courseware import get_object_by_usage_id, load_single_xblock
-from feedback.edxapp_wrapper.xmodule import modulestore
+from feedback.edxapp_wrapper.courseware import (
+    get_object_by_usage_id,
+    load_single_xblock,
+)
 from feedback.edxapp_wrapper.student_models import CourseEnrollment
+from feedback.edxapp_wrapper.xmodule import modulestore
 
 TEMPLATE_ABSOLUTE_PATH = "/instructor_dashboard/"
 BLOCK_CATEGORY = "feedback_instructor"
@@ -57,20 +60,22 @@ class AddFeedbackTab(PipelineStep):
         }
         context["sections"].append(section_data)
 
-        return {
-            "context": context
-        }
+        return {"context": context}
 
     def resource_string(self, path):
         """Handy helper for getting resources from our kit."""
-        data = pkg_resources.resource_string(
-            "feedback", path
-        )
+        data = pkg_resources.resource_string("feedback", path)
         return data.decode("utf8")
 
 
 def load_blocks(request, course):
+    """
+    Load feedback blocks for a given course for all enrolled students.
 
+    Arguments:
+        request (HttpRequest): Django request object.
+        course (CourseLocator): Course locator object.
+    """
     course_id = str(course.id)
 
     feedback_blocks = modulestore().get_items(
@@ -78,41 +83,71 @@ def load_blocks(request, course):
     )
 
     blocks = []
-    students = CourseEnrollment.objects.filter(course_id=course_id).values_list("user_id", "user__username")
+    students = CourseEnrollment.objects.filter(course_id=course_id).values_list(
+        "user_id", "user__username"
+    )
     for feedback_block in feedback_blocks:
         block = get_object_by_usage_id(
-            request, str(course.id), str(feedback_block.location),
-            disable_staff_debug_info=True, course=course
+            request,
+            str(course.id),
+            str(feedback_block.location),
+            disable_staff_debug_info=True,
+            course=course,
         )
-        answers = load_xblock_answers(request, students, str(course.location.course_key), str(feedback_block.location), course)
+        answers = load_xblock_answers(
+            request,
+            students,
+            str(course.location.course_key),
+            str(feedback_block.location),
+            course,
+        )
 
         vote_aggregate = []
         for i, vote in enumerate(block.vote_aggregate):
-            vote_aggregate.append({
-                "scale_text": block.get_prompt()["scale_text"][i],
-                "count": vote,
-            })
+            vote_aggregate.append(
+                {
+                    "scale_text": block.get_prompt()["scale_text"][i],
+                    "count": vote,
+                }
+            )
 
-        blocks.append({
-            "display_name": block.display_name,
-            "prompts": block.prompts,
-            "vote_aggregate": vote_aggregate,
-            "answers": answers,
-        })
+        blocks.append(
+            {
+                "display_name": block.display_name,
+                "prompts": block.prompts,
+                "vote_aggregate": vote_aggregate,
+                "answers": answers,
+            }
+        )
     return blocks
 
 
 def load_xblock_answers(request, students, course_id, block_id, course):
-    """Load answers for a given feedback xblock instance."""
+    """
+    Load answers for a given feedback xblock instance.
+
+    Arguments:
+        request (HttpRequest): Django request object.
+        students (list): List of enrolled students.
+        course_id (str): Course ID.
+        block_id (str): Block ID.
+        course (CourseDescriptor): Course descriptor.
+    """
     answers = []
     for user_id, username in students:
-        student_xblock_instance = load_single_xblock(request, user_id, course_id, block_id, course)
+        student_xblock_instance = load_single_xblock(
+            request, user_id, course_id, block_id, course
+        )
         if student_xblock_instance:
             prompt = student_xblock_instance.get_prompt()
-            answers.append({
-                "username": username,
-                "user_vote": prompt["scale_text"][student_xblock_instance.user_vote],
-                "user_freeform": student_xblock_instance.user_freeform,
-            })
+            answers.append(
+                {
+                    "username": username,
+                    "user_vote": prompt["scale_text"][
+                        student_xblock_instance.user_vote
+                    ],
+                    "user_freeform": student_xblock_instance.user_freeform,
+                }
+            )
 
     return answers

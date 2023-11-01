@@ -2,3 +2,5 @@
 -c constraints.txt
 
 Xblock[django]
+django_crum
+openedx_filters
