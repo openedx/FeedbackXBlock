@@ -36,8 +36,8 @@ DEFAULT_SCALETEXT = ["Excellent", "Good", "Average", "Fair", "Poor"]
 ICON_SETS = {
     'face': [""]*5,  # u"😁😊😐😞😭",
     'num': "12345",
-    'midface': [""]*5, # u"😞😐😊😐😞"
-    'star': [""]*5, # u "☆☆☆☆☆"
+    'midface': [""]*5,  # u"😞😐😊😐😞"
+    'star': [""]*5,  # u "☆☆☆☆☆"
 }
 
 
@@ -195,8 +195,10 @@ class FeedbackXBlock(XBlock):
             styling. For example, at the time of this writing, we do
             selected through CSS, rather than by using those icons.
             '''
-            templates = {'inactive': 'public/default_icons/i{set}{i}.png',
-                         'active': 'public/default_icons/a{set}{i}.png',}
+            templates = {
+                'inactive': 'public/default_icons/i{set}{i}.png',
+                'active': 'public/default_icons/a{set}{i}.png',
+            }
             template = templates[icon_type]
             icon_file = template.format(i=i, set=prompt['icon_set'])
             return self.runtime.local_resource_url(self, icon_file)
