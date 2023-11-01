@@ -33,9 +33,12 @@ DEFAULT_ICON = "face"
 DEFAULT_SCALETEXT = ["Excellent", "Good", "Average", "Fair", "Poor"]
 
 # Unicode alt faces are cute, but we do nulls instead for a11y.
-ICON_SETS = {'face': [""]*5,  # u"😁😊😐😞😭",
-             'num': "12345",
-             'midface': [""]*5}  # u"😞😐😊😐😞"}
+ICON_SETS = {
+    'face': [""]*5,  # u"😁😊😐😞😭",
+    'num': "12345",
+    'midface': [""]*5, # u"😞😐😊😐😞"
+    'star': [""]*5, # u "☆☆☆☆☆"
+}
 
 
 def _(text):
