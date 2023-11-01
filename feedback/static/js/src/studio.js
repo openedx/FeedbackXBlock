@@ -2,6 +2,7 @@ function FeedbackBlock(runtime, element, data) {
     // When the user asks to save, read the form data and send it via AJAX
     $(element).find('.save-button').bind('click', function() {
 	var handlerUrl = runtime.handlerUrl(element, 'studio_submit');
+
 	var form_data = {
 	    likert: $(element).find('input[name=likert]').val(),
 	    likert0: $(element).find('input[name=likert0]').val(),
@@ -11,6 +12,10 @@ function FeedbackBlock(runtime, element, data) {
 	    likert4: $(element).find('input[name=likert4]').val(),
 	    freeform: $(element).find('input[name=freeform]').val(),
 	    placeholder: $(element).find('input[name=placeholder]').val(),
+		display_name: $(element).find('input[name=display_name]').val(),
+		voting_message: $(element).find('input[name=voting_message]').val(),
+		feedback_message: $(element).find('input[name=feedback_message]').val(),
+		show_aggregate_to_students: $(element).find('select[name=show_aggregate_to_students]').val() === 'True',
 	    icon_set: $(element).find('select[name=icon_set]').val()
 	};
 	runtime.notify('save', {state: 'start'});

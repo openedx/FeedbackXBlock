@@ -12,7 +12,7 @@ import pkg_resources
 import six
 
 from xblock.core import XBlock
-from xblock.fields import Scope, Integer, String, List, Float
+from xblock.fields import Scope, Integer, String, List, Float, Boolean
 from web_fragments.fragment import Fragment
 from xblock.utils.resources import ResourceLoader
 
@@ -109,6 +109,24 @@ class FeedbackXBlock(XBlock):
         scopde=Scope.settings
     )
 
+    voting_message = String(
+        display_name=_("Voting message"),
+        default=_("Thank you for voting!"),
+        scope=Scope.settings
+    )
+
+    feedback_message = String(
+        display_name=_("Feedback message"),
+        default=_("Thank you for your feedback!"),
+        scope=Scope.settings
+    )
+
+    show_aggregate_to_students = Boolean(
+        display_name=_("Show aggregate to students"),
+        default=False,
+        scope=Scope.settings
+    )
+
     @classmethod
     def resource_string(cls, path):
         """Handy helper for getting resources from our kit."""
@@ -165,7 +183,7 @@ class FeedbackXBlock(XBlock):
         prompt = self.get_prompt()
 
         # Staff see vote totals, so we have slightly different HTML here.
-        if self.vote_aggregate and self.is_staff():
+        if self.vote_aggregate and (self.show_aggregate_to_students or self.is_staff()):
             item_templates_file = "templates/html/staff_item.html"
         else:
             item_templates_file = "templates/html/scale_item.html"
@@ -237,7 +255,7 @@ class FeedbackXBlock(XBlock):
         )
         if self.user_vote != -1:
             _ = self.runtime.service(self, 'i18n').ugettext
-            response = _("Thank you for voting!")
+            response = self.voting_message
         else:
             response = ""
 
@@ -280,6 +298,13 @@ class FeedbackXBlock(XBlock):
         for idx in range(len(prompt['scale_text'])):
             prompt['likert{i}'.format(i=idx)] = prompt['scale_text'][idx]
         frag = Fragment()
+
+        prompt.update({
+            "display_name": self.display_name,
+            "voting_message": self.voting_message,
+            "feedback_message": self.feedback_message,
+            "show_aggregate_to_students": self.show_aggregate_to_students,
+        })
         frag.add_content(resource_loader.render_django_template(
             'templates/html/studio_view.html',
             prompt,
@@ -305,6 +330,11 @@ class FeedbackXBlock(XBlock):
             likert = data.get('likert{i}'.format(i=i), None)
             if likert and len(likert) > 0:
                 self.prompts[0]['scale_text'][i] = html.escape(likert)
+
+        self.display_name = data.get('display_name')
+        self.voting_message = data.get('voting_message')
+        self.feedback_message = data.get('feedback_message')
+        self.show_aggregate_to_students = data.get("show_aggregate_to_students")
 
         return {'result': 'success'}
 
@@ -358,7 +388,7 @@ class FeedbackXBlock(XBlock):
                                  {})
         if 'vote' in data:
             response = {"success": True,
-                        "response": _("Thank you for voting!")}
+                        "response": self.voting_message}
             self.runtime.publish(self,
                                  'edx.feedbackxblock.likert_provided',
                                  {'old_vote': self.user_vote,
@@ -366,7 +396,7 @@ class FeedbackXBlock(XBlock):
             self.vote(data)
         if 'freeform' in data:
             response = {"success": True,
-                        "response": _("Thank you for your feedback!")}
+                        "response": self.feedback_message}
             self.runtime.publish(self,
                                  'edx.feedbackxblock.freeform_provided',
                                  {'old_freeform': self.user_freeform,
