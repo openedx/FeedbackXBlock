@@ -41,7 +41,10 @@ setup(
         ],
         'xblock.test.v0': [
             'feedbacktest = feedbacktests:TestFeedback',
-        ]
+        ],
+         "lms.djangoapp": [
+            "feedback = feedback.apps:FeedbackConfig",
+        ],
     },
     package_data=package_data("feedback", ["static", "public", "templates", "translations"]),
 )
