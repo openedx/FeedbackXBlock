@@ -31,3 +31,6 @@ class FeedbackConfig(AppConfig):
         Perform initialization tasks required for the forum_email_notifier Django application.
         """
         super().ready()
+        from feedback.extensions import (  # noqa pylint: disable=unused-import, import-outside-toplevel
+            filters,
+        )

@@ -17,3 +17,8 @@ def plugin_settings(settings):
     More info: https://github.com/edx/edx-platform/blob/master/openedx/core/djangoapps/plugins/README.rst
     """
     settings.MAKO_TEMPLATE_DIRS_BASE.append(ROOT_DIRECTORY / "templates")
+
+    # Backend settings
+    settings.FEEDBACK_COURSEWARE_BACKEND = "feedback.edxapp_wrapper.backends.courseware_p_v1"
+    settings.FEEDBACK_XMODULE_BACKEND = "feedback.edxapp_wrapper.backends.xmodule_p_v1"
+    settings.FEEDBACK_COURSE_ENROLLMENT_MODEL_BACKEND = "feedback.edxapp_wrapper.backends.student_models_p_v1"
