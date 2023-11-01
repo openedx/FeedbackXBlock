@@ -20,7 +20,8 @@ def test_studio_view(feedback_xblock):
 def test_studio_submit(feedback_xblock):
     """ Test the FeedbackXBlock's save action """
     request_body = b"""{
-        "display_name": "foo"
+        "display_name": "foo",
+        "voting_message": "bar"
     }"""
     request = Mock(method='POST', body=request_body)
     response = feedback_xblock.studio_submit(request)
