@@ -8,10 +8,9 @@ from django.template import Context, Template
 from openedx_filters import PipelineStep
 from web_fragments.fragment import Fragment
 
-from lms.djangoapps.courseware.module_render import get_module_by_usage_id  # pylint: disable=import-error
-from lms.djangoapps.courseware.block_render import load_single_xblock  # pylint: disable=import-error
+from lms.djangoapps.courseware.block_render import load_single_xblock, get_block_by_usage_id  # pylint: disable=import-error
 from xmodule.modulestore.django import modulestore  # pylint: disable=import-error
-from common.djangoapps.student.models import CourseEnrollment
+from common.djangoapps.student.models import CourseEnrollment  # pylint: disable=import-error
 
 TEMPLATE_ABSOLUTE_PATH = "/instructor_dashboard/"
 BLOCK_CATEGORY = "feedback_instructor"
@@ -85,7 +84,7 @@ def load_blocks(request, course):
         "user_id", "user__username"
     )
     for feedback_block in feedback_blocks:
-        block, _ = get_module_by_usage_id(
+        block, _ = get_block_by_usage_id(
             request,
             str(course.id),
             str(feedback_block.location),
