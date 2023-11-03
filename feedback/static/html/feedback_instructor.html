@@ -1,24 +1,30 @@
 {% load i18n %}
 
 <div class="feedback-instructor-wrapper">
-  <ul>
+  <table>
+    <tr>
+      <th>Location</th>
+      <th>Numbers of ratings</th>
+      <th>Average rating</th>
+      <th>Feedback received</th>
+    </tr>
     {% for block in blocks %}
-    <li>
-      <div class="feedback-block">
-        <div class="feedback-block-title">{{ block.display_name }}</div>
-        <div class="feedback-block-prompts">{{ block.prompts }}</div>
-        <div class="feedback-block-vote-aggregate">Results:
+    <tr>
+      <td><a href="{{ block.url }}">{{ block.parent }}</a></td>
+      <td>
+        <ul>
           {% for vote_aggregate in block.vote_aggregate %}
-            {{ vote_aggregate.scale_text }}: {{ vote_aggregate.count }}
+          <li>{{ vote_aggregate.scale_text }}: {{ vote_aggregate.count }}</li>
           {% endfor %}
-        </div>
-        <div class="feedback-block-answers">
-          {% for answer in block.answers %}
-          <div class="feedback-block-answer"> * {{ answer.username }}: {{ answer.user_freeform }}. Vote: {{ answer.user_vote }}</div>
-          {% endfor %}
-        </div>
-      </div>
-    </li>
+        </ul>
+      </td>
+      <td>{{ block.average_rating }}</td>
+      <td>
+        {% for feedback in block.answers %}
+        <div class="feedback-block-answer"> * {{ feedback.user_freeform }}. Vote: {{ feedback.user_vote }}</div>
+        {% endfor %}
+      </td>
+    </tr>
     {% endfor %}
-  </ul>
+  </table>
 </div>

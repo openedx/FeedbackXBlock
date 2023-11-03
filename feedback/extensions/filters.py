@@ -11,6 +11,7 @@ from web_fragments.fragment import Fragment
 from lms.djangoapps.courseware.block_render import load_single_xblock, get_block_by_usage_id  # pylint: disable=import-error
 from xmodule.modulestore.django import modulestore  # pylint: disable=import-error
 from common.djangoapps.student.models import CourseEnrollment  # pylint: disable=import-error
+from cms.djangoapps.contentstore.utils import get_lms_link_for_item  # pylint: disable=import-error
 
 TEMPLATE_ABSOLUTE_PATH = "/instructor_dashboard/"
 BLOCK_CATEGORY = "feedback_instructor"
@@ -100,6 +101,8 @@ def load_blocks(request, course):
         )
 
         vote_aggregate = []
+        total_votes = 0
+        total_answers = 0
 
         if not block.vote_aggregate:
             block.vote_aggregate = [0] * len(block.get_prompt()["scale_text"])
@@ -110,6 +113,21 @@ def load_blocks(request, course):
                     "count": vote,
                 }
             )
+            total_answers += vote
+            total_votes += vote * (5-i)
+
+        try:
+            average_rating = total_votes/total_answers
+        except ZeroDivisionError:
+            average_rating = 0
+
+        parent, _ = get_block_by_usage_id(
+            request,
+            str(course.id),
+            str(feedback_block.parent),
+            disable_staff_debug_info=True,
+            course=course,
+        )
 
         blocks.append(
             {
@@ -117,6 +135,9 @@ def load_blocks(request, course):
                 "prompts": block.prompts,
                 "vote_aggregate": vote_aggregate,
                 "answers": answers,
+                "parent": parent.display_name,
+                "average_rating": average_rating,
+                "url": get_lms_link_for_item(block.location),
             }
         )
     return blocks
