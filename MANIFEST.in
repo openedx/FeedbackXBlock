@@ -1,0 +1,7 @@
+include CHANGELOG.rst
+include LICENSE.txt
+include README.rst
+include requirements/base.in
+include requirements/constraints.txt
+recursive-include feedback/locale *
+recursive-include feedback *.html *.png *.gif *.js *.css *.jpg *.jpeg *.svg *.txt

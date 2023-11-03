@@ -36,6 +36,7 @@ setup(
         ],
         exclude=["*tests"],
     ),
+    include_package_data=True,
     install_requires=[
         'XBlock',
     ],
@@ -49,5 +50,6 @@ setup(
          "lms.djangoapp": [
             "feedback = feedback.apps:FeedbackConfig",
         ],
-    }
+    },
+    package_data=package_data("feedback", ["static", "public", "templates"]),
 )
