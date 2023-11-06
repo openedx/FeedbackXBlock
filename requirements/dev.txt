@@ -12,16 +12,16 @@ asgiref==3.7.2
     # via
     #   -r requirements/base.txt
     #   django
-boto3==1.28.73
+boto3==1.28.78
     # via
     #   -r requirements/base.txt
     #   fs-s3fs
-botocore==1.31.73
+botocore==1.31.78
     # via
     #   -r requirements/base.txt
     #   boto3
     #   s3transfer
-django==3.2.22
+django==3.2.23
     # via
     #   -r requirements/base.txt
     #   edx-i18n-tools
