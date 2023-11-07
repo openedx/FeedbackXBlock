@@ -12,3 +12,7 @@ INSTALLED_APPS = [
 'django.contrib.contenttypes',
 'workbench',
 ]
+
+FEATURES = {
+    "ENABLE_FEEDBACK_INSTRUCTOR_VIEW": True,
+}

@@ -9,21 +9,16 @@ from openedx_filters import PipelineStep
 from web_fragments.fragment import Fragment
 
 try:
-    from lms.djangoapps.courseware.block_render import load_single_xblock, get_block_by_usage_id  # noqa
+    from cms.djangoapps.contentstore.utils import get_lms_link_for_item
+    from lms.djangoapps.courseware.block_render import (get_block_by_usage_id,
+                                                        load_single_xblock)
+    from openedx.core.djangoapps.enrollments.data import get_user_enrollments
+    from xmodule.modulestore.django import modulestore
 except ImportError:
     load_single_xblock = None
     get_block_by_usage_id = None
-try:
-    from xmodule.modulestore.django import modulestore
-except ImportError:
     modulestore = None
-try:
-    from openedx.core.djangoapps.enrollments.data import get_user_enrollments
-except ImportError:
     get_user_enrollments = None
-try:
-    from cms.djangoapps.contentstore.utils import get_lms_link_for_item
-except ImportError:
     get_lms_link_for_item = None
 
 TEMPLATE_ABSOLUTE_PATH = "/instructor_dashboard/"
@@ -48,7 +43,9 @@ class AddFeedbackTab(PipelineStep):
             }
 
         course = context["course"]
-        template = Template(self.resource_string(f"static/html/{TEMPLATE_CATEGORY}.html"))
+        template = Template(
+            self.resource_string(f"static/html/{TEMPLATE_CATEGORY}.html")
+        )
 
         request = get_current_request()
 
@@ -61,7 +58,9 @@ class AddFeedbackTab(PipelineStep):
         html = template.render(Context(context))
         frag = Fragment(html)
         frag.add_css(self.resource_string(f"static/css/{TEMPLATE_CATEGORY}.css"))
-        frag.add_javascript(self.resource_string(f"static/js/src/{TEMPLATE_CATEGORY}.js"))
+        frag.add_javascript(
+            self.resource_string(f"static/js/src/{TEMPLATE_CATEGORY}.js")
+        )
 
         section_data = {
             "fragment": frag,
@@ -95,9 +94,11 @@ def load_blocks(request, course):
     )
 
     blocks = []
-    students = get_user_enrollments(course_id).values_list(
-        "user_id", "user__username"
-    )
+
+    if not feedback_blocks:
+        return []
+
+    students = get_user_enrollments(course_id).values_list("user_id", "user__username")
     for feedback_block in feedback_blocks:
         block, _ = get_block_by_usage_id(
             request,
@@ -128,7 +129,7 @@ def load_blocks(request, course):
                 }
             )
             total_answers += vote
-            total_votes += vote * (5-index)
+            total_votes += vote * (5 - index)
 
         try:
             average_rating = total_votes / total_answers
@@ -175,12 +176,17 @@ def load_xblock_answers(request, students, course_id, block_id, course):
         )
         if student_xblock_instance:
             prompt = student_xblock_instance.get_prompt()
-            if student_xblock_instance.user_vote == -1 and not student_xblock_instance.user_freeform:
+            if (
+                student_xblock_instance.user_vote == -1
+                and not student_xblock_instance.user_freeform
+            ):
                 continue
             answers.append(
                 {
                     "username": username,
-                    "user_vote": prompt["scale_text"][student_xblock_instance.user_vote],
+                    "user_vote": prompt["scale_text"][
+                        student_xblock_instance.user_vote
+                    ],
                     "user_freeform": student_xblock_instance.user_freeform,
                 }
             )
