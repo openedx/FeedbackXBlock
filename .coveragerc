@@ -2,4 +2,6 @@
 [run]
 data_file = .coverage
 source = feedback
-omit = */urls.py
+omit =
+    */urls.py
+    */settings/*

@@ -51,5 +51,5 @@ setup(
             "feedback = feedback.apps:FeedbackConfig",
         ],
     },
-    package_data=package_data("feedback", ["static", "public", "templates"]),
+    package_data=package_data("feedback", ["static", "public", "templates", "translations"]),
 )

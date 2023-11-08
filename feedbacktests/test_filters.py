@@ -25,7 +25,7 @@ class TestFilters(TestCase):
     @patch("feedback.extensions.filters.modulestore")
     def test_run_filter_without_blocks(self, modulestore_mock, get_block_by_usage_id_mock, get_user_enrollments_mock):
         """
-        Check the filter is not executed when there are no LimeSurvey blocks in the course.
+        Check the filter is not executed when there are no Feedback blocks in the course.
 
         Expected result:
             - The context is returned without modifications.
@@ -48,10 +48,10 @@ class TestFilters(TestCase):
     def test_run_filter(self, modulestore_mock, load_single_xblock_mock, get_block_by_usage_id_mock, get_user_enrollments_mock,
                         get_lms_link_for_item_mock):
         """
-        Check the filter is executed when there are LimeSurvey blocks in the course.
+        Check the filter is executed when there are Feedback blocks in the course.
 
         Expected result:
-            - The context is returned with the LimeSurvey blocks information.
+            - The context is returned with the Feedback blocks information.
         """
         modulestore_mock().get_items.return_value = [Mock(location="test-location")]
         context = {"course": Mock(id="test-course-id"), "sections": []}
