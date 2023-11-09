@@ -50,7 +50,7 @@
     <li class="field comp-setting-entry is-set">
       <div class="wrapper-comp-setting">
         <label class="label setting-label" for="placeholder" aria-describedby="placeholder_span">{% trans "Freeform placeholder"%}</label>
-        <input class="input setting-input" name="placeholder" id="placeholder" value="{{placeholder}}" type="text" />
+        <input class="input setting-input" name="placeholder" id="placeholder" value="{% trans placeholder %}" type="text" />
       </div>
       <span id="placeholder_span" class="tip setting-help">{% trans "This is shown as grayed out text before the student has answered." %}</span>
     </li>
@@ -70,7 +70,7 @@
     <li class="field comp-setting-entry is-set">
       <div class="wrapper-comp-setting">
         <label class="label setting-label" for="likert" aria-describedby="lik_example">{% trans "Likert prompt" %}</label>
-        <input class="input setting-input" name="likert" id="likert" value="{{likert}}" type="text" />
+        <input class="input setting-input" name="likert" id="likert" value="{% trans likert %}" type="text" />
       </div>
       <span id="lik_example" class="tip setting-help">{% trans "Example: Please rate your overall experience with this section." %}</span>
     </li>
@@ -78,7 +78,7 @@
     <li class="field comp-setting-entry is-set">
       <div class="wrapper-comp-setting">
         <label class="label setting-label" for="likert0" aria-describedby="lik_excel">{% trans "Likert option 1" %}</label>
-        <input class="input setting-input" name="likert0" id="likert0" value="{{likert0}}" type="text" />
+        <input class="input setting-input" name="likert0" id="likert0" value="{% trans likert0 %}" type="text" />
       </div>
       <span id="lik_excel" class="tip setting-help">{% trans "Example: Excellent!" %}</span>
     </li>
@@ -86,7 +86,7 @@
     <li class="field comp-setting-entry is-set">
       <div class="wrapper-comp-setting">
         <label class="label setting-label" for="likert1" aria-describedby="lik_good">{% trans "Likert option 2" %}</label>
-        <input class="input setting-input" name="likert1" id="likert1" value="{{likert1}}" type="text" />
+        <input class="input setting-input" name="likert1" id="likert1" value="{% trans likert1 %}" type="text" />
       </div>
       <span id="lik_good" class="tip setting-help">{% trans "Example: Good" %}</span>
     </li>
@@ -94,7 +94,7 @@
     <li class="field comp-setting-entry is-set">
       <div class="wrapper-comp-setting">
         <label class="label setting-label" for="likert2" aria-describedby="lik_ave">{% trans "Likert option 3" %}</label>
-        <input class="input setting-input" name="likert2" id="likert2" value="{{likert2}}" type="text" />
+        <input class="input setting-input" name="likert2" id="likert2" value="{% trans likert2 %}" type="text" />
       </div>
       <span id="lik_ave" class="tip setting-help">{% trans "Example: Average" %}</span>
     </li>
@@ -102,7 +102,7 @@
     <li class="field comp-setting-entry is-set">
       <div class="wrapper-comp-setting">
         <label class="label setting-label" for="likert3" aria-describedby="lik_fair">{% trans "Likert option 4" %}</label>
-        <input class="input setting-input" name="likert3" id="likert3" value="{{likert3}}" type="text" />
+        <input class="input setting-input" name="likert3" id="likert3" value="{% trans likert3 %}" type="text" />
       </div>
       <span id="lik_fair" class="tip setting-help">{% trans "Example: Fair" %}</span>
     </li>
@@ -110,7 +110,7 @@
     <li class="field comp-setting-entry is-set">
       <div class="wrapper-comp-setting">
         <label class="label setting-label" for="likert4" aria-describedby="lik_poor">{% trans "Likert option 5" %}</label>
-        <input class="input setting-input" name="likert4" id="likert4" value="{{likert4}}" type="text" />
+        <input class="input setting-input" name="likert4" id="likert4" value="{% trans likert4 %}" type="text" />
       </div>
       <span id="lik_poor" class="tip setting-help">{% trans "Example: Poor" %}</span>
     </li>
