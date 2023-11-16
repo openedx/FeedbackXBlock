@@ -20,10 +20,18 @@ def test_studio_view(feedback_xblock):
 def test_studio_submit(feedback_xblock):
     """ Test the FeedbackXBlock's save action """
     request_body = b"""{
-        "display_name": "foo"
+        "display_name": "foo",
+        "voting_message": "bar",
+        "feedback_message": "baz",
+        "show_aggregate_to_students": true
     }"""
     request = Mock(method='POST', body=request_body)
     response = feedback_xblock.studio_submit(request)
+
+    assert feedback_xblock.display_name == 'foo'
+    assert feedback_xblock.voting_message == 'bar'
+    assert feedback_xblock.feedback_message == 'baz'
+    assert feedback_xblock.show_aggregate_to_students is True
     assert response.status_code == 200 and {'result': 'success'} == response.json, response.json
 
 

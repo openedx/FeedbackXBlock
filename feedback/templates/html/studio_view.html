@@ -3,88 +3,114 @@
 <div class="wrapper-comp-settings is-active editor-with-buttons" id="settings-tab">
   <ul class="list-input settings-list">
     <li class="field comp-setting-entry is-set">{% trans "This XBlock allows you to collect student feedback on pieces of the course. This may be helpful either for course improvement, or to give students a chance to reflect on what they have done." %}</li>
-  
+
     <li class="field comp-setting-entry is-set">
       <div class="wrapper-comp-setting">
-        <label class="label setting-label" aria-describedby="ff_p_div">{% trans "Freeform prompt" %}
-          <input class="input setting-input" name="freeform" id="freeform" value="{{freeform}}" type="text" />
-        </label>
+        <label class="label setting-label" for="display_name" aria-describedby="display_name_help">{% trans "Display name" %}</label>
+        <input class="input setting-input" name="display_name" id="display_name" value="{{display_name}}" type="text" />
       </div>
-      <span class="tip setting-help" id="ff_p_div">{% trans "Example: Please provide us feedback on this section." %}</span>
+      <span class="tip setting-help" id="display_name_help"> {% trans "The name of the component." %} </span>
     </li>
 
     <li class="field comp-setting-entry is-set">
       <div class="wrapper-comp-setting">
-        <label aria-describedby="placeholder_span" class="label setting-label">{% trans "Freeform placeholder" %}
-          <input class="input setting-input" name="placeholder" id="placeholder" value="{{placeholder}}" type="text" />
-        </label>
+        <label class="label setting-label" for="voting_message" aria-describedby="voting_message_help">{% trans "Voting message" %}</label>
+        <input class="input setting-input" name="voting_message" id="voting_message" value="{{voting_message}}" type="text" />
+      </div>
+      <span class="tip setting-help" id="voting_message_help"> {% trans "The message to show after user vote." %} </span>
+    </li>
+
+    <li class="field comp-setting-entry is-set">
+      <div class="wrapper-comp-setting">
+        <label class="label setting-label" for="feedback_message" aria-describedby="feedback_message_help">{% trans "Feedback message" %}</label>
+        <input class="input setting-input" name="feedback_message" id="feedback_message" value="{{feedback_message}}" type="text" />
+      </div>
+      <span class="tip setting-help" id="feedback_message_help"> {% trans "The message to show after user feedback." %} </span>
+    </li>
+
+    <li class="field comp-setting-entry is-set">
+      <div class="wrapper-comp-setting">
+        <label class="label setting-label" for="show_aggregate_to_students">{% trans "Show aggregate report to students" %}</label>
+        <select name="show_aggregate_to_students" value="{{show_aggregate_to_students}}">
+          <option value="False">{% trans "False" %}</option>
+          <option value="True">{% trans "True" %}</option>
+        </select>
+      </div>
+      <span class="tip setting-help"> {% trans "Wheter to show the aggregate report to students." %} </span>
+    </li>
+
+    <li class="field comp-setting-entry is-set">
+      <div class="wrapper-comp-setting">
+        <label class="label setting-label" for="freeform" aria-describedby="ff_p_div">{% trans "Freeform prompt" %}</label>
+        <input class="input setting-input" name="freeform" id="freeform" value="{{freeform}}" type="text" />
+      </div>
+      <span class="tip setting-help" id="ff_p_div">{% trans "Example: Please provide us feedback on this section."%}</span>
+    </li>
+
+    <li class="field comp-setting-entry is-set">
+      <div class="wrapper-comp-setting">
+        <label class="label setting-label" for="placeholder" aria-describedby="placeholder_span">{% trans "Freeform placeholder"%}</label>
+        <input class="input setting-input" name="placeholder" id="placeholder" value="{{placeholder}}" type="text" />
       </div>
       <span id="placeholder_span" class="tip setting-help">{% trans "This is shown as grayed out text before the student has answered." %}</span>
     </li>
 
     <li class="field comp-setting-entry is-set">
       <div class="wrapper-comp-setting">
-        <label aria-describedby="icon_set_option" class="label setting-label">{% trans "Likert icon set" %}
-	<select name="icon_set">
-	  <option value="face">{% trans "Faces (happy to sad)" %}</option>
-	  <option value="midface">{% trans "Faces (sad to happy to sad)" %}</option>
-	  <option value="num">{% trans "Numeric" %}</option>
-	</select>
-	</label>
+        <label class="label setting-label" for="icon_set" aria-describedby="icon_set_option">{% trans "Likert icon set" %}</label>
+        <select name="icon_set" id="icon_set">
+          <option value="face">{% trans "Faces (happy to sad)" %}</option>
+          <option value="midface">{% trans "Faces (sad to happy to sad)" %}</option>
+          <option value="num">{% trans "Numeric" %}</option>
+        </select>
       </div>
-      <span id="icon_set_option" class="tip setting-help">{% trans "We can either show happy/sad faces, or numbers 1-5." %}</span>
+      <span id="icon_set_option" class="tip setting-help">{% trans "We can either show happy/sad faces, or numbers 1-5."%}</span>
     </li>
 
     <li class="field comp-setting-entry is-set">
       <div class="wrapper-comp-setting">
-        <label aria-describedby="lik_example" class="label setting-label">{% trans "Likert prompt" %}
-          <input class="input setting-input" name="likert" id="likert" value="{{likert}}" type="text" />
-        </label>
+        <label class="label setting-label" for="likert" aria-describedby="lik_example">{% trans "Likert prompt" %}</label>
+        <input class="input setting-input" name="likert" id="likert" value="{{likert}}" type="text" />
       </div>
       <span id="lik_example" class="tip setting-help">{% trans "Example: Please rate your overall experience with this section." %}</span>
     </li>
 
     <li class="field comp-setting-entry is-set">
       <div class="wrapper-comp-setting">
-        <label aria-describedby="lik_excel" class="label setting-label">{% trans "Likert option 1" %}
-          <input class="input setting-input" name="likert0" id="likert0" value="{{likert0}}" type="text" />
-        </label>
+        <label class="label setting-label" for="likert0" aria-describedby="lik_excel">{% trans "Likert option 1" %}</label>
+        <input class="input setting-input" name="likert0" id="likert0" value="{{likert0}}" type="text" />
       </div>
       <span id="lik_excel" class="tip setting-help">{% trans "Example: Excellent!" %}</span>
     </li>
 
     <li class="field comp-setting-entry is-set">
       <div class="wrapper-comp-setting">
-        <label aria-describedby="lik_good" class="label setting-label">{% trans "Likert option 2" %}
-          <input class="input setting-input" name="likert1" id="likert1" value="{{likert1}}" type="text" />
-        </label>
+        <label class="label setting-label" for="likert1" aria-describedby="lik_good">{% trans "Likert option 2" %}</label>
+        <input class="input setting-input" name="likert1" id="likert1" value="{{likert1}}" type="text" />
       </div>
       <span id="lik_good" class="tip setting-help">{% trans "Example: Good" %}</span>
     </li>
 
     <li class="field comp-setting-entry is-set">
       <div class="wrapper-comp-setting">
-        <label aria-describedby="lik_ave" class="label setting-label">{% trans "Likert option 3" %}
-          <input class="input setting-input" name="likert2" id="likert2" value="{{likert2}}" type="text" />
-        </label>
+        <label class="label setting-label" for="likert2" aria-describedby="lik_ave">{% trans "Likert option 3" %}</label>
+        <input class="input setting-input" name="likert2" id="likert2" value="{{likert2}}" type="text" />
       </div>
       <span id="lik_ave" class="tip setting-help">{% trans "Example: Average" %}</span>
     </li>
 
     <li class="field comp-setting-entry is-set">
       <div class="wrapper-comp-setting">
-        <label aria-describedby="lik_fair" class="label setting-label">{% trans "Likert option 4" %}
-          <input class="input setting-input" name="likert3" id="likert3" value="{{likert3}}" type="text" />
-        </label>
+        <label class="label setting-label" for="likert3" aria-describedby="lik_fair">{% trans "Likert option 4" %}</label>
+        <input class="input setting-input" name="likert3" id="likert3" value="{{likert3}}" type="text" />
       </div>
       <span id="lik_fair" class="tip setting-help">{% trans "Example: Fair" %}</span>
     </li>
 
     <li class="field comp-setting-entry is-set">
       <div class="wrapper-comp-setting">
-        <label aria-describedby="lik_poor" class="label setting-label">{% trans "Likert option 5" %}
-          <input class="input setting-input" name="likert4" id="likert4" value="{{likert4}}" type="text" />
-        </label>
+        <label class="label setting-label" for="likert4" aria-describedby="lik_poor">{% trans "Likert option 5" %}</label>
+        <input class="input setting-input" name="likert4" id="likert4" value="{{likert4}}" type="text" />
       </div>
       <span id="lik_poor" class="tip setting-help">{% trans "Example: Poor" %}</span>
     </li>
