@@ -75,6 +75,7 @@
 
 .feedback_block .feedback_freeform_area {
     height:inherit;
+    width: 100%;
 }
 
 .feedback_block .feedback_rating_active {
