@@ -2,3 +2,5 @@
 
 locales:
     - en  # English - Source Language
+    - es_419  # Spanish (Latin America)
+    - es_ES  # Spanish (Spain)

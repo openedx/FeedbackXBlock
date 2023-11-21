@@ -18,6 +18,9 @@ install-dev:
 
 install: install-test
 
+compile_translations:
+	cd feedback && i18n_tool generate
+
 quality:  ## Run the quality checks
 	pycodestyle --max-line-length=120 --config=.pep8 feedback
 	pylint --rcfile=pylintrc feedback
