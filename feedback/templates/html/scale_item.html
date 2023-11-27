@@ -1,3 +1,5 @@
+{% load i18n %}
+
 <div class="feedback_likert_rating">
   <label title="{{scale_text}}" class="feedback_likert_label">
     <input data-id="radio_{{idx}}" name="feedback_scale" class="feedback_radio" type="radio" {{active}}/>
@@ -8,6 +10,6 @@
       <img src="{{act_icon}}" alt="{{unicode_icon}}"/>
     </span>
     <br/>
-    <span>{{scale_text}}</span>
+    <span>{% trans scale_text %}</span>
   </label>
 </div>
