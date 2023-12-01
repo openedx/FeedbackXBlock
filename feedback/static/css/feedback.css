@@ -55,6 +55,7 @@
    border-color: rgba(255,255,255,0);
    padding:1px;
    height:60px;
+   width: 60px;
 }
 
 .feedback_block input[type="radio"]:focus ~ .feedback_icon {
