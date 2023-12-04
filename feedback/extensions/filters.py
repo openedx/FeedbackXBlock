@@ -153,7 +153,7 @@ def load_blocks(request, course):
                 "display_name": block.display_name,
                 "prompts": block.prompts,
                 "vote_aggregate": vote_aggregate,
-                "answers": answers,
+                "answers": answers[-10:],
                 "parent": parent.display_name,
                 "average_rating": average_rating,
                 "url": get_lms_link_for_item(block.location),
