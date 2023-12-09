@@ -9,3 +9,5 @@ __pycache__
 
 # Translations
 feedback/conf/locale/*/LC_MESSAGES/*
+build/
+dist/

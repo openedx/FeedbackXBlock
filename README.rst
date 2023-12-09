@@ -34,6 +34,41 @@ feedback.
 .. |Scale where good is in the middle| image:: happy_sad_happy_example.png
 .. |Numberical scale| image:: numerical_example.png
 
+The instructors can view reports in their course instructor dashboard. The reports shows the count for every score, the average sentiment score, and the last 10 feedback comments.
+
+Tutor configuration
+-------------------
+
+To enable the FeedbackXBlock report in the instructor dashboard, you can use the following tutor inline plugins:
+
+.. code-block:: yaml
+
+    name: feedback-xblock-settings
+    version: 0.1.0
+    patches:
+      openedx-common-settings: |
+        FEATURES["ENABLE_FEEDBACK_INSTRUCTOR_VIEW"] = True
+        OPEN_EDX_FILTERS_CONFIG = {
+          "org.openedx.learning.instructor.dashboard.render.started.v1": {
+            "fail_silently": False,
+            "pipeline": [
+              "feedback.extensions.filters.AddFeedbackTab",
+            ]
+          },
+        }
+
+To enable this plugin you need to create a file called *feedback-xblock-settings.yml* in your tutor plugins directory of your tutor instance
+with the content of the previous code block, and run the following commands.
+
+.. code-block:: bash
+
+    tutor plugins enable feedback-xblock-settings
+    tutor config save
+
+
+You can find more information about tutor plugins in the Tutor `plugins`_ documentation.
+
+.. _plugins: https://docs.tutor.edly.io/tutorials/plugin.html
 
 Getting Started
 ===============
