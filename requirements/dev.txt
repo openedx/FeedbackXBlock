@@ -12,11 +12,11 @@ asgiref==3.7.2
     # via
     #   -r requirements/base.txt
     #   django
-boto3==1.34.29
+boto3==1.34.34
     # via
     #   -r requirements/base.txt
     #   fs-s3fs
-botocore==1.34.29
+botocore==1.34.34
     # via
     #   -r requirements/base.txt
     #   boto3
@@ -56,11 +56,11 @@ lxml==5.1.0
     #   -r requirements/base.txt
     #   edx-i18n-tools
     #   xblock
-mako==1.3.0
+mako==1.3.2
     # via
     #   -r requirements/base.txt
     #   xblock
-markupsafe==2.1.4
+markupsafe==2.1.5
     # via
     #   -r requirements/base.txt
     #   mako
@@ -71,7 +71,7 @@ openedx-django-pyfs==3.4.1
     #   xblock
 openedx-filters==1.6.0
     # via -r requirements/base.txt
-path==16.9.0
+path==16.10.0
     # via edx-i18n-tools
 polib==1.2.0
     # via edx-i18n-tools
@@ -80,7 +80,7 @@ python-dateutil==2.8.2
     #   -r requirements/base.txt
     #   botocore
     #   xblock
-pytz==2023.3.post1
+pytz==2024.1
     # via
     #   -r requirements/base.txt
     #   django
