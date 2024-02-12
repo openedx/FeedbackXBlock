@@ -74,7 +74,7 @@ lazy==1.6
     # via
     #   -r requirements/base.txt
     #   xblock
-lxml==5.1.0
+lxml==4.9.4
     # via
     #   -r requirements/base.txt
     #   xblock
