@@ -7,14 +7,16 @@ in the course.
 """
 
 import html
-import importlib_resources
 import random
-import six
 
+import importlib_resources
+import six
+from web_fragments.fragment import Fragment
 from xblock.core import XBlock
 from xblock.fields import Scope, Integer, String, List, Float, Boolean
-from web_fragments.fragment import Fragment
+
 from feedback.utils import _
+
 try:
     from xblock.utils.resources import ResourceLoader
 except ModuleNotFoundError:  # For backward compatibility with releases older than Quince.
