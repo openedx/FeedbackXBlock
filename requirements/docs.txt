@@ -22,11 +22,11 @@ babel==2.14.0
     #   sphinx
 beautifulsoup4==4.12.3
     # via pydata-sphinx-theme
-boto3==1.34.34
+boto3==1.34.39
     # via
     #   -r requirements/base.txt
     #   fs-s3fs
-botocore==1.34.34
+botocore==1.34.39
     # via
     #   -r requirements/base.txt
     #   boto3
@@ -35,7 +35,7 @@ certifi==2024.2.2
     # via requests
 charset-normalizer==3.3.2
     # via requests
-django==3.2.23
+django==3.2.24
     # via
     #   -r requirements/base.txt
     #   django-crum
