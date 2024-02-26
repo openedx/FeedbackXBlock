@@ -20,6 +20,10 @@ babel==2.14.0
     # via
     #   pydata-sphinx-theme
     #   sphinx
+backports-zoneinfo==0.2.1 ; python_version < "3.9"
+    # via
+    #   -r requirements/base.txt
+    #   django
 beautifulsoup4==4.12.3
     # via pydata-sphinx-theme
 boto3==1.34.49
@@ -35,7 +39,7 @@ certifi==2024.2.2
     # via requests
 charset-normalizer==3.3.2
     # via requests
-django==3.2.24
+django==4.2.10
     # via
     #   -r requirements/base.txt
     #   django-crum
@@ -74,7 +78,7 @@ lazy==1.6
     # via
     #   -r requirements/base.txt
     #   xblock
-lxml==5.1.0
+lxml==4.9.4
     # via
     #   -r requirements/base.txt
     #   xblock
@@ -114,7 +118,6 @@ pytz==2024.1
     # via
     #   -r requirements/base.txt
     #   babel
-    #   django
     #   xblock
 pyyaml==6.0.1
     # via
