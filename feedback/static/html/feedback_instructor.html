@@ -24,7 +24,7 @@
           {% for block in blocks %}
           <tr role="row" class="pgn__data-table-row">
             <td colspan="6" role="cell" class="pgn__data-table-cell-wrap">
-              <a class="admin-panel" href="{{ block.url }}"><button class="btn btn-primary" ="button">{% trans "See Unit" %}: {{ block.parent }}</button></a>
+              <a class="admin-panel" href="{{ block.url }}"><button class="btn btn-primary" ="button">{{ block.section_display_name }} > {{ block.subsection_display_name }} > {{ block.unit_display_name }}</button></a>
             </td>
             <td colspan="3" role="cell" class="pgn__data-table-cell-wrap">
               <ul>

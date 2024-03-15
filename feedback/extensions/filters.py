@@ -140,13 +140,9 @@ def load_blocks(request, course):
         except ZeroDivisionError:
             average_rating = 0
 
-        parent, _ = get_block_by_usage_id(
-            request,
-            str(course.id),
-            str(feedback_block.parent),
-            disable_staff_debug_info=True,
-            course=course,
-        )
+        unit = block.get_parent()
+        subsection = unit.get_parent()
+        section = subsection.get_parent()
 
         blocks.append(
             {
@@ -154,7 +150,9 @@ def load_blocks(request, course):
                 "prompts": block.prompts,
                 "vote_aggregate": vote_aggregate,
                 "answers": answers[-10:],
-                "parent": parent.display_name,
+                "unit_display_name": unit.display_name,
+                "subsection_display_name": subsection.display_name,
+                "section_display_name": section.display_name,
                 "average_rating": average_rating,
                 "url": get_lms_link_for_item(block.location),
             }
