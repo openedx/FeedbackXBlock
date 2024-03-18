@@ -115,3 +115,8 @@
 .feedback_block .feedback_submit_feedback {
     width:100%;
 }
+
+.feedback_likert_scale {
+    display: flex;
+    flex-direction: row;
+}

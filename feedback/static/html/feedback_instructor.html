@@ -9,7 +9,7 @@
             <th colspan="6" role="columnheader">
               <span class="d-flex align-items-center"><span>{% trans "Component" %}</span></span>
             </th>
-            <th colspan="3" role="columnheader">
+            <th colspan="6" role="columnheader">
               <span class="d-flex align-items-center"><span>{% trans "Number of ratings" %}</span></span>
             </th>
             <th colspan="3" role="columnheader">
@@ -26,7 +26,7 @@
             <td colspan="6" role="cell" class="pgn__data-table-cell-wrap">
               <a class="admin-panel" href="{{ block.url }}"><button class="btn btn-primary" ="button">{{ block.section_display_name }} > {{ block.subsection_display_name }} > {{ block.unit_display_name }} > {{ block.display_name }}</button></a>
             </td>
-            <td colspan="3" role="cell" class="pgn__data-table-cell-wrap">
+            <td colspan="6" role="cell" class="pgn__data-table-cell-wrap">
               <ul>
                 {% for vote_aggregate in block.vote_aggregate %}
                 <li>{{ vote_aggregate.scale_text }}: {{ vote_aggregate.count }}</li>
