@@ -3,7 +3,7 @@
 /* Overall block. We limit width, and put a very faint
    border around it. */
 .feedback_block {
-    max-width: 450px;
+    min-width: 450px;
     border-width: 1px;
     border-style: solid;
     border-color: rgba(0,0,0,0.1);
