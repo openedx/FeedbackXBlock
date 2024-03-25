@@ -10,7 +10,7 @@ appdirs==1.4.4
     #   fs
 arrow==1.3.0
     # via cookiecutter
-asgiref==3.8.0
+asgiref==3.8.1
     # via
     #   -r requirements/base.txt
     #   django
@@ -25,17 +25,19 @@ backports-zoneinfo==0.2.1 ; python_version < "3.9"
     #   django
 binaryornot==0.4.4
     # via cookiecutter
-boto3==1.34.68
+boto3==1.34.69
     # via
     #   -r requirements/base.txt
     #   fs-s3fs
-botocore==1.34.68
+botocore==1.34.69
     # via
     #   -r requirements/base.txt
     #   boto3
     #   s3transfer
 certifi==2024.2.2
     # via requests
+cffi==1.16.0
+    # via cryptography
 chardet==5.2.0
     # via binaryornot
 charset-normalizer==3.3.2
@@ -56,6 +58,8 @@ coverage==6.5.0
     # via coveralls
 coveralls==3.3.1
     # via -r requirements/test.in
+cryptography==42.0.5
+    # via secretstorage
 ddt==1.7.2
     # via -r requirements/test.in
 dill==0.3.8
@@ -102,6 +106,14 @@ isort==5.13.2
     # via pylint
 jaraco-classes==3.3.1
     # via keyring
+jaraco-context==4.3.0
+    # via keyring
+jaraco-functools==4.0.0
+    # via keyring
+jeepney==0.8.0
+    # via
+    #   keyring
+    #   secretstorage
 jinja2==3.1.3
     # via
     #   code-annotations
@@ -111,7 +123,7 @@ jmespath==1.0.1
     #   -r requirements/base.txt
     #   boto3
     #   botocore
-keyring==24.3.1
+keyring==25.0.0
     # via twine
 lazy==1.6
     # via
@@ -142,7 +154,9 @@ mdurl==0.1.2
 mock==5.1.0
     # via -r requirements/test.in
 more-itertools==10.2.0
-    # via jaraco-classes
+    # via
+    #   jaraco-classes
+    #   jaraco-functools
 nh3==0.2.15
     # via readme-renderer
 openedx-django-pyfs==3.5.0
@@ -163,6 +177,8 @@ pluggy==1.4.0
     # via pytest
 pycodestyle==2.11.1
     # via -r requirements/test.in
+pycparser==2.21
+    # via cffi
 pygments==2.17.2
     # via
     #   readme-renderer
@@ -230,6 +246,8 @@ s3transfer==0.10.1
     # via
     #   -r requirements/base.txt
     #   boto3
+secretstorage==3.3.3
+    # via keyring
 simplejson==3.19.2
     # via
     #   -r requirements/base.txt
