@@ -6,16 +6,16 @@
       <table role="table" class="pgn__data-table is-striped">
         <thead>
           <tr role="row">
-            <th colspan="6" role="columnheader">
+            <th role="columnheader" style="width:100%">
               <span class="d-flex align-items-center"><span>{% trans "Component" %}</span></span>
             </th>
-            <th colspan="3" role="columnheader">
+            <th role="columnheader" style="width:100%">
               <span class="d-flex align-items-center"><span>{% trans "Number of ratings" %}</span></span>
             </th>
-            <th colspan="3" role="columnheader">
+            <th role="columnheader" style="width:40%">
               <span class="d-flex align-items-center"><span>{% trans "Average rating" %}</span></span>
             </th>
-            <th colspan="8" role="columnheader">
+            <th role="columnheader" style="width:100%">
               <span class="d-flex align-items-center"><span>{% trans "Feedback " %}</span></span>
             </th>
           </tr>
@@ -23,18 +23,18 @@
         <tbody role="rowgroup">
           {% for block in blocks %}
           <tr role="row" class="pgn__data-table-row">
-            <td colspan="6" role="cell" class="pgn__data-table-cell-wrap">
+            <td  role="cell" class="pgn__data-table-cell-wrap">
               <a class="admin-panel" href="{{ block.url }}"><button class="btn btn-primary" ="button">{{ block.section_display_name }} > {{ block.subsection_display_name }} > {{ block.unit_display_name }} > {{ block.display_name }}</button></a>
             </td>
-            <td colspan="3" role="cell" class="pgn__data-table-cell-wrap">
+            <td role="cell" class="pgn__data-table-cell-wrap">
               <ul>
                 {% for vote_aggregate in block.vote_aggregate %}
                 <li>{{ vote_aggregate.scale_text }}: {{ vote_aggregate.count }}</li>
                 {% endfor %}
               </ul>
             </td>
-            <td colspan="3" role="cell" class="pgn__data-table-cell-wrap">{{ block.average_rating }}</td>
-            <td colspan="8" role="cell" class="pgn__data-table-cell-wrap">
+            <td role="cell" class="pgn__data-table-cell-wrap">{{ block.average_rating }}</td>
+            <td role="cell" class="pgn__data-table-cell-wrap">
               <ul>
                 {% for feedback in block.answers %}
                 <li>{% trans "Comment" %}: {{ feedback.user_freeform }}. {% trans "Vote" %}: {% if feedback.user_vote != -1 %} {{ feedback.user_vote }} {% else %} {% trans "No vote" %} {% endif %}</li>
