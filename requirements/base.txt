@@ -12,9 +12,9 @@ backports-zoneinfo==0.2.1 ; python_version < "3.9"
     # via
     #   -c requirements/constraints.txt
     #   django
-boto3==1.34.74
+boto3==1.34.79
     # via fs-s3fs
-botocore==1.34.74
+botocore==1.34.79
     # via
     #   boto3
     #   s3transfer
@@ -71,15 +71,15 @@ six==1.16.0
     #   python-dateutil
 sqlparse==0.4.4
     # via django
-typing-extensions==4.10.0
+typing-extensions==4.11.0
     # via asgiref
 urllib3==1.26.18
     # via botocore
-web-fragments==2.1.0
+web-fragments==2.2.0
     # via xblock
 webob==1.8.7
     # via xblock
-xblock[django]==3.0.0
+xblock[django]==3.1.0
     # via -r requirements/base.in
 
 # The following packages are considered to be unsafe in a requirements file:
