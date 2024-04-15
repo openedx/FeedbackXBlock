@@ -18,6 +18,8 @@ astroid==3.1.0
     # via
     #   pylint
     #   pylint-celery
+backports-tarfile==1.0.0
+    # via jaraco-context
 backports-zoneinfo==0.2.1 ; python_version < "3.9"
     # via
     #   -c requirements/constraints.txt
@@ -25,11 +27,11 @@ backports-zoneinfo==0.2.1 ; python_version < "3.9"
     #   django
 binaryornot==0.4.4
     # via cookiecutter
-boto3==1.34.74
+boto3==1.34.84
     # via
     #   -r requirements/base.txt
     #   fs-s3fs
-botocore==1.34.74
+botocore==1.34.84
     # via
     #   -r requirements/base.txt
     #   boto3
@@ -50,7 +52,7 @@ click==8.1.7
     #   edx-lint
 click-log==0.4.0
     # via edx-lint
-code-annotations==1.7.0
+code-annotations==1.8.0
     # via edx-lint
 cookiecutter==2.6.0
     # via xblock-sdk
@@ -84,7 +86,7 @@ fs-s3fs==1.1.1
     #   -r requirements/base.txt
     #   openedx-django-pyfs
     #   xblock-sdk
-idna==3.6
+idna==3.7
     # via requests
 importlib-metadata==7.1.0
     # via
@@ -96,7 +98,7 @@ isort==5.13.2
     # via pylint
 jaraco-classes==3.4.0
     # via keyring
-jaraco-context==4.3.0
+jaraco-context==5.3.0
     # via keyring
 jaraco-functools==4.0.0
     # via keyring
@@ -113,7 +115,7 @@ jmespath==1.0.1
     #   -r requirements/base.txt
     #   boto3
     #   botocore
-keyring==25.0.0
+keyring==25.1.0
     # via twine
 lazy==1.6
     # via
@@ -125,7 +127,7 @@ lxml==4.9.4
     #   -r requirements/base.txt
     #   xblock
     #   xblock-sdk
-mako==1.3.2
+mako==1.3.3
     # via
     #   -r requirements/base.txt
     #   xblock
@@ -151,7 +153,7 @@ openedx-django-pyfs==3.6.0
     # via
     #   -r requirements/base.txt
     #   xblock
-openedx-filters==1.6.0
+openedx-filters==1.8.1
     # via -r requirements/base.txt
 pbr==6.0.0
     # via stevedore
@@ -238,7 +240,7 @@ six==1.16.0
     #   fs
     #   fs-s3fs
     #   python-dateutil
-sqlparse==0.4.4
+sqlparse==0.5.0
     # via
     #   -r requirements/base.txt
     #   django
@@ -254,7 +256,7 @@ twine==5.0.0
     # via -r requirements/quality.in
 types-python-dateutil==2.9.0.20240316
     # via arrow
-typing-extensions==4.10.0
+typing-extensions==4.11.0
     # via
     #   -r requirements/base.txt
     #   asgiref
@@ -267,7 +269,7 @@ urllib3==1.26.18
     #   botocore
     #   requests
     #   twine
-web-fragments==2.1.0
+web-fragments==2.2.0
     # via
     #   -r requirements/base.txt
     #   xblock
@@ -277,11 +279,11 @@ webob==1.8.7
     #   -r requirements/base.txt
     #   xblock
     #   xblock-sdk
-xblock[django]==3.0.0
+xblock[django]==3.1.0
     # via
     #   -r requirements/base.txt
     #   xblock-sdk
-xblock-sdk==0.9.0
+xblock-sdk==0.10.0
     # via -r requirements/quality.in
 zipp==3.18.1
     # via
