@@ -26,11 +26,11 @@ backports-zoneinfo==0.2.1 ; python_version < "3.9"
     #   django
 beautifulsoup4==4.12.3
     # via pydata-sphinx-theme
-boto3==1.34.84
+boto3==1.34.88
     # via
     #   -r requirements/base.txt
     #   fs-s3fs
-botocore==1.34.84
+botocore==1.34.88
     # via
     #   -r requirements/base.txt
     #   boto3
@@ -78,7 +78,7 @@ lazy==1.6
     # via
     #   -r requirements/base.txt
     #   xblock
-lxml==4.9.4
+lxml==5.2.1
     # via
     #   -r requirements/base.txt
     #   xblock
@@ -184,7 +184,7 @@ webob==1.8.7
     # via
     #   -r requirements/base.txt
     #   xblock
-xblock[django]==3.1.0
+xblock[django]==4.0.0
     # via -r requirements/base.txt
 zipp==3.18.1
     # via importlib-metadata
