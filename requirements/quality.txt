@@ -18,7 +18,7 @@ astroid==3.1.0
     # via
     #   pylint
     #   pylint-celery
-backports-tarfile==1.1.0
+backports-tarfile==1.1.1
     # via jaraco-context
 backports-zoneinfo==0.2.1 ; python_version < "3.9"
     # via
@@ -27,19 +27,17 @@ backports-zoneinfo==0.2.1 ; python_version < "3.9"
     #   django
 binaryornot==0.4.4
     # via cookiecutter
-boto3==1.34.88
+boto3==1.34.90
     # via
     #   -r requirements/base.txt
     #   fs-s3fs
-botocore==1.34.88
+botocore==1.34.90
     # via
     #   -r requirements/base.txt
     #   boto3
     #   s3transfer
 certifi==2024.2.2
     # via requests
-cffi==1.16.0
-    # via cryptography
 chardet==5.2.0
     # via binaryornot
 charset-normalizer==3.3.2
@@ -56,8 +54,6 @@ code-annotations==1.8.0
     # via edx-lint
 cookiecutter==2.6.0
     # via xblock-sdk
-cryptography==42.0.5
-    # via secretstorage
 ddt==1.7.2
     # via -r requirements/quality.in
 dill==0.3.8
@@ -102,10 +98,6 @@ jaraco-context==5.3.0
     # via keyring
 jaraco-functools==4.0.1
     # via keyring
-jeepney==0.8.0
-    # via
-    #   keyring
-    #   secretstorage
 jinja2==3.1.3
     # via
     #   code-annotations
@@ -121,9 +113,8 @@ lazy==1.6
     # via
     #   -r requirements/base.txt
     #   xblock
-lxml==4.9.4
+lxml==5.2.1
     # via
-    #   -c requirements/constraints.txt
     #   -r requirements/base.txt
     #   xblock
     #   xblock-sdk
@@ -159,12 +150,10 @@ pbr==6.0.0
     # via stevedore
 pkginfo==1.10.0
     # via twine
-platformdirs==4.2.0
+platformdirs==4.2.1
     # via pylint
 pycodestyle==2.11.1
     # via -r requirements/quality.in
-pycparser==2.22
-    # via cffi
 pygments==2.17.2
     # via
     #   readme-renderer
@@ -226,8 +215,6 @@ s3transfer==0.10.1
     # via
     #   -r requirements/base.txt
     #   boto3
-secretstorage==3.3.3
-    # via keyring
 simplejson==3.19.2
     # via
     #   -r requirements/base.txt
@@ -283,7 +270,7 @@ xblock[django]==4.0.0
     # via
     #   -r requirements/base.txt
     #   xblock-sdk
-xblock-sdk==0.10.0
+xblock-sdk==0.11.0
     # via -r requirements/quality.in
 zipp==3.18.1
     # via
