@@ -9,7 +9,7 @@
         <label class="label setting-label" for="display_name" aria-describedby="display_name_help">{% trans "Display name" %}</label>
         <input class="input setting-input" name="display_name" id="display_name" value="{{display_name}}" type="text" />
       </div>
-      <span class="tip setting-help" id="display_name_help"> {% trans "The name of the component." %} </span>
+      <span class="tip setting-help" id="display_name_help">{% trans "The name of the component." %}</span>
     </li>
 
     <li class="field comp-setting-entry is-set">
@@ -17,7 +17,7 @@
         <label class="label setting-label" for="voting_message" aria-describedby="voting_message_help">{% trans "Voting message" %}</label>
         <input class="input setting-input" name="voting_message" id="voting_message" value="{{voting_message}}" type="text" />
       </div>
-      <span class="tip setting-help" id="voting_message_help"> {% trans "The message to show after user vote." %} </span>
+      <span class="tip setting-help" id="voting_message_help">{% trans "The message to show after user vote." %}</span>
     </li>
 
     <li class="field comp-setting-entry is-set">
@@ -25,18 +25,18 @@
         <label class="label setting-label" for="feedback_message" aria-describedby="feedback_message_help">{% trans "Feedback message" %}</label>
         <input class="input setting-input" name="feedback_message" id="feedback_message" value="{{feedback_message}}" type="text" />
       </div>
-      <span class="tip setting-help" id="feedback_message_help"> {% trans "The message to show after user feedback." %} </span>
+      <span class="tip setting-help" id="feedback_message_help">{% trans "The message to show after user feedback." %}</span>
     </li>
 
     <li class="field comp-setting-entry is-set">
       <div class="wrapper-comp-setting">
         <label class="label setting-label" for="show_aggregate_to_students">{% trans "Show aggregate report to students" %}</label>
-        <select name="show_aggregate_to_students" value="{{show_aggregate_to_students}}">
-          <option value="False">{% trans "False" %}</option>
-          <option value="True">{% trans "True" %}</option>
+        <select name="show_aggregate_to_students" id="show_aggregate_to_students">
+          <option value="False" {% if show_aggregate_to_students == False %}selected{% endif %}>{% trans "False" %}</option>
+          <option value="True" {% if show_aggregate_to_students == True %}selected{% endif %}>{% trans "True" %}</option>
         </select>
       </div>
-      <span class="tip setting-help"> {% trans "Wheter to show the aggregate report to students." %} </span>
+      <span class="tip setting-help">{% trans "Whether to show the aggregate report to students." %}</span>
     </li>
 
     <li class="field comp-setting-entry is-set">
@@ -60,7 +60,7 @@
         <label class="label setting-label" for="icon_set" aria-describedby="icon_set_option">{% trans "Likert icon set" %}</label>
         <select name="icon_set" id="icon_set">
           <option value="face">{% trans "Faces (happy to sad)" %}</option>
-          <option value="midface">{% trans "Faces (sad to happy to sad)" %}</option>
+          <option value="midface">{% trans "Faces (sad to happy)" %}</option>
           <option value="num">{% trans "Numeric" %}</option>
           <option value="star">{% trans "Stars" %}</option>
         </select>
