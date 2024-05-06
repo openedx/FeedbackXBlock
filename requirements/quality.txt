@@ -27,11 +27,11 @@ backports-zoneinfo==0.2.1 ; python_version < "3.9"
     #   django
 binaryornot==0.4.4
     # via cookiecutter
-boto3==1.34.93
+boto3==1.34.98
     # via
     #   -r requirements/base.txt
     #   fs-s3fs
-botocore==1.34.93
+botocore==1.34.98
     # via
     #   -r requirements/base.txt
     #   boto3
@@ -56,7 +56,7 @@ code-annotations==1.8.0
     # via edx-lint
 cookiecutter==2.6.0
     # via xblock-sdk
-cryptography==42.0.5
+cryptography==42.0.6
     # via secretstorage
 ddt==1.7.2
     # via -r requirements/quality.in
@@ -106,7 +106,7 @@ jeepney==0.8.0
     # via
     #   keyring
     #   secretstorage
-jinja2==3.1.3
+jinja2==3.1.4
     # via
     #   code-annotations
     #   cookiecutter
@@ -164,7 +164,7 @@ pycodestyle==2.11.1
     # via -r requirements/quality.in
 pycparser==2.22
     # via cffi
-pygments==2.17.2
+pygments==2.18.0
     # via
     #   readme-renderer
     #   rich
