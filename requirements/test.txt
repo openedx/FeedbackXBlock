@@ -27,11 +27,11 @@ backports-zoneinfo==0.2.1 ; python_version < "3.9"
     #   django
 binaryornot==0.4.4
     # via cookiecutter
-boto3==1.34.98
+boto3==1.34.103
     # via
     #   -r requirements/base.txt
     #   fs-s3fs
-botocore==1.34.98
+botocore==1.34.103
     # via
     #   -r requirements/base.txt
     #   boto3
@@ -60,13 +60,13 @@ coverage[toml]==7.4.4
     # via coveralls
 coveralls==4.0.0
     # via -r requirements/test.in
-cryptography==42.0.6
+cryptography==42.0.7
     # via secretstorage
 ddt==1.7.2
     # via -r requirements/test.in
 dill==0.3.8
     # via pylint
-django==4.2.11
+django==4.2.13
     # via
     #   -r requirements/base.txt
     #   django-crum
@@ -274,7 +274,7 @@ tomli==2.0.1
     #   coverage
     #   pylint
     #   pytest
-tomlkit==0.12.4
+tomlkit==0.12.5
     # via pylint
 twine==5.0.0
     # via -r requirements/test.in
