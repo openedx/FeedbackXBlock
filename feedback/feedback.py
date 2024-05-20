@@ -8,13 +8,15 @@ in the course.
 
 import html
 import random
-import pkg_resources
-import six
 
+import importlib.resources
+import six
+from web_fragments.fragment import Fragment
 from xblock.core import XBlock
 from xblock.fields import Scope, Integer, String, List, Float, Boolean
-from web_fragments.fragment import Fragment
+
 from feedback.utils import _
+
 try:
     from xblock.utils.resources import ResourceLoader
 except ModuleNotFoundError:  # For backward compatibility with releases older than Quince.
@@ -133,8 +135,7 @@ class FeedbackXBlock(XBlock):
     @classmethod
     def resource_string(cls, path):
         """Handy helper for getting resources from our kit."""
-        data = pkg_resources.resource_string(__name__, path)
-        return data.decode("utf8")
+        return importlib.resources.files(__package__).joinpath(path).read_text(encoding="utf-8")
 
     def get_prompt(self, index=-1):
         """
