@@ -406,7 +406,7 @@ class FeedbackXBlock(XBlock):
                                   'new_freeform': data['freeform']})
             self.user_freeform = data['freeform']
 
-        response.update({
+        response.update({  # pylint: disable=possibly-used-before-assignment
             "freeform": self.user_freeform,
             "vote": self.user_vote
         })
