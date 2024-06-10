@@ -27,11 +27,11 @@ backports-zoneinfo==0.2.1 ; python_version < "3.9"
     #   django
 binaryornot==0.4.4
     # via cookiecutter
-boto3==1.34.117
+boto3==1.34.122
     # via
     #   -r requirements/base.txt
     #   fs-s3fs
-botocore==1.34.117
+botocore==1.34.122
     # via
     #   -r requirements/base.txt
     #   boto3
@@ -60,7 +60,7 @@ coverage[toml]==7.5.3
     # via coveralls
 coveralls==4.0.1
     # via -r requirements/test.in
-cryptography==42.0.7
+cryptography==42.0.8
     # via secretstorage
 ddt==1.7.2
     # via -r requirements/test.in
@@ -166,11 +166,11 @@ openedx-django-pyfs==3.6.0
     #   xblock
 openedx-filters==1.8.1
     # via -r requirements/base.txt
-packaging==24.0
+packaging==24.1
     # via pytest
 pbr==6.0.0
     # via stevedore
-pkginfo==1.11.0
+pkginfo==1.11.1
     # via twine
 platformdirs==4.2.2
     # via pylint
@@ -184,7 +184,7 @@ pygments==2.18.0
     # via
     #   readme-renderer
     #   rich
-pylint==3.2.2
+pylint==3.2.3
     # via
     #   edx-lint
     #   pylint-celery
@@ -200,7 +200,7 @@ pylint-plugin-utils==0.8.2
     #   pylint-django
 pypng==0.20220715.0
     # via xblock-sdk
-pytest==8.2.1
+pytest==8.2.2
     # via
     #   -r requirements/test.in
     #   pytest-django
@@ -280,7 +280,7 @@ twine==5.1.0
     # via -r requirements/test.in
 types-python-dateutil==2.9.0.20240316
     # via arrow
-typing-extensions==4.12.1
+typing-extensions==4.12.2
     # via
     #   -r requirements/base.txt
     #   asgiref
@@ -309,7 +309,7 @@ xblock[django]==4.0.1
     #   xblock-sdk
 xblock-sdk==0.11.0
     # via -r requirements/test.in
-zipp==3.19.1
+zipp==3.19.2
     # via
     #   importlib-metadata
     #   importlib-resources
