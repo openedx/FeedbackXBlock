@@ -26,11 +26,11 @@ backports-zoneinfo==0.2.1 ; python_version < "3.9"
     #   django
 beautifulsoup4==4.12.3
     # via pydata-sphinx-theme
-boto3==1.34.131
+boto3==1.34.136
     # via
     #   -r requirements/base.txt
     #   fs-s3fs
-botocore==1.34.131
+botocore==1.34.136
     # via
     #   -r requirements/base.txt
     #   boto3
@@ -65,7 +65,7 @@ idna==3.7
     # via requests
 imagesize==1.4.1
     # via sphinx
-importlib-metadata==7.2.1
+importlib-metadata==8.0.0
     # via sphinx
 jinja2==3.1.4
     # via sphinx
@@ -125,7 +125,7 @@ pyyaml==6.0.1
     #   xblock
 requests==2.32.3
     # via sphinx
-s3transfer==0.10.1
+s3transfer==0.10.2
     # via
     #   -r requirements/base.txt
     #   boto3
