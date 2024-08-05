@@ -22,11 +22,11 @@ backports-tarfile==1.2.0
     # via jaraco-context
 binaryornot==0.4.4
     # via cookiecutter
-boto3==1.34.149
+boto3==1.34.153
     # via
     #   -r requirements/base.txt
     #   fs-s3fs
-botocore==1.34.149
+botocore==1.34.153
     # via
     #   -r requirements/base.txt
     #   boto3
@@ -51,7 +51,7 @@ code-annotations==1.8.0
     # via edx-lint
 cookiecutter==2.6.0
     # via xblock-sdk
-coverage[toml]==7.6.0
+coverage[toml]==7.6.1
     # via coveralls
 coveralls==4.0.1
     # via -r requirements/test.in
@@ -103,7 +103,7 @@ jaraco-classes==3.4.0
     # via keyring
 jaraco-context==5.3.0
     # via keyring
-jaraco-functools==4.0.1
+jaraco-functools==4.0.2
     # via keyring
 jeepney==0.8.0
     # via
@@ -118,7 +118,7 @@ jmespath==1.0.1
     #   -r requirements/base.txt
     #   boto3
     #   botocore
-keyring==25.2.1
+keyring==25.3.0
     # via twine
 lazy==1.6
     # via
@@ -169,7 +169,7 @@ platformdirs==4.2.2
     # via pylint
 pluggy==1.5.0
     # via pytest
-pycodestyle==2.12.0
+pycodestyle==2.12.1
     # via -r requirements/test.in
 pycparser==2.22
     # via cffi
