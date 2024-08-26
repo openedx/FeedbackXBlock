@@ -22,11 +22,11 @@ babel==2.16.0
     #   sphinx
 beautifulsoup4==4.12.3
     # via pydata-sphinx-theme
-boto3==1.35.0
+boto3==1.35.5
     # via
     #   -r requirements/base.txt
     #   fs-s3fs
-botocore==1.35.0
+botocore==1.35.5
     # via
     #   -r requirements/base.txt
     #   boto3
@@ -57,7 +57,7 @@ fs-s3fs==1.1.1
     # via
     #   -r requirements/base.txt
     #   openedx-django-pyfs
-idna==3.7
+idna==3.8
     # via requests
 imagesize==1.4.1
     # via sphinx
@@ -86,7 +86,7 @@ markupsafe==2.1.5
     #   jinja2
     #   mako
     #   xblock
-openedx-django-pyfs==3.6.0
+openedx-django-pyfs==3.7.0
     # via
     #   -r requirements/base.txt
     #   xblock
@@ -174,7 +174,7 @@ webob==1.8.8
     # via
     #   -r requirements/base.txt
     #   xblock
-xblock[django]==5.0.0
+xblock[django]==5.1.0
     # via -r requirements/base.txt
 
 # The following packages are considered to be unsafe in a requirements file:

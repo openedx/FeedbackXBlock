@@ -12,11 +12,11 @@ asgiref==3.8.1
     # via
     #   -r requirements/base.txt
     #   django
-boto3==1.35.0
+boto3==1.35.5
     # via
     #   -r requirements/base.txt
     #   fs-s3fs
-botocore==1.35.0
+botocore==1.35.5
     # via
     #   -r requirements/base.txt
     #   boto3
@@ -65,7 +65,7 @@ markupsafe==2.1.5
     #   -r requirements/base.txt
     #   mako
     #   xblock
-openedx-django-pyfs==3.6.0
+openedx-django-pyfs==3.7.0
     # via
     #   -r requirements/base.txt
     #   xblock
@@ -119,7 +119,7 @@ webob==1.8.8
     # via
     #   -r requirements/base.txt
     #   xblock
-xblock[django]==5.0.0
+xblock[django]==5.1.0
     # via -r requirements/base.txt
 
 # The following packages are considered to be unsafe in a requirements file:
