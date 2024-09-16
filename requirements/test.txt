@@ -22,17 +22,19 @@ backports-tarfile==1.2.0
     # via jaraco-context
 binaryornot==0.4.4
     # via cookiecutter
-boto3==1.35.14
+boto3==1.35.19
     # via
     #   -r requirements/base.txt
     #   fs-s3fs
-botocore==1.35.14
+botocore==1.35.19
     # via
     #   -r requirements/base.txt
     #   boto3
     #   s3transfer
 certifi==2024.8.30
     # via requests
+cffi==1.17.1
+    # via cryptography
 chardet==5.2.0
     # via binaryornot
 charset-normalizer==3.3.2
@@ -53,6 +55,8 @@ coverage[toml]==7.6.1
     # via coveralls
 coveralls==4.0.1
     # via -r requirements/test.in
+cryptography==43.0.1
+    # via secretstorage
 ddt==1.7.2
     # via -r requirements/test.in
 dill==0.3.8
@@ -84,9 +88,9 @@ fs-s3fs==1.1.1
     #   -r requirements/base.txt
     #   openedx-django-pyfs
     #   xblock-sdk
-idna==3.8
+idna==3.10
     # via requests
-importlib-metadata==8.4.0
+importlib-metadata==8.5.0
     # via
     #   keyring
     #   twine
@@ -100,6 +104,10 @@ jaraco-context==6.0.1
     # via keyring
 jaraco-functools==4.0.2
     # via keyring
+jeepney==0.8.0
+    # via
+    #   keyring
+    #   secretstorage
 jinja2==3.1.4
     # via
     #   code-annotations
@@ -156,12 +164,14 @@ pbr==6.1.0
     # via stevedore
 pkginfo==1.10.0
     # via twine
-platformdirs==4.3.2
+platformdirs==4.3.3
     # via pylint
 pluggy==1.5.0
     # via pytest
 pycodestyle==2.12.1
     # via -r requirements/test.in
+pycparser==2.22
+    # via cffi
 pygments==2.18.0
     # via
     #   readme-renderer
@@ -182,7 +192,7 @@ pylint-plugin-utils==0.8.2
     #   pylint-django
 pypng==0.20220715.0
     # via xblock-sdk
-pytest==8.3.2
+pytest==8.3.3
     # via
     #   -r requirements/test.in
     #   pytest-django
@@ -198,7 +208,7 @@ python-slugify==8.0.4
     # via
     #   code-annotations
     #   cookiecutter
-pytz==2024.1
+pytz==2024.2
     # via
     #   -r requirements/base.txt
     #   xblock
@@ -221,7 +231,7 @@ requests-toolbelt==1.0.0
     # via twine
 rfc3986==2.0.0
     # via twine
-rich==13.8.0
+rich==13.8.1
     # via
     #   cookiecutter
     #   twine
@@ -229,6 +239,8 @@ s3transfer==0.10.2
     # via
     #   -r requirements/base.txt
     #   boto3
+secretstorage==3.3.3
+    # via keyring
 simplejson==3.19.3
     # via
     #   -r requirements/base.txt
@@ -255,7 +267,7 @@ twine==5.1.1
     # via -r requirements/test.in
 types-python-dateutil==2.9.0.20240906
     # via arrow
-urllib3==2.2.2
+urllib3==2.2.3
     # via
     #   -r requirements/base.txt
     #   botocore
@@ -277,7 +289,7 @@ xblock[django]==5.1.0
     #   xblock-sdk
 xblock-sdk==0.12.0
     # via -r requirements/test.in
-zipp==3.20.1
+zipp==3.20.2
     # via importlib-metadata
 
 # The following packages are considered to be unsafe in a requirements file:
