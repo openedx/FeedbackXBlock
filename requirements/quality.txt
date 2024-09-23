@@ -14,7 +14,7 @@ asgiref==3.8.1
     # via
     #   -r requirements/base.txt
     #   django
-astroid==3.2.4
+astroid==3.3.3
     # via
     #   pylint
     #   pylint-celery
@@ -22,11 +22,11 @@ backports-tarfile==1.2.0
     # via jaraco-context
 binaryornot==0.4.4
     # via cookiecutter
-boto3==1.35.19
+boto3==1.35.24
     # via
     #   -r requirements/base.txt
     #   fs-s3fs
-botocore==1.35.19
+botocore==1.35.24
     # via
     #   -r requirements/base.txt
     #   boto3
@@ -109,7 +109,7 @@ jmespath==1.0.1
     #   -r requirements/base.txt
     #   boto3
     #   botocore
-keyring==25.3.0
+keyring==25.4.1
     # via twine
 lazy==1.6
     # via
@@ -152,7 +152,7 @@ pbr==6.1.0
     # via stevedore
 pkginfo==1.10.0
     # via twine
-platformdirs==4.3.3
+platformdirs==4.3.6
     # via pylint
 pycodestyle==2.12.1
     # via -r requirements/quality.in
@@ -162,7 +162,7 @@ pygments==2.18.0
     # via
     #   readme-renderer
     #   rich
-pylint==3.2.7
+pylint==3.3.0
     # via
     #   -r requirements/quality.in
     #   edx-lint
