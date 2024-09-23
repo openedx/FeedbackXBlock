@@ -12,11 +12,11 @@ asgiref==3.8.1
     # via
     #   -r requirements/base.txt
     #   django
-boto3==1.35.19
+boto3==1.35.24
     # via
     #   -r requirements/base.txt
     #   fs-s3fs
-botocore==1.35.19
+botocore==1.35.24
     # via
     #   -r requirements/base.txt
     #   boto3
