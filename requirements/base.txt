@@ -8,9 +8,9 @@ appdirs==1.4.4
     # via fs
 asgiref==3.8.1
     # via django
-boto3==1.35.29
+boto3==1.35.34
     # via fs-s3fs
-botocore==1.35.29
+botocore==1.35.34
     # via
     #   boto3
     #   s3transfer
@@ -45,7 +45,7 @@ markupsafe==2.1.5
     #   xblock
 openedx-django-pyfs==3.7.0
     # via xblock
-openedx-filters==1.10.0
+openedx-filters==1.11.0
     # via -r requirements/base.in
 python-dateutil==2.9.0.post0
     # via
