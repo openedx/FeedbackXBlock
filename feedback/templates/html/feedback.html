@@ -11,7 +11,7 @@
       <label class="feedback_header" for="feedback_freeform_textarea">{% trans freeform_prompt %}</label>
     </div>
     <div class="feedback_freeform_input">
-      <textarea name="feedback_freeform_textarea" class="feedback_freeform_area" rows="6" cols="45" placeholder="{% trans placeholder %}">{% trans self.user_freeform %}</textarea>
+      <textarea id="feedback_freeform_textarea" name="feedback_freeform_textarea" class="feedback_freeform_area" rows="6" cols="45" placeholder="{% trans placeholder %}">{% trans self.user_freeform %}</textarea>
       <div class="feedback_thank_you" aria-live=polite>{{response}}</div>
     </div>
     <button type="submit" class="feedback_submit_feedback">{% trans "Submit Feedback" %}</button>
