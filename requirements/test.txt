@@ -22,11 +22,11 @@ backports-tarfile==1.2.0
     # via jaraco-context
 binaryornot==0.4.4
     # via cookiecutter
-boto3==1.36.2
+boto3==1.36.6
     # via
     #   -r requirements/base.txt
     #   fs-s3fs
-botocore==1.36.2
+botocore==1.36.6
     # via
     #   -r requirements/base.txt
     #   boto3
@@ -75,7 +75,7 @@ docopt==0.6.2
     # via coveralls
 docutils==0.21.2
     # via readme-renderer
-edx-lint==5.4.1
+edx-lint==5.6.0
     # via -r requirements/test.in
 fs==2.4.16
     # via
@@ -88,9 +88,11 @@ fs-s3fs==1.1.1
     #   -r requirements/base.txt
     #   openedx-django-pyfs
     #   xblock-sdk
+id==1.5.0
+    # via twine
 idna==3.10
     # via requests
-importlib-metadata==8.5.0
+importlib-metadata==8.6.1
     # via keyring
 iniconfig==2.0.0
     # via pytest
@@ -162,8 +164,6 @@ packaging==24.2
     #   twine
 pbr==6.1.0
     # via stevedore
-pkginfo==1.12.0
-    # via twine
 platformdirs==4.3.6
     # via pylint
 pluggy==1.5.0
@@ -224,6 +224,7 @@ requests==2.32.3
     # via
     #   cookiecutter
     #   coveralls
+    #   id
     #   requests-toolbelt
     #   twine
     #   xblock-sdk
@@ -235,7 +236,7 @@ rich==13.9.4
     # via
     #   cookiecutter
     #   twine
-s3transfer==0.11.1
+s3transfer==0.11.2
     # via
     #   -r requirements/base.txt
     #   boto3
@@ -263,7 +264,7 @@ text-unidecode==1.3
     # via python-slugify
 tomlkit==0.13.2
     # via pylint
-twine==6.0.1
+twine==6.1.0
     # via -r requirements/test.in
 types-python-dateutil==2.9.0.20241206
     # via arrow
@@ -284,7 +285,7 @@ webob==1.8.9
     #   -r requirements/base.txt
     #   xblock
     #   xblock-sdk
-xblock[django]==5.1.0
+xblock[django]==5.1.1
     # via
     #   -r requirements/base.txt
     #   xblock-sdk
