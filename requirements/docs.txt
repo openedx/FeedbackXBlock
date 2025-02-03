@@ -16,22 +16,22 @@ asgiref==3.8.1
     # via
     #   -r requirements/base.txt
     #   django
-babel==2.16.0
+babel==2.17.0
     # via
     #   pydata-sphinx-theme
     #   sphinx
-beautifulsoup4==4.12.3
+beautifulsoup4==4.13.0
     # via pydata-sphinx-theme
-boto3==1.36.6
+boto3==1.36.11
     # via
     #   -r requirements/base.txt
     #   fs-s3fs
-botocore==1.36.6
+botocore==1.36.11
     # via
     #   -r requirements/base.txt
     #   boto3
     #   s3transfer
-certifi==2024.12.14
+certifi==2025.1.31
     # via requests
 charset-normalizer==3.4.1
     # via requests
@@ -43,10 +43,18 @@ django==4.2.18
     #   openedx-filters
 django-crum==0.7.9
     # via -r requirements/base.txt
+dnspython==2.7.0
+    # via
+    #   -r requirements/base.txt
+    #   pymongo
 docutils==0.21.2
     # via
     #   pydata-sphinx-theme
     #   sphinx
+edx-opaque-keys[django]==2.11.0
+    # via
+    #   -r requirements/base.txt
+    #   openedx-filters
 fs==2.4.16
     # via
     #   -r requirements/base.txt
@@ -90,10 +98,14 @@ openedx-django-pyfs==3.7.0
     # via
     #   -r requirements/base.txt
     #   xblock
-openedx-filters==1.12.0
+openedx-filters==1.13.0
     # via -r requirements/base.txt
 packaging==24.2
     # via sphinx
+pbr==6.1.0
+    # via
+    #   -r requirements/base.txt
+    #   stevedore
 pydata-sphinx-theme==0.16.1
     # via sphinx-book-theme
 pygments==2.19.1
@@ -101,12 +113,16 @@ pygments==2.19.1
     #   accessible-pygments
     #   pydata-sphinx-theme
     #   sphinx
+pymongo==4.11
+    # via
+    #   -r requirements/base.txt
+    #   edx-opaque-keys
 python-dateutil==2.9.0.post0
     # via
     #   -r requirements/base.txt
     #   botocore
     #   xblock
-pytz==2024.2
+pytz==2025.1
     # via
     #   -r requirements/base.txt
     #   xblock
@@ -157,8 +173,16 @@ sqlparse==0.5.3
     # via
     #   -r requirements/base.txt
     #   django
+stevedore==5.4.0
+    # via
+    #   -r requirements/base.txt
+    #   edx-opaque-keys
 typing-extensions==4.12.2
-    # via pydata-sphinx-theme
+    # via
+    #   -r requirements/base.txt
+    #   beautifulsoup4
+    #   edx-opaque-keys
+    #   pydata-sphinx-theme
 urllib3==2.2.3
     # via
     #   -r requirements/base.txt

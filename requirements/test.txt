@@ -22,16 +22,16 @@ backports-tarfile==1.2.0
     # via jaraco-context
 binaryornot==0.4.4
     # via cookiecutter
-boto3==1.36.6
+boto3==1.36.11
     # via
     #   -r requirements/base.txt
     #   fs-s3fs
-botocore==1.36.6
+botocore==1.36.11
     # via
     #   -r requirements/base.txt
     #   boto3
     #   s3transfer
-certifi==2024.12.14
+certifi==2025.1.31
     # via requests
 cffi==1.17.1
     # via cryptography
@@ -71,12 +71,20 @@ django==4.2.18
     #   xblock-sdk
 django-crum==0.7.9
     # via -r requirements/base.txt
+dnspython==2.7.0
+    # via
+    #   -r requirements/base.txt
+    #   pymongo
 docopt==0.6.2
     # via coveralls
 docutils==0.21.2
     # via readme-renderer
 edx-lint==5.6.0
     # via -r requirements/test.in
+edx-opaque-keys[django]==2.11.0
+    # via
+    #   -r requirements/base.txt
+    #   openedx-filters
 fs==2.4.16
     # via
     #   -r requirements/base.txt
@@ -96,7 +104,7 @@ importlib-metadata==8.6.1
     # via keyring
 iniconfig==2.0.0
     # via pytest
-isort==5.13.2
+isort==6.0.0
     # via pylint
 jaraco-classes==3.4.0
     # via keyring
@@ -156,14 +164,16 @@ openedx-django-pyfs==3.7.0
     # via
     #   -r requirements/base.txt
     #   xblock
-openedx-filters==1.12.0
+openedx-filters==1.13.0
     # via -r requirements/base.txt
 packaging==24.2
     # via
     #   pytest
     #   twine
 pbr==6.1.0
-    # via stevedore
+    # via
+    #   -r requirements/base.txt
+    #   stevedore
 platformdirs==4.3.6
     # via pylint
 pluggy==1.5.0
@@ -176,7 +186,7 @@ pygments==2.19.1
     # via
     #   readme-renderer
     #   rich
-pylint==3.3.3
+pylint==3.3.4
     # via
     #   edx-lint
     #   pylint-celery
@@ -190,6 +200,10 @@ pylint-plugin-utils==0.8.2
     # via
     #   pylint-celery
     #   pylint-django
+pymongo==4.11
+    # via
+    #   -r requirements/base.txt
+    #   edx-opaque-keys
 pypng==0.20220715.0
     # via xblock-sdk
 pytest==8.3.4
@@ -208,7 +222,7 @@ python-slugify==8.0.4
     # via
     #   code-annotations
     #   cookiecutter
-pytz==2024.2
+pytz==2025.1
     # via
     #   -r requirements/base.txt
     #   xblock
@@ -259,7 +273,10 @@ sqlparse==0.5.3
     #   -r requirements/base.txt
     #   django
 stevedore==5.4.0
-    # via code-annotations
+    # via
+    #   -r requirements/base.txt
+    #   code-annotations
+    #   edx-opaque-keys
 text-unidecode==1.3
     # via python-slugify
 tomlkit==0.13.2
@@ -268,6 +285,10 @@ twine==6.1.0
     # via -r requirements/test.in
 types-python-dateutil==2.9.0.20241206
     # via arrow
+typing-extensions==4.12.2
+    # via
+    #   -r requirements/base.txt
+    #   edx-opaque-keys
 urllib3==2.2.3
     # via
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
