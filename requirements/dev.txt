@@ -12,11 +12,11 @@ asgiref==3.8.1
     # via
     #   -r requirements/base.txt
     #   django
-boto3==1.36.21
+boto3==1.36.26
     # via
     #   -r requirements/base.txt
     #   fs-s3fs
-botocore==1.36.21
+botocore==1.36.26
     # via
     #   -r requirements/base.txt
     #   boto3
@@ -80,7 +80,7 @@ openedx-django-pyfs==3.7.0
     # via
     #   -r requirements/base.txt
     #   xblock
-openedx-filters==1.13.0
+openedx-filters==2.0.1
     # via -r requirements/base.txt
 path==16.16.0
     # via edx-i18n-tools
@@ -126,7 +126,7 @@ sqlparse==0.5.3
     # via
     #   -r requirements/base.txt
     #   django
-stevedore==5.4.0
+stevedore==5.4.1
     # via
     #   -r requirements/base.txt
     #   edx-opaque-keys
