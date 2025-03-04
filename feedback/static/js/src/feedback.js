@@ -2,7 +2,7 @@
 // Work-around so we can log in edx-platform, but not fail in Workbench
 if (typeof Logger === 'undefined') {
     var Logger = {
-        log: function(a, b) { 
+        log: function(a, b) {
 	    console.log(JSON.stringify(a)+"/"+JSON.stringify(a));
 	}
     };
@@ -23,6 +23,14 @@ function FeedbackXBlock(runtime, element) {
 	return $(".feedback_freeform_area", element).val();
     }
 
+	function updateVoteCount(data) {
+		if (data.success && data.aggregate && $('.feedback_vote_count', element).length) {
+			$('.feedback_vote_count', element).each(function (idx) {
+				$(this).text('(' + data.aggregate[idx] + ')');
+			});
+		}
+	}
+
     function submit_feedback(freeform, vote) {
 	var feedback = {};
 	if(freeform) {
@@ -38,8 +46,8 @@ function FeedbackXBlock(runtime, element) {
             url: runtime.handlerUrl(element, 'feedback'),
             data: JSON.stringify(feedback),
 	    success: function(data) {
-		$('.feedback_thank_you', element).text("");
-		$('.feedback_thank_you', element).text(data.response);
+		$('.feedback_thank_you', element).text(data.response || '');
+		updateVoteCount(data);
 	    }
         });
     }
