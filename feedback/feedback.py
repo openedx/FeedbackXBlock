@@ -187,10 +187,7 @@ class FeedbackXBlock(XBlock):
         prompt = self.get_prompt()
 
         # Staff see vote totals, so we have slightly different HTML here.
-        if self.vote_aggregate and (self.show_aggregate_to_students or self.is_staff()):
-            item_templates_file = "templates/html/staff_item.html"
-        else:
-            item_templates_file = "templates/html/scale_item.html"
+        item_templates_file = "templates/html/scale_item.html"
 
         # We have five Likert fields right now, but we'd like this to
         # be dynamic
@@ -239,6 +236,7 @@ class FeedbackXBlock(XBlock):
                     'vote_cnt': vote_cnt,
                     'ina_icon': ina_icon,
                     'act_icon': act_icon,
+                    'is_display_vote_cnt': self.vote_aggregate and (self.show_aggregate_to_students or self.is_staff()),
                 },
                 i18n_service=self.runtime.service(self, 'i18n'),
             ) for
@@ -412,7 +410,7 @@ class FeedbackXBlock(XBlock):
             "vote": self.user_vote
         })
 
-        if self.is_staff():
+        if self.show_aggregate_to_students or self.is_staff():
             response['aggregate'] = self.vote_aggregate
 
         return response
