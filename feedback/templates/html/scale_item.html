@@ -11,5 +11,9 @@
     </span>
     <br/>
     <span>{% trans scale_text %}</span>
+    {% if is_display_vote_cnt %}
+      <br/>
+      <span class="feedback_vote_count">({{vote_cnt}})</span>
+    {% endif %}
   </label>
 </div>
