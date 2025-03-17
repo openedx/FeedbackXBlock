@@ -22,11 +22,11 @@ backports-tarfile==1.2.0
     # via jaraco-context
 binaryornot==0.4.4
     # via cookiecutter
-boto3==1.37.9
+boto3==1.37.13
     # via
     #   -r requirements/base.txt
     #   fs-s3fs
-botocore==1.37.9
+botocore==1.37.13
     # via
     #   -r requirements/base.txt
     #   boto3
