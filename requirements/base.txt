@@ -8,9 +8,9 @@ appdirs==1.4.4
     # via fs
 asgiref==3.8.1
     # via django
-boto3==1.37.18
+boto3==1.37.23
     # via fs-s3fs
-botocore==1.37.18
+botocore==1.37.23
     # via
     #   boto3
     #   s3transfer
@@ -59,7 +59,7 @@ python-dateutil==2.9.0.post0
     # via
     #   botocore
     #   xblock
-pytz==2025.1
+pytz==2025.2
     # via xblock
 pyyaml==6.0.2
     # via xblock
@@ -76,7 +76,7 @@ sqlparse==0.5.3
     # via django
 stevedore==5.4.1
     # via edx-opaque-keys
-typing-extensions==4.12.2
+typing-extensions==4.13.0
     # via edx-opaque-keys
 urllib3==2.2.3
     # via
