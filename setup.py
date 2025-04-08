@@ -24,7 +24,7 @@ def package_data(pkg, roots):
 
 setup(
     name='feedback-xblock',
-    version='2.0.1',
+    version='2.1.0',
     description='XBlock for providing feedback on course content',
     long_description=README,
     long_description_content_type='text/x-rst',
