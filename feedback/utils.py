@@ -18,7 +18,7 @@ def get_lms_link_for_item(location, preview=False):
     assert isinstance(location, UsageKey)
 
     try:
-        from openedx.core.djangoapps.site_configuration.models import SiteConfiguration
+        from openedx.core.djangoapps.site_configuration.models import SiteConfiguration # pylint: disable=import-outside-toplevel
     except ImportError:
         return None  # or raise a clearer error, or fallback
 
