@@ -6,9 +6,11 @@ from opaque_keys.edx.keys import UsageKey
 from django.conf import settings
 from openedx.core.djangoapps.site_configuration.models import SiteConfiguration
 
+
 def _(text):
     """Dummy `gettext` replacement to make string extraction tools scrape strings marked for translation"""
     return text
+
 
 def get_lms_link_for_item(location, preview=False):
     """
