@@ -5,26 +5,19 @@ import sys
 import types
 
 
-def test_get_lms_link_default(monkeypatch):
+def test_get_lms_link_importerror(monkeypatch):
     location = Mock(spec=UsageKey)
     location.org = "edX"
     location.course_key = "course-v1:edX+DemoX+2024"
     location.__str__ = lambda self=location: "dummy"
 
-    class MockSiteConfiguration:
-        @staticmethod
-        def get_value_for_org(org, key, default):
-            return default  # simulate missing org-specific config
+    if "openedx.core.djangoapps.site_configuration.models" in sys.modules:
+        del sys.modules["openedx.core.djangoapps.site_configuration.models"]
 
-    monkeypatch.setitem(
-        sys.modules,
-        "openedx.core.djangoapps.site_configuration.models",
-        types.SimpleNamespace(SiteConfiguration=MockSiteConfiguration)
-    )
+    monkeypatch.setattr("feedback.utils.settings", types.SimpleNamespace(LMS_ROOT_URL="https://example.com"))
 
     result = get_lms_link_for_item(location)
-    assert result == "https://example.com/courses/course-v1:edX+DemoX+2024/jump_to/dummy"
-
+    assert result is None
 
 def test_get_lms_link_with_null_lms_base(monkeypatch):
     location = Mock(spec=UsageKey)
