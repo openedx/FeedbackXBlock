@@ -22,7 +22,7 @@ def get_lms_link_for_item(location, preview=False):
         from openedx.core.djangoapps.site_configuration.models import SiteConfiguration
 
     except ImportError:
-        return None  # or raise a clearer error, or fallback
+        return None
 
     lms_base = SiteConfiguration.get_value_for_org(
         location.org,
