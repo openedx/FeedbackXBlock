@@ -22,11 +22,11 @@ backports-tarfile==1.2.0
     # via jaraco-context
 binaryornot==0.4.4
     # via cookiecutter
-boto3==1.40.1
+boto3==1.40.6
     # via
     #   -r requirements/base.txt
     #   fs-s3fs
-botocore==1.40.1
+botocore==1.40.6
     # via
     #   -r requirements/base.txt
     #   boto3
@@ -37,7 +37,7 @@ cffi==1.17.1
     # via cryptography
 chardet==5.2.0
     # via binaryornot
-charset-normalizer==3.4.2
+charset-normalizer==3.4.3
     # via requests
 click==8.2.1
     # via
@@ -51,7 +51,7 @@ code-annotations==2.3.0
     # via edx-lint
 cookiecutter==2.6.0
     # via xblock-sdk
-cryptography==45.0.5
+cryptography==45.0.6
     # via secretstorage
 ddt==1.7.2
     # via -r requirements/quality.in
@@ -172,7 +172,7 @@ pygments==2.19.2
     # via
     #   readme-renderer
     #   rich
-pylint==3.3.7
+pylint==3.3.8
     # via
     #   -r requirements/quality.in
     #   edx-lint
@@ -187,7 +187,7 @@ pylint-plugin-utils==0.9.0
     # via
     #   pylint-celery
     #   pylint-django
-pymongo==4.13.2
+pymongo==4.14.0
     # via
     #   -r requirements/base.txt
     #   edx-opaque-keys
@@ -263,7 +263,7 @@ tomlkit==0.13.3
     # via pylint
 twine==6.1.0
     # via -r requirements/quality.in
-types-python-dateutil==2.9.0.20250708
+types-python-dateutil==2.9.0.20250809
     # via arrow
 typing-extensions==4.14.1
     # via
