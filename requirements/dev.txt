@@ -12,11 +12,11 @@ asgiref==3.11.0
     # via
     #   -r requirements/base.txt
     #   django
-boto3==1.42.9
+boto3==1.42.14
     # via
     #   -r requirements/base.txt
     #   fs-s3fs
-botocore==1.42.9
+botocore==1.42.14
     # via
     #   -r requirements/base.txt
     #   boto3
@@ -118,7 +118,7 @@ six==1.17.0
     #   fs
     #   fs-s3fs
     #   python-dateutil
-sqlparse==0.5.4
+sqlparse==0.5.5
     # via
     #   -r requirements/base.txt
     #   django
