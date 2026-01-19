@@ -22,11 +22,11 @@ babel==2.17.0
     #   sphinx
 beautifulsoup4==4.14.3
     # via pydata-sphinx-theme
-boto3==1.42.25
+boto3==1.42.30
     # via
     #   -r requirements/base.txt
     #   fs-s3fs
-botocore==1.42.25
+botocore==1.42.30
     # via
     #   -r requirements/base.txt
     #   boto3
@@ -148,7 +148,7 @@ six==1.17.0
     #   python-dateutil
 snowballstemmer==3.0.1
     # via sphinx
-soupsieve==2.8.1
+soupsieve==2.8.2
     # via beautifulsoup4
 sphinx==9.0.4
     # via
