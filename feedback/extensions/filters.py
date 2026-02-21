@@ -9,7 +9,7 @@ from openedx_filters import PipelineStep
 from web_fragments.fragment import Fragment
 
 try:
-    from cms.djangoapps.contentstore.utils import get_lms_link_for_item
+    from feedback.utils import get_lms_link_for_item
     from lms.djangoapps.courseware.block_render import (get_block_by_usage_id,
                                                         load_single_xblock)
     from openedx.core.djangoapps.enrollments.data import get_user_enrollments
