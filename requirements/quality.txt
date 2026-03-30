@@ -20,11 +20,11 @@ astroid==4.0.4
     #   pylint-celery
 binaryornot==0.6.0
     # via cookiecutter
-boto3==1.42.73
+boto3==1.42.78
     # via
     #   -r requirements/base.txt
     #   fs-s3fs
-botocore==1.42.73
+botocore==1.42.78
     # via
     #   -r requirements/base.txt
     #   boto3
@@ -47,7 +47,7 @@ code-annotations==3.0.0
     # via edx-lint
 cookiecutter==2.7.1
     # via xblock-sdk
-cryptography==46.0.5
+cryptography==46.0.6
     # via secretstorage
 ddt==1.7.2
     # via -r requirements/quality.in
@@ -142,13 +142,13 @@ more-itertools==10.8.0
     # via
     #   jaraco-classes
     #   jaraco-functools
-nh3==0.3.3
+nh3==0.3.4
     # via readme-renderer
 openedx-django-pyfs==4.0.0
     # via
     #   -r requirements/base.txt
     #   xblock
-openedx-filters==2.1.0
+openedx-filters==3.0.0
     # via -r requirements/base.txt
 packaging==26.0
     # via twine
@@ -158,7 +158,7 @@ pycodestyle==2.14.0
     # via -r requirements/quality.in
 pycparser==3.0
     # via cffi
-pygments==2.19.2
+pygments==2.20.0
     # via
     #   readme-renderer
     #   rich
@@ -205,7 +205,7 @@ pyyaml==6.0.3
     #   xblock
 readme-renderer==44.0
     # via twine
-requests==2.32.5
+requests==2.33.0
     # via
     #   cookiecutter
     #   requests-toolbelt
@@ -275,11 +275,11 @@ webob==1.8.9
     #   -r requirements/base.txt
     #   xblock
     #   xblock-sdk
-xblock[django]==5.3.0
+xblock[django]==6.0.0
     # via
     #   -r requirements/base.txt
     #   xblock-sdk
-xblock-sdk==0.13.0
+xblock-sdk==0.14.0
     # via -r requirements/quality.in
 
 # The following packages are considered to be unsafe in a requirements file:
