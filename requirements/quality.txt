@@ -20,11 +20,11 @@ astroid==4.0.4
     #   pylint-celery
 binaryornot==0.6.0
     # via cookiecutter
-boto3==1.42.83
+boto3==1.42.88
     # via
     #   -r requirements/base.txt
     #   fs-s3fs
-botocore==1.42.83
+botocore==1.42.88
     # via
     #   -r requirements/base.txt
     #   boto3
@@ -47,13 +47,13 @@ code-annotations==3.0.0
     # via edx-lint
 cookiecutter==2.7.1
     # via xblock-sdk
-cryptography==46.0.6
+cryptography==46.0.7
     # via secretstorage
 ddt==1.7.2
     # via -r requirements/quality.in
 dill==0.4.1
     # via pylint
-django==5.2.12
+django==5.2.13
     # via
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/base.txt
@@ -117,7 +117,7 @@ lazy==1.6
     # via
     #   -r requirements/base.txt
     #   xblock
-lxml==6.0.2
+lxml==6.0.4
     # via
     #   -r requirements/base.txt
     #   xblock
@@ -138,7 +138,7 @@ mccabe==0.7.0
     # via pylint
 mdurl==0.1.2
     # via markdown-it-py
-more-itertools==11.0.1
+more-itertools==11.0.2
     # via
     #   jaraco-classes
     #   jaraco-functools
@@ -148,11 +148,11 @@ openedx-django-pyfs==4.0.0
     # via
     #   -r requirements/base.txt
     #   xblock
-openedx-filters==3.0.0
+openedx-filters==3.1.0
     # via -r requirements/base.txt
 packaging==26.0
     # via twine
-platformdirs==4.9.4
+platformdirs==4.9.6
     # via pylint
 pycodestyle==2.14.0
     # via -r requirements/quality.in
@@ -215,7 +215,7 @@ requests-toolbelt==1.0.0
     # via twine
 rfc3986==2.0.0
     # via twine
-rich==14.3.3
+rich==15.0.0
     # via
     #   cookiecutter
     #   twine
