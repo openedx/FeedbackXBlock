@@ -1,3 +1,15 @@
+.. image:: https://img.shields.io/badge/status-deprecated-red
+   :alt: Status
+
+Deprecation
+===========
+
+**This repository is no longer maintained.**
+
+The FeedbackXBlock has been moved to `xblocks-extra <https://github.com/openedx/xblocks-extra>`_.
+
+Please use the new repository for all future work.
+
 ##############
 FeedbackXBlock
 ##############
