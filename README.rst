@@ -1,8 +1,9 @@
 .. image:: https://img.shields.io/badge/status-deprecated-red
    :alt: Status
 
+###########
 Deprecation
-===========
+###########
 
 **This repository is no longer maintained.**
 
