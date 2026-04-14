@@ -2,7 +2,7 @@
    :alt: Status
 
 ###########
-Deprecation
+Move
 ###########
 
 **This repository is no longer maintained.**
